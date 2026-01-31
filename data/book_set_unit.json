@@ -1,0 +1,3440 @@
+[
+    {
+        "book_set_id": 1,
+        "id": 1,
+        "name": "Bài 1",
+        "total_word": 100
+    },
+    {
+        "book_set_id": 1,
+        "id": 2,
+        "name": "Bài 2",
+        "total_word": 89
+    },
+    {
+        "book_set_id": 1,
+        "id": 3,
+        "name": "Bài 3",
+        "total_word": 90
+    },
+    {
+        "book_set_id": 1,
+        "id": 4,
+        "name": "Bài 4",
+        "total_word": 100
+    },
+    {
+        "book_set_id": 1,
+        "id": 5,
+        "name": "Bài 5",
+        "total_word": 100
+    },
+    {
+        "book_set_id": 1,
+        "id": 6,
+        "name": "Bài 6",
+        "total_word": 48
+    },
+    {
+        "book_set_id": 1,
+        "id": 7,
+        "name": "Bài 7",
+        "total_word": 72
+    },
+    {
+        "book_set_id": 1,
+        "id": 8,
+        "name": "Bài 8",
+        "total_word": 100
+    },
+    {
+        "book_set_id": 1,
+        "id": 9,
+        "name": "Bài 9",
+        "total_word": 100
+    },
+    {
+        "book_set_id": 1,
+        "id": 10,
+        "name": "Bài 10",
+        "total_word": 100
+    },
+    {
+        "book_set_id": 1,
+        "id": 11,
+        "name": "Bài 11",
+        "total_word": 100
+    },
+    {
+        "book_set_id": 1,
+        "id": 12,
+        "name": "Bài 12",
+        "total_word": 100
+    },
+    {
+        "book_set_id": 1,
+        "id": 13,
+        "name": "Bài 13",
+        "total_word": 70
+    },
+    {
+        "book_set_id": 2,
+        "id": 14,
+        "name": "Unit 01 - 名詞A - Bài 1",
+        "total_word": 17
+    },
+    {
+        "book_set_id": 2,
+        "id": 15,
+        "name": "Unit 01 - 名詞A - Bài 2",
+        "total_word": 21
+    },
+    {
+        "book_set_id": 2,
+        "id": 16,
+        "name": "Unit 01 - 名詞A - Bài 3",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 2,
+        "id": 17,
+        "name": "Unit 01 - 名詞A - Bài 4",
+        "total_word": 19
+    },
+    {
+        "book_set_id": 2,
+        "id": 18,
+        "name": "Unit 01 - 名詞A - Bài 5",
+        "total_word": 18
+    },
+    {
+        "book_set_id": 2,
+        "id": 19,
+        "name": "Unit 01 - 名詞A - Bài 6",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 2,
+        "id": 20,
+        "name": "Unit 02 - 動詞A - Bài 1",
+        "total_word": 16
+    },
+    {
+        "book_set_id": 2,
+        "id": 21,
+        "name": "Unit 02 - 動詞A - Bài 2",
+        "total_word": 16
+    },
+    {
+        "book_set_id": 2,
+        "id": 22,
+        "name": "Unit 02 - 動詞A - Bài 3",
+        "total_word": 17
+    },
+    {
+        "book_set_id": 2,
+        "id": 23,
+        "name": "Unit 02 - 動詞A - Bài 4",
+        "total_word": 11
+    },
+    {
+        "book_set_id": 2,
+        "id": 24,
+        "name": "Unit 02 - 動詞A - Bài 5",
+        "total_word": 11
+    },
+    {
+        "book_set_id": 2,
+        "id": 25,
+        "name": "Unit 02 - 動詞A - Bài 6",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 2,
+        "id": 26,
+        "name": "Unit 02 - 動詞A - Bài 7",
+        "total_word": 16
+    },
+    {
+        "book_set_id": 2,
+        "id": 27,
+        "name": "Unit 02 - 動詞A - Bài 8",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 2,
+        "id": 28,
+        "name": "Unit 02 - 動詞A - Bài 9",
+        "total_word": 7
+    },
+    {
+        "book_set_id": 2,
+        "id": 29,
+        "name": "Unit 03 - 形容詞A - Bài 1",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 2,
+        "id": 30,
+        "name": "Unit 03 - 形容詞A - Bài 2",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 2,
+        "id": 31,
+        "name": "Unit 03 - 形容詞A - Bài 3",
+        "total_word": 11
+    },
+    {
+        "book_set_id": 2,
+        "id": 32,
+        "name": "Unit 03 - 形容詞A - Bài 4",
+        "total_word": 9
+    },
+    {
+        "book_set_id": 2,
+        "id": 33,
+        "name": "Unit 03 - 形容詞A - Bài 5",
+        "total_word": 6
+    },
+    {
+        "book_set_id": 2,
+        "id": 34,
+        "name": "Unit 04 - 名詞B - Bài 1",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 2,
+        "id": 35,
+        "name": "Unit 04 - 名詞B - Bài 2",
+        "total_word": 16
+    },
+    {
+        "book_set_id": 2,
+        "id": 36,
+        "name": "Unit 04 - 名詞B - Bài 3",
+        "total_word": 18
+    },
+    {
+        "book_set_id": 2,
+        "id": 37,
+        "name": "Unit 04 - 名詞B - Bài 4",
+        "total_word": 3
+    },
+    {
+        "book_set_id": 2,
+        "id": 38,
+        "name": "Unit 04 - 名詞B - Bài 5",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 2,
+        "id": 39,
+        "name": "Unit 04 - 名詞B - Bài 6",
+        "total_word": 19
+    },
+    {
+        "book_set_id": 2,
+        "id": 40,
+        "name": "Unit 04 - 名詞B - Bài 7",
+        "total_word": 16
+    },
+    {
+        "book_set_id": 2,
+        "id": 41,
+        "name": "Unit 04 - 名詞B - Bài 8",
+        "total_word": 21
+    },
+    {
+        "book_set_id": 2,
+        "id": 42,
+        "name": "Unit 04 - 名詞B - Bài 9",
+        "total_word": 20
+    },
+    {
+        "book_set_id": 2,
+        "id": 43,
+        "name": "Unit 04 - 名詞B - Bài 10",
+        "total_word": 23
+    },
+    {
+        "book_set_id": 2,
+        "id": 44,
+        "name": "Unit 04 - 名詞B - Bài 11",
+        "total_word": 21
+    },
+    {
+        "book_set_id": 2,
+        "id": 45,
+        "name": "Unit 04 - 名詞B - Bài 12",
+        "total_word": 5
+    },
+    {
+        "book_set_id": 2,
+        "id": 46,
+        "name": "Unit 05 - カタカナA - Bài 1",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 2,
+        "id": 47,
+        "name": "Unit 05 - カタカナA - Bài 2",
+        "total_word": 10
+    },
+    {
+        "book_set_id": 2,
+        "id": 48,
+        "name": "Unit 05 - カタカナA - Bài 3",
+        "total_word": 10
+    },
+    {
+        "book_set_id": 2,
+        "id": 49,
+        "name": "Unit 05 - カタカナA - Bài 4",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 2,
+        "id": 50,
+        "name": "Unit 05 - カタカナA - Bài 5",
+        "total_word": 2
+    },
+    {
+        "book_set_id": 2,
+        "id": 51,
+        "name": "Unit 06 - 副詞＋接続詞 - Bài 1",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 2,
+        "id": 52,
+        "name": "Unit 06 - 副詞＋接続詞 - Bài 2",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 2,
+        "id": 53,
+        "name": "Unit 06 - 副詞＋接続詞 - Bài 3",
+        "total_word": 17
+    },
+    {
+        "book_set_id": 2,
+        "id": 54,
+        "name": "Unit 06 - 副詞＋接続詞 - Bài 4",
+        "total_word": 16
+    },
+    {
+        "book_set_id": 2,
+        "id": 55,
+        "name": "Unit 06 - 副詞＋接続詞 - Bài 5",
+        "total_word": 8
+    },
+    {
+        "book_set_id": 2,
+        "id": 56,
+        "name": "Unit 07 - 名詞C - Bài 1",
+        "total_word": 17
+    },
+    {
+        "book_set_id": 2,
+        "id": 57,
+        "name": "Unit 07 - 名詞C - Bài 2",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 2,
+        "id": 58,
+        "name": "Unit 07 - 名詞C - Bài 3",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 2,
+        "id": 59,
+        "name": "Unit 07 - 名詞C - Bài 4",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 2,
+        "id": 60,
+        "name": "Unit 07 - 名詞C - Bài 5",
+        "total_word": 17
+    },
+    {
+        "book_set_id": 2,
+        "id": 61,
+        "name": "Unit 07 - 名詞C - Bài 6",
+        "total_word": 8
+    },
+    {
+        "book_set_id": 2,
+        "id": 62,
+        "name": "Unit 07 - 名詞C - Bài 7",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 2,
+        "id": 63,
+        "name": "Unit 07 - 名詞C - Bài 8",
+        "total_word": 11
+    },
+    {
+        "book_set_id": 2,
+        "id": 64,
+        "name": "Unit 08 - 動詞B - Bài 1",
+        "total_word": 11
+    },
+    {
+        "book_set_id": 2,
+        "id": 65,
+        "name": "Unit 08 - 動詞B - Bài 2",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 2,
+        "id": 66,
+        "name": "Unit 08 - 動詞B - Bài 3",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 2,
+        "id": 67,
+        "name": "Unit 08 - 動詞B - Bài 4",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 2,
+        "id": 68,
+        "name": "Unit 08 - 動詞B - Bài 5",
+        "total_word": 10
+    },
+    {
+        "book_set_id": 2,
+        "id": 69,
+        "name": "Unit 08 - 動詞B - Bài 6",
+        "total_word": 10
+    },
+    {
+        "book_set_id": 2,
+        "id": 70,
+        "name": "Unit 08 - 動詞B - Bài 7",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 2,
+        "id": 71,
+        "name": "Unit 08 - 動詞B - Bài 8",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 2,
+        "id": 72,
+        "name": "Unit 08 - 動詞B - Bài 9",
+        "total_word": 11
+    },
+    {
+        "book_set_id": 2,
+        "id": 73,
+        "name": "Unit 09 - カタカナB - Bài 1",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 2,
+        "id": 74,
+        "name": "Unit 09 - カタカナB - Bài 2",
+        "total_word": 10
+    },
+    {
+        "book_set_id": 2,
+        "id": 75,
+        "name": "Unit 09 - カタカナB - Bài 3",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 2,
+        "id": 76,
+        "name": "Unit 09 - カタカナB - Bài 4",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 2,
+        "id": 77,
+        "name": "Unit 10 - 形容詞B - Bài 1",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 2,
+        "id": 78,
+        "name": "Unit 10 - 形容詞B - Bài 2",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 2,
+        "id": 79,
+        "name": "Unit 10 - 形容詞B - Bài 3",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 2,
+        "id": 80,
+        "name": "Unit 10 - 形容詞B - Bài 4",
+        "total_word": 10
+    },
+    {
+        "book_set_id": 2,
+        "id": 81,
+        "name": "Unit 11 - 名詞D - Bài 1",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 2,
+        "id": 82,
+        "name": "Unit 11 - 名詞D - Bài 2",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 2,
+        "id": 83,
+        "name": "Unit 11 - 名詞D - Bài 3",
+        "total_word": 16
+    },
+    {
+        "book_set_id": 2,
+        "id": 84,
+        "name": "Unit 11 - 名詞D - Bài 4",
+        "total_word": 6
+    },
+    {
+        "book_set_id": 2,
+        "id": 85,
+        "name": "Unit 11 - 名詞D - Bài 5",
+        "total_word": 16
+    },
+    {
+        "book_set_id": 2,
+        "id": 86,
+        "name": "Unit 11 - 名詞D - Bài 6",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 2,
+        "id": 87,
+        "name": "Unit 11 - 名詞D - Bài 7",
+        "total_word": 11
+    },
+    {
+        "book_set_id": 2,
+        "id": 88,
+        "name": "Unit 11 - 名詞D - Bài 8",
+        "total_word": 8
+    },
+    {
+        "book_set_id": 2,
+        "id": 89,
+        "name": "Unit 12 - 動詞B - Bài 1",
+        "total_word": 9
+    },
+    {
+        "book_set_id": 2,
+        "id": 90,
+        "name": "Unit 12 - 動詞B - Bài 2",
+        "total_word": 11
+    },
+    {
+        "book_set_id": 2,
+        "id": 91,
+        "name": "Unit 12 - 動詞B - Bài 3",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 2,
+        "id": 92,
+        "name": "Unit 12 - 動詞B - Bài 4",
+        "total_word": 10
+    },
+    {
+        "book_set_id": 2,
+        "id": 93,
+        "name": "Unit 12 - 動詞B - Bài 5",
+        "total_word": 6
+    },
+    {
+        "book_set_id": 2,
+        "id": 94,
+        "name": "Unit 12 - 動詞B - Bài 6",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 2,
+        "id": 95,
+        "name": "Unit 12 - 動詞B - Bài 7",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 2,
+        "id": 96,
+        "name": "Unit 12 - 動詞B - Bài 8",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 2,
+        "id": 97,
+        "name": "Unit 12 - 動詞B - Bài 9",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 2,
+        "id": 98,
+        "name": "Unit 13 - 副詞＋連体詞 - Bài 1",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 2,
+        "id": 99,
+        "name": "Unit 13 - 副詞＋連体詞 - Bài 2",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 2,
+        "id": 100,
+        "name": "Unit 13 - 副詞＋連体詞 - Bài 3",
+        "total_word": 18
+    },
+    {
+        "book_set_id": 2,
+        "id": 101,
+        "name": "Unit 13 - 副詞＋連体詞 - Bài 4",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 2,
+        "id": 102,
+        "name": "Unit 13 - 副詞＋連体詞 - Bài 5",
+        "total_word": 9
+    },
+    {
+        "book_set_id": 3,
+        "id": 103,
+        "name": "Unit 01 - 名詞A - Bài 1",
+        "total_word": 17
+    },
+    {
+        "book_set_id": 3,
+        "id": 104,
+        "name": "Unit 01 - 名詞A - Bài 2",
+        "total_word": 17
+    },
+    {
+        "book_set_id": 3,
+        "id": 105,
+        "name": "Unit 01 - 名詞A - Bài 3",
+        "total_word": 18
+    },
+    {
+        "book_set_id": 3,
+        "id": 106,
+        "name": "Unit 01 - 名詞A - Bài 4",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 3,
+        "id": 107,
+        "name": "Unit 01 - 名詞A - Bài 5",
+        "total_word": 5
+    },
+    {
+        "book_set_id": 3,
+        "id": 108,
+        "name": "Unit 01 - 名詞A - Bài 6",
+        "total_word": 17
+    },
+    {
+        "book_set_id": 3,
+        "id": 109,
+        "name": "Unit 01 - 名詞A - Bài 7",
+        "total_word": 18
+    },
+    {
+        "book_set_id": 3,
+        "id": 110,
+        "name": "Unit 01 - 名詞A - Bài 8",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 3,
+        "id": 111,
+        "name": "Unit 02 - 動詞A - Bài 1",
+        "total_word": 16
+    },
+    {
+        "book_set_id": 3,
+        "id": 112,
+        "name": "Unit 02 - 動詞A - Bài 2",
+        "total_word": 17
+    },
+    {
+        "book_set_id": 3,
+        "id": 113,
+        "name": "Unit 02 - 動詞A - Bài 3",
+        "total_word": 10
+    },
+    {
+        "book_set_id": 3,
+        "id": 114,
+        "name": "Unit 02 - 動詞A - Bài 4",
+        "total_word": 7
+    },
+    {
+        "book_set_id": 3,
+        "id": 115,
+        "name": "Unit 02 - 動詞A - Bài 5",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 3,
+        "id": 116,
+        "name": "Unit 02 - 動詞A - Bài 6",
+        "total_word": 17
+    },
+    {
+        "book_set_id": 3,
+        "id": 117,
+        "name": "Unit 02 - 動詞A - Bài 7",
+        "total_word": 11
+    },
+    {
+        "book_set_id": 3,
+        "id": 118,
+        "name": "Unit 02 - 動詞A - Bài 8",
+        "total_word": 10
+    },
+    {
+        "book_set_id": 3,
+        "id": 119,
+        "name": "まとめ　連用名詞",
+        "total_word": 38
+    },
+    {
+        "book_set_id": 3,
+        "id": 120,
+        "name": "Unit 03 - 形容詞A - Bài 1",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 3,
+        "id": 121,
+        "name": "Unit 03 - 形容詞A - Bài 2",
+        "total_word": 11
+    },
+    {
+        "book_set_id": 3,
+        "id": 122,
+        "name": "Unit 03 - 形容詞A - Bài 3",
+        "total_word": 10
+    },
+    {
+        "book_set_id": 3,
+        "id": 123,
+        "name": "Unit 03 - 形容詞A - Bài 4",
+        "total_word": 7
+    },
+    {
+        "book_set_id": 3,
+        "id": 124,
+        "name": "まとめ　イ形容詞＋まる／める",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 3,
+        "id": 125,
+        "name": "Unit 04 - 名詞B - Bài 1",
+        "total_word": 16
+    },
+    {
+        "book_set_id": 3,
+        "id": 126,
+        "name": "Unit 04 - 名詞B - Bài 2",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 3,
+        "id": 127,
+        "name": "Unit 04 - 名詞B - Bài 3",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 3,
+        "id": 128,
+        "name": "Unit 04 - 名詞B - Bài 4",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 3,
+        "id": 129,
+        "name": "Unit 04 - 名詞B - Bài 5",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 3,
+        "id": 130,
+        "name": "Unit 04 - 名詞B - Bài 6",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 3,
+        "id": 131,
+        "name": "Unit 04 - 名詞B - Bài 7",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 3,
+        "id": 132,
+        "name": "Unit 05 - 動詞B - Bài 1",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 3,
+        "id": 133,
+        "name": "Unit 05 - 動詞B - Bài 2",
+        "total_word": 16
+    },
+    {
+        "book_set_id": 3,
+        "id": 134,
+        "name": "Unit 05 - 動詞B - Bài 3",
+        "total_word": 16
+    },
+    {
+        "book_set_id": 3,
+        "id": 135,
+        "name": "Unit 05 - 動詞B - Bài 4",
+        "total_word": 6
+    },
+    {
+        "book_set_id": 3,
+        "id": 136,
+        "name": "Unit 05 - 動詞B - Bài 5",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 3,
+        "id": 137,
+        "name": "Unit 05 - 動詞B - Bài 6",
+        "total_word": 18
+    },
+    {
+        "book_set_id": 3,
+        "id": 138,
+        "name": "Unit 05 - 動詞B - Bài 7",
+        "total_word": 11
+    },
+    {
+        "book_set_id": 3,
+        "id": 139,
+        "name": "Unit 05 - 動詞B - Bài 8",
+        "total_word": 6
+    },
+    {
+        "book_set_id": 3,
+        "id": 140,
+        "name": "Unit 06 - カタカナA",
+        "total_word": 40
+    },
+    {
+        "book_set_id": 3,
+        "id": 141,
+        "name": "Unit 07 - 形容詞B - Bài 1",
+        "total_word": 11
+    },
+    {
+        "book_set_id": 3,
+        "id": 142,
+        "name": "Unit 07 - 形容詞B - Bài 2",
+        "total_word": 10
+    },
+    {
+        "book_set_id": 3,
+        "id": 143,
+        "name": "Unit 07 - 形容詞B - Bài 3",
+        "total_word": 9
+    },
+    {
+        "book_set_id": 3,
+        "id": 144,
+        "name": "Unit 07 - 形容詞B - Bài 4",
+        "total_word": 10
+    },
+    {
+        "book_set_id": 3,
+        "id": 145,
+        "name": "Unit 08 - 副詞A - Bài 1",
+        "total_word": 11
+    },
+    {
+        "book_set_id": 3,
+        "id": 146,
+        "name": "Unit 08 - 副詞A - Bài 2",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 3,
+        "id": 147,
+        "name": "Unit 08 - 副詞A - Bài 3",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 3,
+        "id": 148,
+        "name": "Unit 08 - 副詞A - Bài 4",
+        "total_word": 9
+    },
+    {
+        "book_set_id": 3,
+        "id": 149,
+        "name": "Unit 09 - 名詞C - Bài 1",
+        "total_word": 16
+    },
+    {
+        "book_set_id": 3,
+        "id": 150,
+        "name": "Unit 09 - 名詞C - Bài 2",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 3,
+        "id": 151,
+        "name": "Unit 09 - 名詞C - Bài 3",
+        "total_word": 9
+    },
+    {
+        "book_set_id": 3,
+        "id": 152,
+        "name": "Unit 09 - 名詞C - Bài 4",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 3,
+        "id": 153,
+        "name": "Unit 09 - 名詞C - Bài 5",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 3,
+        "id": 154,
+        "name": "Unit 09 - 名詞C - Bài 6",
+        "total_word": 10
+    },
+    {
+        "book_set_id": 3,
+        "id": 155,
+        "name": "Unit 10 - 動詞C - Bài 1",
+        "total_word": 9
+    },
+    {
+        "book_set_id": 3,
+        "id": 156,
+        "name": "Unit 10 - 動詞C - Bài 2",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 3,
+        "id": 157,
+        "name": "Unit 10 - 動詞C - Bài 3",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 3,
+        "id": 158,
+        "name": "Unit 10 - 動詞C - Bài 4",
+        "total_word": 3
+    },
+    {
+        "book_set_id": 3,
+        "id": 159,
+        "name": "Unit 10 - 動詞C - Bài 5",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 3,
+        "id": 160,
+        "name": "Unit 10 - 動詞C - Bài 6",
+        "total_word": 10
+    },
+    {
+        "book_set_id": 3,
+        "id": 161,
+        "name": "Unit 10 - 動詞C - Bài 7",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 3,
+        "id": 162,
+        "name": "Unit 10 - 動詞C - Bài 8",
+        "total_word": 4
+    },
+    {
+        "book_set_id": 3,
+        "id": 163,
+        "name": "Unit 11 - カタカナB",
+        "total_word": 40
+    },
+    {
+        "book_set_id": 3,
+        "id": 164,
+        "name": "まとめ　料理の動詞",
+        "total_word": 10
+    },
+    {
+        "book_set_id": 3,
+        "id": 165,
+        "name": "Unit 12 - 副詞B、連体詞・接続詞 - Bài 1",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 3,
+        "id": 166,
+        "name": "Unit 12 - 副詞B、連体詞・接続詞 - Bài 2",
+        "total_word": 10
+    },
+    {
+        "book_set_id": 3,
+        "id": 167,
+        "name": "Unit 12 - 副詞B、連体詞・接続詞 - Bài 3",
+        "total_word": 9
+    },
+    {
+        "book_set_id": 3,
+        "id": 168,
+        "name": "Unit 12 - 副詞B、連体詞・接続詞 - Bài 4",
+        "total_word": 4
+    },
+    {
+        "book_set_id": 4,
+        "id": 169,
+        "name": "第 1 週 - 1日目",
+        "total_word": 28
+    },
+    {
+        "book_set_id": 4,
+        "id": 170,
+        "name": "第 1 週 - 2日目",
+        "total_word": 66
+    },
+    {
+        "book_set_id": 4,
+        "id": 171,
+        "name": "第 1 週 - 3日目",
+        "total_word": 32
+    },
+    {
+        "book_set_id": 4,
+        "id": 172,
+        "name": "第 1 週 - 4日目",
+        "total_word": 47
+    },
+    {
+        "book_set_id": 4,
+        "id": 173,
+        "name": "第 1 週 - 5日目",
+        "total_word": 37
+    },
+    {
+        "book_set_id": 4,
+        "id": 174,
+        "name": "第 1 週 - 6 日目",
+        "total_word": 52
+    },
+    {
+        "book_set_id": 4,
+        "id": 175,
+        "name": "第 2 週 - 1日目",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 4,
+        "id": 176,
+        "name": "第 2 週 - 2日目",
+        "total_word": 25
+    },
+    {
+        "book_set_id": 4,
+        "id": 177,
+        "name": "第 2 週 - 3日目",
+        "total_word": 23
+    },
+    {
+        "book_set_id": 4,
+        "id": 178,
+        "name": "第 2 週 - 4日目",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 4,
+        "id": 179,
+        "name": "第 2 週 - 5日目",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 4,
+        "id": 180,
+        "name": "第 2 週 - 6 日目",
+        "total_word": 27
+    },
+    {
+        "book_set_id": 4,
+        "id": 181,
+        "name": "第 3 週 - 1日目",
+        "total_word": 21
+    },
+    {
+        "book_set_id": 4,
+        "id": 182,
+        "name": "第 3 週 -  2日目",
+        "total_word": 25
+    },
+    {
+        "book_set_id": 4,
+        "id": 183,
+        "name": "第 3 週 - 3日目",
+        "total_word": 24
+    },
+    {
+        "book_set_id": 4,
+        "id": 184,
+        "name": "第 3 週 - 4日目",
+        "total_word": 23
+    },
+    {
+        "book_set_id": 4,
+        "id": 185,
+        "name": "第 3 週 - 5日目",
+        "total_word": 22
+    },
+    {
+        "book_set_id": 4,
+        "id": 186,
+        "name": "第 3 週 - 6日目",
+        "total_word": 23
+    },
+    {
+        "book_set_id": 4,
+        "id": 187,
+        "name": "第 4 週 - 1日目",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 4,
+        "id": 188,
+        "name": "第 4 週 - 2日目",
+        "total_word": 29
+    },
+    {
+        "book_set_id": 4,
+        "id": 189,
+        "name": "第 4 週 - 3日目",
+        "total_word": 27
+    },
+    {
+        "book_set_id": 4,
+        "id": 190,
+        "name": "第 4 週 - 4日目",
+        "total_word": 28
+    },
+    {
+        "book_set_id": 4,
+        "id": 191,
+        "name": "第 4 週 - 5日目",
+        "total_word": 33
+    },
+    {
+        "book_set_id": 4,
+        "id": 192,
+        "name": "第 4 週 - 6日目",
+        "total_word": 32
+    },
+    {
+        "book_set_id": 4,
+        "id": 193,
+        "name": "第 5 週  - 1日目",
+        "total_word": 34
+    },
+    {
+        "book_set_id": 4,
+        "id": 194,
+        "name": "第 5 週 - 2日目",
+        "total_word": 36
+    },
+    {
+        "book_set_id": 4,
+        "id": 195,
+        "name": "第 5 週 - 3日目",
+        "total_word": 29
+    },
+    {
+        "book_set_id": 4,
+        "id": 196,
+        "name": "第 5 週 - 4日目",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 4,
+        "id": 197,
+        "name": "第 5 週 - 5日目",
+        "total_word": 37
+    },
+    {
+        "book_set_id": 4,
+        "id": 198,
+        "name": "第 5 週 - 6日目",
+        "total_word": 33
+    },
+    {
+        "book_set_id": 4,
+        "id": 199,
+        "name": "第 6週 - 1日目",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 4,
+        "id": 200,
+        "name": "第 6週 - 2日目",
+        "total_word": 36
+    },
+    {
+        "book_set_id": 4,
+        "id": 201,
+        "name": "第 6週 - 3日目",
+        "total_word": 37
+    },
+    {
+        "book_set_id": 4,
+        "id": 202,
+        "name": "第 6週 - 4日目",
+        "total_word": 22
+    },
+    {
+        "book_set_id": 4,
+        "id": 203,
+        "name": "第 6週 - 5日目",
+        "total_word": 32
+    },
+    {
+        "book_set_id": 4,
+        "id": 204,
+        "name": "第 6週 - 6日目",
+        "total_word": 26
+    },
+    {
+        "book_set_id": 4,
+        "id": 205,
+        "name": "第 7 週 - 1日目",
+        "total_word": 32
+    },
+    {
+        "book_set_id": 4,
+        "id": 206,
+        "name": "第 7 週 - 2日目",
+        "total_word": 24
+    },
+    {
+        "book_set_id": 4,
+        "id": 207,
+        "name": "第 7 週 - 3日目",
+        "total_word": 27
+    },
+    {
+        "book_set_id": 4,
+        "id": 208,
+        "name": "第 7 週 - 4日目",
+        "total_word": 38
+    },
+    {
+        "book_set_id": 4,
+        "id": 209,
+        "name": "第 7 週 - 5日目",
+        "total_word": 24
+    },
+    {
+        "book_set_id": 4,
+        "id": 210,
+        "name": "第 7 週 - 6日目",
+        "total_word": 35
+    },
+    {
+        "book_set_id": 4,
+        "id": 211,
+        "name": "第 8 週 - 1日目",
+        "total_word": 25
+    },
+    {
+        "book_set_id": 4,
+        "id": 212,
+        "name": "第 8 週 - 2日目",
+        "total_word": 29
+    },
+    {
+        "book_set_id": 4,
+        "id": 213,
+        "name": "第 8 週 - 3日目",
+        "total_word": 32
+    },
+    {
+        "book_set_id": 4,
+        "id": 214,
+        "name": "第 8 週 - 4日目",
+        "total_word": 27
+    },
+    {
+        "book_set_id": 4,
+        "id": 215,
+        "name": "第 8 週 - 5日目",
+        "total_word": 77
+    },
+    {
+        "book_set_id": 5,
+        "id": 216,
+        "name": "第1週 (1) - アパートを探しています。",
+        "total_word": 39
+    },
+    {
+        "book_set_id": 5,
+        "id": 217,
+        "name": "第1週 (2) - 引っ越しは大変です",
+        "total_word": 37
+    },
+    {
+        "book_set_id": 5,
+        "id": 218,
+        "name": "第1週 (3) - 友人を招きました",
+        "total_word": 22
+    },
+    {
+        "book_set_id": 5,
+        "id": 219,
+        "name": "第1週 (4) - 家事、子育ては大変です",
+        "total_word": 44
+    },
+    {
+        "book_set_id": 5,
+        "id": 220,
+        "name": "第1週 (5) - 夏休みを海で過ごしています",
+        "total_word": 35
+    },
+    {
+        "book_set_id": 5,
+        "id": 221,
+        "name": "第1週 (6) - お金を使いすぎました",
+        "total_word": 27
+    },
+    {
+        "book_set_id": 5,
+        "id": 222,
+        "name": "第2週 (1) - 仕事を探しています",
+        "total_word": 28
+    },
+    {
+        "book_set_id": 5,
+        "id": 223,
+        "name": "第2週 (2) - 仕事をしています①",
+        "total_word": 36
+    },
+    {
+        "book_set_id": 5,
+        "id": 224,
+        "name": "第2週 (3) - 仕事をしています②",
+        "total_word": 32
+    },
+    {
+        "book_set_id": 5,
+        "id": 225,
+        "name": "第2週 (4) - パソコンを使っています",
+        "total_word": 36
+    },
+    {
+        "book_set_id": 5,
+        "id": 226,
+        "name": "第2週 (5) - パソコンを使っています②",
+        "total_word": 33
+    },
+    {
+        "book_set_id": 5,
+        "id": 227,
+        "name": "第2週 (6) - パソコンを使っています",
+        "total_word": 28
+    },
+    {
+        "book_set_id": 5,
+        "id": 228,
+        "name": "第3週 (1) - どんな人ですか",
+        "total_word": 49
+    },
+    {
+        "book_set_id": 5,
+        "id": 229,
+        "name": "第3週 (2) - どんな様子ですか",
+        "total_word": 48
+    },
+    {
+        "book_set_id": 5,
+        "id": 230,
+        "name": "第3週 (3) - どんな動作ですか",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 5,
+        "id": 231,
+        "name": "第3週 (4) - どんな気持ち、態度ですか①",
+        "total_word": 38
+    },
+    {
+        "book_set_id": 5,
+        "id": 232,
+        "name": "第3週 (5) - どんな気持ち、態度ですか②",
+        "total_word": 43
+    },
+    {
+        "book_set_id": 5,
+        "id": 233,
+        "name": "第3週 (6) - 体の具合はどうですか",
+        "total_word": 38
+    },
+    {
+        "book_set_id": 5,
+        "id": 234,
+        "name": "第4週 (1) - なんとか覚えよう",
+        "total_word": 43
+    },
+    {
+        "book_set_id": 5,
+        "id": 235,
+        "name": "第4週 (2) - いずれ覚えられる",
+        "total_word": 53
+    },
+    {
+        "book_set_id": 5,
+        "id": 236,
+        "name": "第4週 (3) - せっせと覚えよう",
+        "total_word": 60
+    },
+    {
+        "book_set_id": 5,
+        "id": 237,
+        "name": "第4週 (4) - さらに覚えよう",
+        "total_word": 56
+    },
+    {
+        "book_set_id": 5,
+        "id": 238,
+        "name": "第4週 (5) - とりあえず覚えよう",
+        "total_word": 52
+    },
+    {
+        "book_set_id": 5,
+        "id": 239,
+        "name": "第4週 (6) - いったん覚えたら忘れない",
+        "total_word": 46
+    },
+    {
+        "book_set_id": 5,
+        "id": 240,
+        "name": "第5週 (1) - 物事、日中、年月",
+        "total_word": 58
+    },
+    {
+        "book_set_id": 5,
+        "id": 241,
+        "name": "第5週 (2) - 夜中、世間、作業",
+        "total_word": 58
+    },
+    {
+        "book_set_id": 5,
+        "id": 242,
+        "name": "第5週 (3) - 一生、用心、見事",
+        "total_word": 55
+    },
+    {
+        "book_set_id": 5,
+        "id": 243,
+        "name": "第5週 (4) - 土地、苗字、発売",
+        "total_word": 59
+    },
+    {
+        "book_set_id": 5,
+        "id": 244,
+        "name": "第5週 (5) - 手品、合図、強気",
+        "total_word": 53
+    },
+    {
+        "book_set_id": 5,
+        "id": 245,
+        "name": "第5週 (6) - 本気、気楽、目安",
+        "total_word": 54
+    },
+    {
+        "book_set_id": 5,
+        "id": 246,
+        "name": "第6週 (1) - カタカナで書く言葉①",
+        "total_word": 68
+    },
+    {
+        "book_set_id": 5,
+        "id": 247,
+        "name": "第6週 (2) - カタカナで書く言葉②",
+        "total_word": 37
+    },
+    {
+        "book_set_id": 5,
+        "id": 248,
+        "name": "第6週 (3) - カタカナで書く言葉",
+        "total_word": 47
+    },
+    {
+        "book_set_id": 5,
+        "id": 249,
+        "name": "第6週 (4) - 似ている言葉①",
+        "total_word": 55
+    },
+    {
+        "book_set_id": 5,
+        "id": 250,
+        "name": "第6週 (5) - 似ている言葉②",
+        "total_word": 55
+    },
+    {
+        "book_set_id": 5,
+        "id": 251,
+        "name": "第6週 (6) - 似ている言葉",
+        "total_word": 46
+    },
+    {
+        "book_set_id": 5,
+        "id": 252,
+        "name": "第7週 (1) - 意味がたくさんある言葉①",
+        "total_word": 42
+    },
+    {
+        "book_set_id": 5,
+        "id": 253,
+        "name": "第7週 (2) - 意味がたくさんある言葉②",
+        "total_word": 37
+    },
+    {
+        "book_set_id": 5,
+        "id": 254,
+        "name": "第7週 (3) - 意味がたくさんある言葉",
+        "total_word": 57
+    },
+    {
+        "book_set_id": 5,
+        "id": 255,
+        "name": "第7週 (4) - 言葉の前につく語",
+        "total_word": 68
+    },
+    {
+        "book_set_id": 5,
+        "id": 256,
+        "name": "第7週 (5) - 言葉の後ろにつく語",
+        "total_word": 61
+    },
+    {
+        "book_set_id": 5,
+        "id": 257,
+        "name": "第7週 (6) - 言葉の後ろにつく語②",
+        "total_word": 39
+    },
+    {
+        "book_set_id": 5,
+        "id": 258,
+        "name": "第8週 (1) - 組み合わせ言葉①",
+        "total_word": 56
+    },
+    {
+        "book_set_id": 5,
+        "id": 259,
+        "name": "第8週 (2) - 組み合わせ言葉②",
+        "total_word": 63
+    },
+    {
+        "book_set_id": 5,
+        "id": 260,
+        "name": "第8週 (3) - よく使われる表現①",
+        "total_word": 32
+    },
+    {
+        "book_set_id": 5,
+        "id": 261,
+        "name": "第8週 (4) - よく使われる表現②",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 5,
+        "id": 262,
+        "name": "第8週 (5) - よく使われる表現",
+        "total_word": 45
+    },
+    {
+        "book_set_id": 5,
+        "id": 263,
+        "name": "第8週 (6) - よく使われる表現",
+        "total_word": 48
+    },
+    {
+        "book_set_id": 6,
+        "id": 264,
+        "name": "第1週 (1) - キッチンで、リビングで",
+        "total_word": 47
+    },
+    {
+        "book_set_id": 6,
+        "id": 265,
+        "name": "第1週 (2) - 料理をしましょう①",
+        "total_word": 50
+    },
+    {
+        "book_set_id": 6,
+        "id": 266,
+        "name": "第1週 (3) - 料理をしましょう②",
+        "total_word": 36
+    },
+    {
+        "book_set_id": 6,
+        "id": 267,
+        "name": "第1週 (4) - 掃除をしましょう",
+        "total_word": 39
+    },
+    {
+        "book_set_id": 6,
+        "id": 268,
+        "name": "第1週 (5) - 洗濯をしましょう",
+        "total_word": 23
+    },
+    {
+        "book_set_id": 6,
+        "id": 269,
+        "name": "第1週 (6) - 子供やペットの世話をしましょう",
+        "total_word": 46
+    },
+    {
+        "book_set_id": 6,
+        "id": 270,
+        "name": "第2週 (1) - 計画を立てましょう",
+        "total_word": 48
+    },
+    {
+        "book_set_id": 6,
+        "id": 271,
+        "name": "第2週 (2) - 電車に乗りましょう①",
+        "total_word": 28
+    },
+    {
+        "book_set_id": 6,
+        "id": 272,
+        "name": "第2週 (3) - 電車に乗りましょう②",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 6,
+        "id": 273,
+        "name": "第2週 (4) - 車に乗りましょう①",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 6,
+        "id": 274,
+        "name": "第2週 (5) - 車に乗りましょう②",
+        "total_word": 35
+    },
+    {
+        "book_set_id": 6,
+        "id": 275,
+        "name": "第2週 (6) - 用事を済ませましょう",
+        "total_word": 36
+    },
+    {
+        "book_set_id": 6,
+        "id": 276,
+        "name": "第3週 (1) - デートにさそいましょう",
+        "total_word": 36
+    },
+    {
+        "book_set_id": 6,
+        "id": 277,
+        "name": "第3週 (2) - したくをしましょう",
+        "total_word": 38
+    },
+    {
+        "book_set_id": 6,
+        "id": 278,
+        "name": "第3週 (3) - 買い物をしましょう",
+        "total_word": 38
+    },
+    {
+        "book_set_id": 6,
+        "id": 279,
+        "name": "第3週 (4) - 食事に行きましょう",
+        "total_word": 35
+    },
+    {
+        "book_set_id": 6,
+        "id": 280,
+        "name": "第3週 (5) - お酒を飲みましょう",
+        "total_word": 36
+    },
+    {
+        "book_set_id": 6,
+        "id": 281,
+        "name": "第3週 (6) - お金を払いましょう",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 6,
+        "id": 282,
+        "name": "第4週 (1) - 学校へ行きましょう①",
+        "total_word": 41
+    },
+    {
+        "book_set_id": 6,
+        "id": 283,
+        "name": "第4週 (2) - 学校へ行きましょう②",
+        "total_word": 41
+    },
+    {
+        "book_set_id": 6,
+        "id": 284,
+        "name": "第4週 (3) - 学校へ行きましょう",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 6,
+        "id": 285,
+        "name": "第4週 (4) - 仕事をしましょう",
+        "total_word": 34
+    },
+    {
+        "book_set_id": 6,
+        "id": 286,
+        "name": "第4週 (5) - パソコンを使いましょう",
+        "total_word": 25
+    },
+    {
+        "book_set_id": 6,
+        "id": 287,
+        "name": "第4週 (6) - メールをしましょう",
+        "total_word": 22
+    },
+    {
+        "book_set_id": 6,
+        "id": 288,
+        "name": "第5週 (1) - どういう関係ですか",
+        "total_word": 34
+    },
+    {
+        "book_set_id": 6,
+        "id": 289,
+        "name": "第5週 (2) - あいさつをしましょう",
+        "total_word": 26
+    },
+    {
+        "book_set_id": 6,
+        "id": 290,
+        "name": "第5週 (3) - どんな人が好き？",
+        "total_word": 36
+    },
+    {
+        "book_set_id": 6,
+        "id": 291,
+        "name": "第5週 (4) - 体の調子はどうですか",
+        "total_word": 37
+    },
+    {
+        "book_set_id": 6,
+        "id": 292,
+        "name": "第5週 (5) - どんなようすですか①",
+        "total_word": 40
+    },
+    {
+        "book_set_id": 6,
+        "id": 293,
+        "name": "第5週 (6) - どんなようすですか②",
+        "total_word": 33
+    },
+    {
+        "book_set_id": 6,
+        "id": 294,
+        "name": "第6週 (1) - かなり頑張っています",
+        "total_word": 53
+    },
+    {
+        "book_set_id": 6,
+        "id": 295,
+        "name": "第6週 (2) - ちゃんと頑張っています",
+        "total_word": 51
+    },
+    {
+        "book_set_id": 6,
+        "id": 296,
+        "name": "第6週 (3) - ますます頑張ります",
+        "total_word": 46
+    },
+    {
+        "book_set_id": 6,
+        "id": 297,
+        "name": "第6週 (4) - 組み合わせの言葉",
+        "total_word": 35
+    },
+    {
+        "book_set_id": 6,
+        "id": 298,
+        "name": "第6週 (5) - 意味がたくさんある動詞①",
+        "total_word": 54
+    },
+    {
+        "book_set_id": 6,
+        "id": 299,
+        "name": "第6週 (6) - 意味がたくさんある動詞②",
+        "total_word": 44
+    },
+    {
+        "book_set_id": 7,
+        "id": 300,
+        "name": "Bài 1 - 助詞",
+        "total_word": 49
+    },
+    {
+        "book_set_id": 7,
+        "id": 301,
+        "name": "Bài 2 -「は」と「が」",
+        "total_word": 44
+    },
+    {
+        "book_set_id": 7,
+        "id": 302,
+        "name": "Bài 3 - 活用１",
+        "total_word": 28
+    },
+    {
+        "book_set_id": 7,
+        "id": 303,
+        "name": "Bài 4 - 動詞の３種類",
+        "total_word": 38
+    },
+    {
+        "book_set_id": 7,
+        "id": 304,
+        "name": "Bài 5 - 動詞の活用と文型",
+        "total_word": 35
+    },
+    {
+        "book_set_id": 7,
+        "id": 305,
+        "name": "Bài 6 - 普通形",
+        "total_word": 48
+    },
+    {
+        "book_set_id": 7,
+        "id": 306,
+        "name": "Bài 7 - こ～そ～あ～　位置関係",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 7,
+        "id": 307,
+        "name": "Bài 8 - 申し出・勧誘",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 7,
+        "id": 308,
+        "name": "Bài 9 - 自分か　他者か",
+        "total_word": 35
+    },
+    {
+        "book_set_id": 7,
+        "id": 309,
+        "name": "Bài 10 - 継続性か　・　瞬間性か",
+        "total_word": 41
+    },
+    {
+        "book_set_id": 7,
+        "id": 310,
+        "name": "Bài 11 - 話者の位置",
+        "total_word": 40
+    },
+    {
+        "book_set_id": 7,
+        "id": 311,
+        "name": "Bài 12 -　他動詞と自動詞",
+        "total_word": 62
+    },
+    {
+        "book_set_id": 7,
+        "id": 312,
+        "name": "Bài 13 - 可能表現",
+        "total_word": 43
+    },
+    {
+        "book_set_id": 7,
+        "id": 313,
+        "name": "Bài 14 - 事実か　気持ちを入っているか",
+        "total_word": 33
+    },
+    {
+        "book_set_id": 7,
+        "id": 314,
+        "name": "Bài 15 - 条件",
+        "total_word": 50
+    },
+    {
+        "book_set_id": 7,
+        "id": 315,
+        "name": "Bài 16 - 授受・だれがだれに",
+        "total_word": 37
+    },
+    {
+        "book_set_id": 7,
+        "id": 316,
+        "name": "Bài 17 - 使役",
+        "total_word": 44
+    },
+    {
+        "book_set_id": 7,
+        "id": 317,
+        "name": "Bài 18 - 受身・使役受身",
+        "total_word": 52
+    },
+    {
+        "book_set_id": 7,
+        "id": 318,
+        "name": "Bài 19 - 敬語",
+        "total_word": 40
+    },
+    {
+        "book_set_id": 7,
+        "id": 319,
+        "name": "Bài 20 - 文のスタイル",
+        "total_word": 41
+    },
+    {
+        "book_set_id": 8,
+        "id": 320,
+        "name": "1.性格 （＿人が好き－嫌いだ） thái độ của người nào đó đối với công việc, v.v.",
+        "total_word": 16
+    },
+    {
+        "book_set_id": 8,
+        "id": 321,
+        "name": "2. 人柄",
+        "total_word": 4
+    },
+    {
+        "book_set_id": 8,
+        "id": 322,
+        "name": "3.個性",
+        "total_word": 9
+    },
+    {
+        "book_set_id": 8,
+        "id": 323,
+        "name": "4. 人に対する感情・行動",
+        "total_word": 9
+    },
+    {
+        "book_set_id": 8,
+        "id": 324,
+        "name": "5.人間関係",
+        "total_word": 9
+    },
+    {
+        "book_set_id": 8,
+        "id": 325,
+        "name": "5.付き合い giao thiệp, hẹn hò",
+        "total_word": 6
+    },
+    {
+        "book_set_id": 8,
+        "id": 326,
+        "name": "6.恋愛",
+        "total_word": 3
+    },
+    {
+        "book_set_id": 8,
+        "id": 327,
+        "name": "7.その他",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 8,
+        "id": 328,
+        "name": "7.__味",
+        "total_word": 6
+    },
+    {
+        "book_set_id": 8,
+        "id": 329,
+        "name": "7.__匂い",
+        "total_word": 2
+    },
+    {
+        "book_set_id": 8,
+        "id": 330,
+        "name": "8.育児 chăm sóc trẻ",
+        "total_word": 6
+    },
+    {
+        "book_set_id": 8,
+        "id": 331,
+        "name": "8.住居 nơi ở",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 8,
+        "id": 332,
+        "name": "8.病気",
+        "total_word": 16
+    },
+    {
+        "book_set_id": 8,
+        "id": 333,
+        "name": "9.治療",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 8,
+        "id": 334,
+        "name": "10.健康",
+        "total_word": 10
+    },
+    {
+        "book_set_id": 8,
+        "id": 335,
+        "name": "11.芸術",
+        "total_word": 26
+    },
+    {
+        "book_set_id": 8,
+        "id": 336,
+        "name": "20.スポーツ",
+        "total_word": 8
+    },
+    {
+        "book_set_id": 8,
+        "id": 337,
+        "name": "12.スポーツ",
+        "total_word": 28
+    },
+    {
+        "book_set_id": 8,
+        "id": 338,
+        "name": "13.発表・プレゼンテーション presentation",
+        "total_word": 11
+    },
+    {
+        "book_set_id": 8,
+        "id": 339,
+        "name": "14.仕事",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 8,
+        "id": 340,
+        "name": "15. 職業",
+        "total_word": 11
+    },
+    {
+        "book_set_id": 8,
+        "id": 341,
+        "name": "15. 就職・求人",
+        "total_word": 22
+    },
+    {
+        "book_set_id": 8,
+        "id": 342,
+        "name": "16. 経済",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 8,
+        "id": 343,
+        "name": "16. 産業",
+        "total_word": 9
+    },
+    {
+        "book_set_id": 8,
+        "id": 344,
+        "name": "16. 政治・法律",
+        "total_word": 25
+    },
+    {
+        "book_set_id": 8,
+        "id": 345,
+        "name": "16. 歴史",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 8,
+        "id": 346,
+        "name": "16. 格差社会 chênh lệch trong xã hội",
+        "total_word": 8
+    },
+    {
+        "book_set_id": 8,
+        "id": 347,
+        "name": "16. 少子高齢化",
+        "total_word": 21
+    },
+    {
+        "book_set_id": 8,
+        "id": 348,
+        "name": "17. 気象・気候",
+        "total_word": 8
+    },
+    {
+        "book_set_id": 8,
+        "id": 349,
+        "name": "18.地形",
+        "total_word": 10
+    },
+    {
+        "book_set_id": 8,
+        "id": 350,
+        "name": "18.天体 てんたい Thiên thể",
+        "total_word": 17
+    },
+    {
+        "book_set_id": 8,
+        "id": 351,
+        "name": "18.機械",
+        "total_word": 5
+    },
+    {
+        "book_set_id": 8,
+        "id": 352,
+        "name": "19.時間",
+        "total_word": 6
+    },
+    {
+        "book_set_id": 8,
+        "id": 353,
+        "name": "20.空間",
+        "total_word": 21
+    },
+    {
+        "book_set_id": 8,
+        "id": 354,
+        "name": "21.関係",
+        "total_word": 22
+    },
+    {
+        "book_set_id": 8,
+        "id": 355,
+        "name": "22.変化",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 8,
+        "id": 356,
+        "name": "23.意味がたくさんある言葉",
+        "total_word": 10
+    },
+    {
+        "book_set_id": 8,
+        "id": 357,
+        "name": "24.意味がたくさんある言葉",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 8,
+        "id": 358,
+        "name": "25.意味がたくさんある言葉",
+        "total_word": 17
+    },
+    {
+        "book_set_id": 8,
+        "id": 359,
+        "name": "26.動詞",
+        "total_word": 20
+    },
+    {
+        "book_set_id": 8,
+        "id": 360,
+        "name": "27. 形が似ている言葉",
+        "total_word": 123
+    },
+    {
+        "book_set_id": 8,
+        "id": 361,
+        "name": "28. 推量",
+        "total_word": 3
+    },
+    {
+        "book_set_id": 8,
+        "id": 362,
+        "name": "29. 様子",
+        "total_word": 4
+    },
+    {
+        "book_set_id": 8,
+        "id": 363,
+        "name": "29. 結果・状態",
+        "total_word": 3
+    },
+    {
+        "book_set_id": 8,
+        "id": 364,
+        "name": "30. 副詞",
+        "total_word": 44
+    },
+    {
+        "book_set_id": 8,
+        "id": 365,
+        "name": "31. ものの様子",
+        "total_word": 47
+    },
+    {
+        "book_set_id": 8,
+        "id": 366,
+        "name": "31. 人の様子",
+        "total_word": 48
+    },
+    {
+        "book_set_id": 8,
+        "id": 367,
+        "name": "32. 体の言葉",
+        "total_word": 80
+    },
+    {
+        "book_set_id": 8,
+        "id": 368,
+        "name": "33. 複合動詞",
+        "total_word": 99
+    },
+    {
+        "book_set_id": 9,
+        "id": 369,
+        "name": "1章 人間 1課 親類・友人・知人",
+        "total_word": 35
+    },
+    {
+        "book_set_id": 9,
+        "id": 370,
+        "name": "1章 人間 2課 人の性格・特徴",
+        "total_word": 49
+    },
+    {
+        "book_set_id": 9,
+        "id": 371,
+        "name": "1章 人間 3課 人に対する感情・行動 ",
+        "total_word": 48
+    },
+    {
+        "book_set_id": 9,
+        "id": 372,
+        "name": "2章 食生活 1課 食生活",
+        "total_word": 45
+    },
+    {
+        "book_set_id": 9,
+        "id": 373,
+        "name": "2章 食生活 2課 家事",
+        "total_word": 53
+    },
+    {
+        "book_set_id": 9,
+        "id": 374,
+        "name": "2章 食生活 3課 健康",
+        "total_word": 40
+    },
+    {
+        "book_set_id": 9,
+        "id": 375,
+        "name": "3章 趣味・娯楽 ",
+        "total_word": 37
+    },
+    {
+        "book_set_id": 9,
+        "id": 376,
+        "name": "4章 旅行 1課 旅行・交通 ",
+        "total_word": 39
+    },
+    {
+        "book_set_id": 9,
+        "id": 377,
+        "name": "4章 旅行 2課 自然 ",
+        "total_word": 22
+    },
+    {
+        "book_set_id": 9,
+        "id": 378,
+        "name": "4章 旅行 2課 自然",
+        "total_word": 20
+    },
+    {
+        "book_set_id": 9,
+        "id": 379,
+        "name": "5章 教育と仕事 1課 学校",
+        "total_word": 41
+    },
+    {
+        "book_set_id": 9,
+        "id": 380,
+        "name": "5章 教育と仕事 2課 仕事 ",
+        "total_word": 40
+    },
+    {
+        "book_set_id": 9,
+        "id": 381,
+        "name": "6章 メディア 1課 報道・広告",
+        "total_word": 40
+    },
+    {
+        "book_set_id": 9,
+        "id": 382,
+        "name": "6章 メディア 2課 コンピューター ",
+        "total_word": 37
+    },
+    {
+        "book_set_id": 9,
+        "id": 383,
+        "name": "7章 社会 1課 行事",
+        "total_word": 34
+    },
+    {
+        "book_set_id": 9,
+        "id": 384,
+        "name": "7章 社会 2課 事件・事故・災害",
+        "total_word": 25
+    },
+    {
+        "book_set_id": 9,
+        "id": 385,
+        "name": "7章 社会 3課 経済・産業",
+        "total_word": 40
+    },
+    {
+        "book_set_id": 9,
+        "id": 386,
+        "name": "7章 社会 4課 政治・法律・歴史 ",
+        "total_word": 34
+    },
+    {
+        "book_set_id": 9,
+        "id": 387,
+        "name": "8章 科学 1課 自然 ",
+        "total_word": 40
+    },
+    {
+        "book_set_id": 9,
+        "id": 388,
+        "name": "8章 科学 2課 科学・技術ư",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 9,
+        "id": 389,
+        "name": "9章 抽象概念 1課 数量を表す言葉 ",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 9,
+        "id": 390,
+        "name": "9章 抽象概念 1課 数量を表す言葉",
+        "total_word": 7
+    },
+    {
+        "book_set_id": 9,
+        "id": 391,
+        "name": "9章 抽象概念 2課 時間・空間の言葉",
+        "total_word": 19
+    },
+    {
+        "book_set_id": 9,
+        "id": 392,
+        "name": "1章 意味がたくさんある言葉 1課 動詞",
+        "total_word": 68
+    },
+    {
+        "book_set_id": 9,
+        "id": 393,
+        "name": "1章 意味がたくさんある言葉 2課 動詞",
+        "total_word": 95
+    },
+    {
+        "book_set_id": 9,
+        "id": 394,
+        "name": "2 章 意味がたくさんある言葉.1. 副詞。形容詞",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 9,
+        "id": 395,
+        "name": "12.形容詞的表現",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 9,
+        "id": 396,
+        "name": "12章 意味が似ている言葉 2課 名詞",
+        "total_word": 28
+    },
+    {
+        "book_set_id": 9,
+        "id": 397,
+        "name": "4章 副詞 1課 程度、時間、頻度の副詞",
+        "total_word": 23
+    },
+    {
+        "book_set_id": 9,
+        "id": 398,
+        "name": "4章 副詞 ２課後ろに決まった表現が来る副詞",
+        "total_word": 22
+    },
+    {
+        "book_set_id": 9,
+        "id": 399,
+        "name": "4章 副詞 ３課　まとめ て 覚え たい 副詞 ・ その他 の 副詞",
+        "total_word": 50
+    },
+    {
+        "book_set_id": 9,
+        "id": 400,
+        "name": "5章 オノマトペ",
+        "total_word": 46
+    },
+    {
+        "book_set_id": 9,
+        "id": 401,
+        "name": "6章 慣用表現 1課 体の言葉を使った慣用表現1.",
+        "total_word": 43
+    },
+    {
+        "book_set_id": 9,
+        "id": 402,
+        "name": "6章 慣用表現 1課 体の言葉を使った慣用表現２.その他の慣用表現",
+        "total_word": 42
+    },
+    {
+        "book_set_id": 9,
+        "id": 403,
+        "name": "7章 語形成 1課 二つの言葉をプラス",
+        "total_word": 8
+    },
+    {
+        "book_set_id": 9,
+        "id": 404,
+        "name": "7章 語形成 1課：複合動詞ー動詞の前に付くもの",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 9,
+        "id": 405,
+        "name": "7章 語形成 1課：その他ー後ろに付いて名詞になるもの",
+        "total_word": 11
+    },
+    {
+        "book_set_id": 9,
+        "id": 406,
+        "name": "7章 語形成2課 単語の前に漢字をプラス",
+        "total_word": 36
+    },
+    {
+        "book_set_id": 9,
+        "id": 407,
+        "name": "7章 語形成2課 形容詞の漢字",
+        "total_word": 34
+    },
+    {
+        "book_set_id": 9,
+        "id": 408,
+        "name": "7章 語形成2課 その他",
+        "total_word": 76
+    },
+    {
+        "book_set_id": 9,
+        "id": 409,
+        "name": "7章 語形成3課 単語 の 後ろ に 漢字 を プラス",
+        "total_word": 222
+    },
+    {
+        "book_set_id": 9,
+        "id": 410,
+        "name": "7章 語形成4課 形容詞から作る動詞と名詞",
+        "total_word": 45
+    },
+    {
+        "book_set_id": 10,
+        "id": 411,
+        "name": "Danh từ - Thông dụng 1 - Part 1",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 412,
+        "name": "Danh từ - Thông dụng 1 - Part 2",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 413,
+        "name": "Danh từ - Thông dụng 1 - Part 3",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 414,
+        "name": "Danh từ - Thông dụng 1 - Part 4",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 415,
+        "name": "Danh từ - Thông dụng 1 - Part 5",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 416,
+        "name": "Danh từ - Thông dụng 1 - Part 6",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 417,
+        "name": "Danh từ - Thông dụng 1 - Part 7",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 418,
+        "name": "Danh từ - Thông dụng 1 - Part 8",
+        "total_word": 27
+    },
+    {
+        "book_set_id": 10,
+        "id": 419,
+        "name": "Danh từ - Thông dụng 2 - Part 1",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 420,
+        "name": "Danh từ - Thông dụng 2 - Part 2",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 421,
+        "name": "Danh từ - Thông dụng 2 - Part 3",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 422,
+        "name": "Danh từ - Thông dụng 2 - Part 4",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 423,
+        "name": "Danh từ - Thông dụng 2 - Part 5",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 424,
+        "name": "Danh từ - Thông dụng 2 - Part 6",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 425,
+        "name": "Danh từ - Thông dụng 2 - Part 7",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 426,
+        "name": "Danh từ - Thông dụng 2 - Part 8",
+        "total_word": 25
+    },
+    {
+        "book_set_id": 10,
+        "id": 427,
+        "name": "Danh từ - Giao thông, sức khỏe - Part 1",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 428,
+        "name": "Danh từ - Giao thông, sức khỏe - Part 2",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 429,
+        "name": "Danh từ - Giao thông, sức khỏe - Part 3",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 430,
+        "name": "Danh từ - Giao thông, sức khỏe - Part 4",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 431,
+        "name": "Danh từ - Giao thông, sức khỏe - Part 5",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 432,
+        "name": "Danh từ - Giao thông, sức khỏe - Part 6",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 433,
+        "name": "Danh từ - Giao thông, sức khỏe - Part 7",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 434,
+        "name": "Danh từ - Giao thông, sức khỏe - Part 8",
+        "total_word": 19
+    },
+    {
+        "book_set_id": 10,
+        "id": 435,
+        "name": "Danh từ - Các mối quan hệ, Giáo dục - Part 1",
+        "total_word": 20
+    },
+    {
+        "book_set_id": 10,
+        "id": 436,
+        "name": "Danh từ - Các mối quan hệ, Giáo dục - Part 2",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 437,
+        "name": "Danh từ - Các mối quan hệ, Giáo dục - Part 3",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 438,
+        "name": "Danh từ - Các mối quan hệ, Giáo dục - Part 4",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 439,
+        "name": "Danh từ - Các mối quan hệ, Giáo dục - Part 5",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 440,
+        "name": "Danh từ - Các mối quan hệ, Giáo dục - Part 6",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 441,
+        "name": "Danh từ - Các mối quan hệ, Giáo dục - Part 7",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 442,
+        "name": "Danh từ - Các mối quan hệ, Giáo dục - Part 8",
+        "total_word": 28
+    },
+    {
+        "book_set_id": 10,
+        "id": 443,
+        "name": "Danh từ - Xã hội, Tự nhiên - Part 1",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 444,
+        "name": "Danh từ - Xã hội, Tự nhiên - Part 2",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 445,
+        "name": "Danh từ - Xã hội, Tự nhiên - Part 3",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 446,
+        "name": "Danh từ - Xã hội, Tự nhiên - Part 4",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 447,
+        "name": "Danh từ - Xã hội, Tự nhiên - Part 5",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 448,
+        "name": "Danh từ - Xã hội, Tự nhiên - Part 6",
+        "total_word": 22
+    },
+    {
+        "book_set_id": 10,
+        "id": 449,
+        "name": "Danh từ - Cuộc sống sinh hoạt - Part 1",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 450,
+        "name": "Danh từ - Cuộc sống sinh hoạt - Part 2",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 451,
+        "name": "Danh từ - Cuộc sống sinh hoạt - Part 3",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 452,
+        "name": "Danh từ - Cuộc sống sinh hoạt - Part 4",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 453,
+        "name": "Danh từ - Cuộc sống sinh hoạt - Part 5",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 454,
+        "name": "Danh từ - Cuộc sống sinh hoạt - Part 6",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 455,
+        "name": "Danh từ - Cuộc sống sinh hoạt - Part 7",
+        "total_word": 32
+    },
+    {
+        "book_set_id": 10,
+        "id": 456,
+        "name": "Động từ 1 - Part 1",
+        "total_word": 30
+    },
+    {
+        "book_set_id": 10,
+        "id": 457,
+        "name": "Động từ 1 - Part 2",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 458,
+        "name": "Động từ 1 - Part 3",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 459,
+        "name": "Động từ 1 - Part 4",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 460,
+        "name": "Động từ 1 - Part 5",
+        "total_word": 7
+    },
+    {
+        "book_set_id": 10,
+        "id": 461,
+        "name": "Động từ 2 - Part 1",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 462,
+        "name": "Động từ 2 - Part 2",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 463,
+        "name": "Động từ 2 - Part 3",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 464,
+        "name": "Động từ 2 - Part 4",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 465,
+        "name": "Tính từ đuôi い",
+        "total_word": 29
+    },
+    {
+        "book_set_id": 10,
+        "id": 466,
+        "name": "Tính từ đuôi な - Part 1",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 467,
+        "name": "Tính từ đuôi な - Part 2",
+        "total_word": 27
+    },
+    {
+        "book_set_id": 10,
+        "id": 468,
+        "name": "Phó từ - Part 1",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 469,
+        "name": "Phó từ - Part 2",
+        "total_word": 31
+    },
+    {
+        "book_set_id": 10,
+        "id": 470,
+        "name": "Phó từ - Part 3",
+        "total_word": 10
+    },
+    {
+        "book_set_id": 10,
+        "id": 471,
+        "name": "Liên từ",
+        "total_word": 19
+    },
+    {
+        "book_set_id": 10,
+        "id": 472,
+        "name": "Kính Ngữ",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 10,
+        "id": 473,
+        "name": "Chào hỏi",
+        "total_word": 25
+    },
+    {
+        "book_set_id": 11,
+        "id": 474,
+        "name": "Bài 1 - 人と人①　Người với người",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 11,
+        "id": 475,
+        "name": "Bài 2 - 趣味①　Sở thích",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 11,
+        "id": 476,
+        "name": "Bài 3 - 趣味②　Sở thích",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 11,
+        "id": 477,
+        "name": "Bài 4 - 生活①　Sinh hoạt",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 11,
+        "id": 478,
+        "name": "Bài 5 - 買い物①　Mua sắm",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 11,
+        "id": 479,
+        "name": "Bài 6 - 学校①　Trường học",
+        "total_word": 16
+    },
+    {
+        "book_set_id": 11,
+        "id": 480,
+        "name": "Bài 7 - 仕事①　Công việc",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 11,
+        "id": 481,
+        "name": "Bài 8 - 町①　Thành phố",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 11,
+        "id": 482,
+        "name": "Bài 9 - 人と人②　Người với người",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 11,
+        "id": 483,
+        "name": "Bài 10 - 趣味　Sở thích",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 11,
+        "id": 484,
+        "name": "Bài 11 - 趣味　Sở thích",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 11,
+        "id": 485,
+        "name": "Bài 12 - 生活②　Sinh hoạt",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 11,
+        "id": 486,
+        "name": "Bài 13 - 生活　Sinh hoạt",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 11,
+        "id": 487,
+        "name": "Bài 14 - 生活　Sinh hoạt",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 11,
+        "id": 488,
+        "name": "Bài 15 - 買い物②　Mua sắm",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 11,
+        "id": 489,
+        "name": "Bài 16 - 学校②　Trường học",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 11,
+        "id": 490,
+        "name": "Bài 17 - 学校　Trường học",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 11,
+        "id": 491,
+        "name": "Bài 18 - 町②　Thành phố",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 11,
+        "id": 492,
+        "name": "Bài 19 - 人と人　Người với người",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 11,
+        "id": 493,
+        "name": "Bài 20 - 趣味　Sở thích",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 11,
+        "id": 494,
+        "name": "Bài 21 - 生活　Sinh hoạt",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 11,
+        "id": 495,
+        "name": "Bài 22 - 生活　Sinh hoạt",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 11,
+        "id": 496,
+        "name": "Bài 23 - 生活　Sinh hoạt",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 11,
+        "id": 497,
+        "name": "Bài 24 - 買い物　Mua sắm",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 11,
+        "id": 498,
+        "name": "Bài 25 - 学校　Trường học",
+        "total_word": 16
+    },
+    {
+        "book_set_id": 11,
+        "id": 499,
+        "name": "Bài 26 - 仕事②　Công việc",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 11,
+        "id": 500,
+        "name": "Bài 27 - 町　Thành phố",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 11,
+        "id": 501,
+        "name": "Bài 28 - 人と人　Người với người",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 11,
+        "id": 502,
+        "name": "Bài 29 - 趣味　Sở thích",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 11,
+        "id": 503,
+        "name": "Bài 30 - 生活　Sinh hoạt",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 11,
+        "id": 504,
+        "name": "Bài 31 - 生活　Sinh hoạt",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 11,
+        "id": 505,
+        "name": "Bài 32 - 学校　Trường học",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 11,
+        "id": 506,
+        "name": "Bài 33 - 体①　Cơ thể",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 11,
+        "id": 507,
+        "name": "Bài 34 - 社会　Xã hội",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 11,
+        "id": 508,
+        "name": "Bài 35 - 時間　Thời gian",
+        "total_word": 10
+    },
+    {
+        "book_set_id": 11,
+        "id": 509,
+        "name": "Bài 36 - 人と人　Người với người",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 11,
+        "id": 510,
+        "name": "Bài 37 - 人と人　Người với người",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 11,
+        "id": 511,
+        "name": "Bài 38 - 趣味　Sở thích",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 11,
+        "id": 512,
+        "name": "Bài 39 - 趣味　Sở thích",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 11,
+        "id": 513,
+        "name": "Bài 40 - 生活　Sinh hoạt",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 11,
+        "id": 514,
+        "name": "Bài 41 - 生活　Sinh hoạt",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 11,
+        "id": 515,
+        "name": "Bài 42 - 生活　Sinh hoạt",
+        "total_word": 11
+    },
+    {
+        "book_set_id": 11,
+        "id": 516,
+        "name": "Bài 43 - 学校　Trường học",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 11,
+        "id": 517,
+        "name": "Bài 44 - 仕事　Công việc",
+        "total_word": 14
+    },
+    {
+        "book_set_id": 11,
+        "id": 518,
+        "name": "Bài 45 - 体②　Cơ thể",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 11,
+        "id": 519,
+        "name": "Bài 46 - 自然　Tự nhiên",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 11,
+        "id": 520,
+        "name": "Bài 47 - 敬語　Kính ngữ",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 11,
+        "id": 521,
+        "name": "Bài 48 - 副詞①　Phó từ",
+        "total_word": 8
+    },
+    {
+        "book_set_id": 11,
+        "id": 522,
+        "name": "Bài 49 - 副詞②　Phó từ",
+        "total_word": 8
+    },
+    {
+        "book_set_id": 11,
+        "id": 523,
+        "name": "Bài 50 - N3へのステップ　Tiếp bước lên N3",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 12,
+        "id": 524,
+        "name": "Section 1: です",
+        "total_word": 13
+    },
+    {
+        "book_set_id": 12,
+        "id": 525,
+        "name": "Section 2: おはよう",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 12,
+        "id": 526,
+        "name": "Section 3: かぞく",
+        "total_word": 23
+    },
+    {
+        "book_set_id": 12,
+        "id": 527,
+        "name": "Section 4: なんにんですか。",
+        "total_word": 20
+    },
+    {
+        "book_set_id": 12,
+        "id": 528,
+        "name": "Section 5: ~からきました",
+        "total_word": 36
+    },
+    {
+        "book_set_id": 12,
+        "id": 529,
+        "name": "Section 1: 学校",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 12,
+        "id": 530,
+        "name": "Section 2: かず",
+        "total_word": 27
+    },
+    {
+        "book_set_id": 12,
+        "id": 531,
+        "name": "Section 3: よう日",
+        "total_word": 20
+    },
+    {
+        "book_set_id": 12,
+        "id": 532,
+        "name": "Section 4: ことば",
+        "total_word": 19
+    },
+    {
+        "book_set_id": 12,
+        "id": 533,
+        "name": "Section 5: べんきょう",
+        "total_word": 25
+    },
+    {
+        "book_set_id": 12,
+        "id": 534,
+        "name": "Section 1: はたらく",
+        "total_word": 25
+    },
+    {
+        "book_set_id": 12,
+        "id": 535,
+        "name": "Section 2: しごと",
+        "total_word": 27
+    },
+    {
+        "book_set_id": 12,
+        "id": 536,
+        "name": "Section 3: これは何ですか",
+        "total_word": 34
+    },
+    {
+        "book_set_id": 12,
+        "id": 537,
+        "name": "Section 4: 何こありますか",
+        "total_word": 25
+    },
+    {
+        "book_set_id": 12,
+        "id": 538,
+        "name": "Section 5: 時間",
+        "total_word": 121
+    },
+    {
+        "book_set_id": 12,
+        "id": 539,
+        "name": "Section 1: どんな人",
+        "total_word": 22
+    },
+    {
+        "book_set_id": 12,
+        "id": 540,
+        "name": "Section 2: シャツをきています",
+        "total_word": 19
+    },
+    {
+        "book_set_id": 12,
+        "id": 541,
+        "name": "Section 3: スカートをはきま",
+        "total_word": 19
+    },
+    {
+        "book_set_id": 12,
+        "id": 542,
+        "name": "Section 4: あそぶ",
+        "total_word": 22
+    },
+    {
+        "book_set_id": 12,
+        "id": 543,
+        "name": "Section 5: 町",
+        "total_word": 28
+    },
+    {
+        "book_set_id": 12,
+        "id": 544,
+        "name": "Section 1: あさ・よる",
+        "total_word": 25
+    },
+    {
+        "book_set_id": 12,
+        "id": 545,
+        "name": "Section 2: 食べる・飲む",
+        "total_word": 41
+    },
+    {
+        "book_set_id": 12,
+        "id": 546,
+        "name": "Section 3: りょうり",
+        "total_word": 23
+    },
+    {
+        "book_set_id": 12,
+        "id": 547,
+        "name": "Section 4: レストラン",
+        "total_word": 25
+    },
+    {
+        "book_set_id": 12,
+        "id": 548,
+        "name": "Section 5: どうですか",
+        "total_word": 15
+    },
+    {
+        "book_set_id": 12,
+        "id": 549,
+        "name": "Section 1: しゅみ",
+        "total_word": 24
+    },
+    {
+        "book_set_id": 12,
+        "id": 550,
+        "name": "Section 2: おんがく",
+        "total_word": 23
+    },
+    {
+        "book_set_id": 12,
+        "id": 551,
+        "name": "Section 3: スポーツ",
+        "total_word": 22
+    },
+    {
+        "book_set_id": 12,
+        "id": 552,
+        "name": "Section 4: てんき",
+        "total_word": 20
+    },
+    {
+        "book_set_id": 12,
+        "id": 553,
+        "name": "Section 5: きせつ",
+        "total_word": 27
+    },
+    {
+        "book_set_id": 12,
+        "id": 554,
+        "name": "Section 1: 買い物",
+        "total_word": 41
+    },
+    {
+        "book_set_id": 12,
+        "id": 555,
+        "name": "Section 2: みせ",
+        "total_word": 20
+    },
+    {
+        "book_set_id": 12,
+        "id": 556,
+        "name": "Section 3: ATM",
+        "total_word": 16
+    },
+    {
+        "book_set_id": 12,
+        "id": 557,
+        "name": "Section 4: おくる",
+        "total_word": 18
+    },
+    {
+        "book_set_id": 12,
+        "id": 558,
+        "name": "Section 5: プレゼント",
+        "total_word": 62
+    },
+    {
+        "book_set_id": 12,
+        "id": 559,
+        "name": "Section 1: のりもの",
+        "total_word": 29
+    },
+    {
+        "book_set_id": 12,
+        "id": 560,
+        "name": "Section 2: どのくらい",
+        "total_word": 12
+    },
+    {
+        "book_set_id": 12,
+        "id": 561,
+        "name": "Section 3: みち",
+        "total_word": 23
+    },
+    {
+        "book_set_id": 12,
+        "id": 562,
+        "name": "Section 4: どこ",
+        "total_word": 21
+    },
+    {
+        "book_set_id": 12,
+        "id": 563,
+        "name": "Section 5: 出かける",
+        "total_word": 25
+    },
+    {
+        "book_set_id": 12,
+        "id": 564,
+        "name": "Section 1: いえ",
+        "total_word": 27
+    },
+    {
+        "book_set_id": 12,
+        "id": 565,
+        "name": "Section 2:  アパートの2かい",
+        "total_word": 20
+    },
+    {
+        "book_set_id": 12,
+        "id": 566,
+        "name": "Section 3: ひっこし",
+        "total_word": 20
+    },
+    {
+        "book_set_id": 12,
+        "id": 567,
+        "name": "Section 4: 先生のいえ",
+        "total_word": 35
+    },
+    {
+        "book_set_id": 12,
+        "id": 568,
+        "name": "Section 5: 電気",
+        "total_word": 18
+    },
+    {
+        "book_set_id": 12,
+        "id": 569,
+        "name": "Section 1: びょうき",
+        "total_word": 24
+    },
+    {
+        "book_set_id": 12,
+        "id": 570,
+        "name": "Section 2:  お元気ですか",
+        "total_word": 21
+    },
+    {
+        "book_set_id": 12,
+        "id": 571,
+        "name": "Section 3: たいせつなもの・こと",
+        "total_word": 16
+    },
+    {
+        "book_set_id": 12,
+        "id": 572,
+        "name": "Section 4: しょうらい",
+        "total_word": 16
+    },
+    {
+        "book_set_id": 12,
+        "id": 573,
+        "name": "Section 5: これもおぼえよう！",
+        "total_word": 29
+    }
+]

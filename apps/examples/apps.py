@@ -1,0 +1,7 @@
+from django.apps import AppConfig
+
+
+class ExamplesConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'apps.examples'
+    verbose_name = 'Examples'

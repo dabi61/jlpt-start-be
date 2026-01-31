@@ -1,0 +1,402 @@
+[
+    {
+        "id": 1,
+        "lesson_id": 1,
+        "sequences": 48.0,
+        "total": 28,
+        "unit_name": "48. 休ませて　いただけませんか。",
+        "unit_type": "word"
+    },
+    {
+        "id": 2,
+        "lesson_id": 1,
+        "sequences": 2.0,
+        "total": 46,
+        "unit_name": "2. ほんのきもちです",
+        "unit_type": "word"
+    },
+    {
+        "id": 3,
+        "lesson_id": 1,
+        "sequences": 5.0,
+        "total": 55,
+        "unit_name": "5. 甲子園へいきますか",
+        "unit_type": "word"
+    },
+    {
+        "id": 4,
+        "lesson_id": 1,
+        "sequences": 33.0,
+        "total": 48,
+        "unit_name": "33. これは　どういう　意味ですか。",
+        "unit_type": "word"
+    },
+    {
+        "id": 5,
+        "lesson_id": 1,
+        "sequences": 45.0,
+        "total": 31,
+        "unit_name": "45. いっしょうけんめい　練習したのに",
+        "unit_type": "word"
+    },
+    {
+        "id": 6,
+        "lesson_id": 1,
+        "sequences": 30.0,
+        "total": 51,
+        "unit_name": "30. チケットを　予約して　おきます。",
+        "unit_type": "word"
+    },
+    {
+        "id": 7,
+        "lesson_id": 1,
+        "sequences": 7.0,
+        "total": 44,
+        "unit_name": "7. ごめんください",
+        "unit_type": "word"
+    },
+    {
+        "id": 8,
+        "lesson_id": 1,
+        "sequences": 13.0,
+        "total": 38,
+        "unit_name": "13. べつべつにお願いします",
+        "unit_type": "word"
+    },
+    {
+        "id": 9,
+        "lesson_id": 1,
+        "sequences": 19.0,
+        "total": 28,
+        "unit_name": "19. ダイエットは明日からします",
+        "unit_type": "word"
+    },
+    {
+        "id": 10,
+        "lesson_id": 1,
+        "sequences": 8.0,
+        "total": 57,
+        "unit_name": "8. そろそろしつれいします",
+        "unit_type": "word"
+    },
+    {
+        "id": 11,
+        "lesson_id": 1,
+        "sequences": 1.0,
+        "total": 60,
+        "unit_name": "1. はじめまして",
+        "unit_type": "word"
+    },
+    {
+        "id": 12,
+        "lesson_id": 1,
+        "sequences": 20.0,
+        "total": 28,
+        "unit_name": "20. 夏安みはどうするの",
+        "unit_type": "word"
+    },
+    {
+        "id": 13,
+        "lesson_id": 1,
+        "sequences": 44.0,
+        "total": 38,
+        "unit_name": "44. この　写真みたいに　して　ください。",
+        "unit_type": "word"
+    },
+    {
+        "id": 14,
+        "lesson_id": 1,
+        "sequences": 22.0,
+        "total": 22,
+        "unit_name": "22. どんな　アパトーが　いいですか。",
+        "unit_type": "word"
+    },
+    {
+        "id": 15,
+        "lesson_id": 1,
+        "sequences": 26.0,
+        "total": 47,
+        "unit_name": "26. どこに　ごみを出したら　いいですか。",
+        "unit_type": "word"
+    },
+    {
+        "id": 16,
+        "lesson_id": 1,
+        "sequences": 42.0,
+        "total": 43,
+        "unit_name": "42. ボーナスは　何に　使いますか。",
+        "unit_type": "word"
+    },
+    {
+        "id": 17,
+        "lesson_id": 1,
+        "sequences": 9.0,
+        "total": 48,
+        "unit_name": "9. ざんねんです",
+        "unit_type": "word"
+    },
+    {
+        "id": 18,
+        "lesson_id": 1,
+        "sequences": 24.0,
+        "total": 17,
+        "unit_name": "24. 手伝って　くれますか。",
+        "unit_type": "word"
+    },
+    {
+        "id": 19,
+        "lesson_id": 1,
+        "sequences": 41.0,
+        "total": 49,
+        "unit_name": "41. にもつを　あずかって　いただけませんか",
+        "unit_type": "word"
+    },
+    {
+        "id": 20,
+        "lesson_id": 1,
+        "sequences": 31.0,
+        "total": 40,
+        "unit_name": "31. インタネットを　始めようと　思っています。",
+        "unit_type": "word"
+    },
+    {
+        "id": 21,
+        "lesson_id": 1,
+        "sequences": 36.0,
+        "total": 44,
+        "unit_name": "36. あたまと　からだを　使うように　して　います。",
+        "unit_type": "word"
+    },
+    {
+        "id": 22,
+        "lesson_id": 1,
+        "sequences": 50.0,
+        "total": 40,
+        "unit_name": "50. 心から　かんしゃいたします。",
+        "unit_type": "word"
+    },
+    {
+        "id": 23,
+        "lesson_id": 1,
+        "sequences": 40.0,
+        "total": 56,
+        "unit_name": "40. ともだちが　できたかどうか　心配です。",
+        "unit_type": "word"
+    },
+    {
+        "id": 24,
+        "lesson_id": 1,
+        "sequences": 12.0,
+        "total": 45,
+        "unit_name": "12. お祭りはどうでしたか",
+        "unit_type": "word"
+    },
+    {
+        "id": 25,
+        "lesson_id": 1,
+        "sequences": 23.0,
+        "total": 30,
+        "unit_name": "23. どうやって　行きますか。",
+        "unit_type": "word"
+    },
+    {
+        "id": 26,
+        "lesson_id": 1,
+        "sequences": 35.0,
+        "total": 47,
+        "unit_name": "35. 旅行者へ　行けば　わかります。",
+        "unit_type": "word"
+    },
+    {
+        "id": 27,
+        "lesson_id": 1,
+        "sequences": 15.0,
+        "total": 28,
+        "unit_name": "15. ご家族は？",
+        "unit_type": "word"
+    },
+    {
+        "id": 28,
+        "lesson_id": 1,
+        "sequences": 10.0,
+        "total": 45,
+        "unit_name": "10. チリソースはありませんか",
+        "unit_type": "word"
+    },
+    {
+        "id": 29,
+        "lesson_id": 1,
+        "sequences": 47.0,
+        "total": 27,
+        "unit_name": "47. こんやくしたそうです。",
+        "unit_type": "word"
+    },
+    {
+        "id": 30,
+        "lesson_id": 1,
+        "sequences": 16.0,
+        "total": 46,
+        "unit_name": "16. 使い方を教えてください",
+        "unit_type": "word"
+    },
+    {
+        "id": 31,
+        "lesson_id": 1,
+        "sequences": 29.0,
+        "total": 44,
+        "unit_name": "29. 忘れ物を　して　しまったんです。",
+        "unit_type": "word"
+    },
+    {
+        "id": 32,
+        "lesson_id": 1,
+        "sequences": 39.0,
+        "total": 42,
+        "unit_name": "39. 遅れて、　すみません。",
+        "unit_type": "word"
+    },
+    {
+        "id": 33,
+        "lesson_id": 1,
+        "sequences": 6.0,
+        "total": 54,
+        "unit_name": "6. いっしょうにいきませんか",
+        "unit_type": "word"
+    },
+    {
+        "id": 34,
+        "lesson_id": 1,
+        "sequences": 28.0,
+        "total": 44,
+        "unit_name": "28. お茶でも　飲みながら。。。",
+        "unit_type": "word"
+    },
+    {
+        "id": 35,
+        "lesson_id": 1,
+        "sequences": 4.0,
+        "total": 58,
+        "unit_name": "4. そちらは何時から何時までですか",
+        "unit_type": "word"
+    },
+    {
+        "id": 36,
+        "lesson_id": 1,
+        "sequences": 34.0,
+        "total": 51,
+        "unit_name": "34. する　とおりに して　ください。",
+        "unit_type": "word"
+    },
+    {
+        "id": 37,
+        "lesson_id": 1,
+        "sequences": 46.0,
+        "total": 29,
+        "unit_name": "46. もうすぐ　着く　はずです。",
+        "unit_type": "word"
+    },
+    {
+        "id": 38,
+        "lesson_id": 1,
+        "sequences": 27.0,
+        "total": 53,
+        "unit_name": "27. 何でも　作れるんですね。",
+        "unit_type": "word"
+    },
+    {
+        "id": 39,
+        "lesson_id": 1,
+        "sequences": 49.0,
+        "total": 41,
+        "unit_name": "49. よろしく　お伝え　ください。",
+        "unit_type": "word"
+    },
+    {
+        "id": 40,
+        "lesson_id": 1,
+        "sequences": 37.0,
+        "total": 46,
+        "unit_name": "37. 海を　埋め立てて　造られました。",
+        "unit_type": "word"
+    },
+    {
+        "id": 41,
+        "lesson_id": 1,
+        "sequences": 43.0,
+        "total": 29,
+        "unit_name": "43. やきしそうですね。",
+        "unit_type": "word"
+    },
+    {
+        "id": 42,
+        "lesson_id": 1,
+        "sequences": 14.0,
+        "total": 38,
+        "unit_name": "14. うめだまで行ってください",
+        "unit_type": "word"
+    },
+    {
+        "id": 43,
+        "lesson_id": 1,
+        "sequences": 32.0,
+        "total": 53,
+        "unit_name": "32. 病気かも　しれません。",
+        "unit_type": "word"
+    },
+    {
+        "id": 44,
+        "lesson_id": 1,
+        "sequences": 25.0,
+        "total": 15,
+        "unit_name": "25. いろいろ　お世話に　なりました",
+        "unit_type": "word"
+    },
+    {
+        "id": 45,
+        "lesson_id": 1,
+        "sequences": 17.0,
+        "total": 30,
+        "unit_name": "17. どうしましたか",
+        "unit_type": "word"
+    },
+    {
+        "id": 46,
+        "lesson_id": 1,
+        "sequences": 38.0,
+        "total": 41,
+        "unit_name": "38. 片づけるのが　すきなんです。",
+        "unit_type": "word"
+    },
+    {
+        "id": 47,
+        "lesson_id": 1,
+        "sequences": 18.0,
+        "total": 29,
+        "unit_name": "18. しゅみは何ですか",
+        "unit_type": "word"
+    },
+    {
+        "id": 48,
+        "lesson_id": 1,
+        "sequences": 3.0,
+        "total": 42,
+        "unit_name": "3. これをください",
+        "unit_type": "word"
+    },
+    {
+        "id": 49,
+        "lesson_id": 1,
+        "sequences": 21.0,
+        "total": 35,
+        "unit_name": "21. わたしもそう思います",
+        "unit_type": "word"
+    },
+    {
+        "id": 50,
+        "lesson_id": 1,
+        "sequences": 11.0,
+        "total": 52,
+        "unit_name": "11. これおねがいします",
+        "unit_type": "word"
+    }
+]

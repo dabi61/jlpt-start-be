@@ -11,6 +11,10 @@ PROJECT_DIR="/root/startjlpt"
 BACKUP_FILE="deploy_full_backup.sql"
 COMPOSE_FILE="docker-compose.prod.yml"
 
+# DB Config
+DB_USER="nihongo_user"
+DB_NAME="nihongo_db"
+
 # Colors
 GREEN='\033[0;32m'
 RED='\033[0;31m'
@@ -41,7 +45,7 @@ echo -e "${GREEN}✅ Code pushed successfully.${NC}"
 echo -e "\n${YELLOW}[2/4] Creating Local Database Dump...${NC}"
 # --clean: Include DROP commands
 # --if-exists: Use IF EXISTS for DROP
-docker compose exec -T db pg_dump -U postgres postgres --clean --if-exists > $BACKUP_FILE
+docker compose exec -T db pg_dump -U $DB_USER $DB_NAME --clean --if-exists > $BACKUP_FILE
 if [ $? -ne 0 ]; then
     echo -e "${RED}❌ Database backup failed. Is Docker running?${NC}"
     rm $BACKUP_FILE 2>/dev/null
@@ -76,7 +80,7 @@ ssh $VPS_USER@$VPS_IP << EOF
     sleep 10
 
     echo "   🔹 Restoring Database from backup..."
-    cat $BACKUP_FILE | docker compose -f $COMPOSE_FILE exec -T db psql -U postgres postgres > /dev/null
+    cat $BACKUP_FILE | docker compose -f $COMPOSE_FILE exec -T db psql -U $DB_USER $DB_NAME > /dev/null
 
     echo "   🔹 Cleaning up..."
     rm $BACKUP_FILE

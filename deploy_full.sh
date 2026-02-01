@@ -82,6 +82,8 @@ ssh -p $VPS_PORT $VPS_USER@$VPS_IP << EOF
     cd $PROJECT_DIR
 
     echo "   🔹 Pulling latest code..."
+    git reset --hard HEAD
+    git clean -fd
     git pull origin main
 
     echo "   🔹 Rebuilding Docker containers..."

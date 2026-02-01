@@ -11,24 +11,28 @@ echo "🔧 Fixing Server Git State..."
 ssh -p $VPS_PORT $VPS_USER@$VPS_IP << EOF
     cd $PROJECT_DIR
 
-    echo "1. Checking out main branch..."
-    git checkout main || git checkout -b main
+    echo "1. Backing up SSL Certificates..."
+    mkdir -p /tmp/certbot_backup
+    cp -r data/certbot/* /tmp/certbot_backup/ 2>/dev/null || true
 
-    echo "2. Deleting weird branches if any..."
-    git branch -D prod_data_backup.dump 2>/dev/null || true
-
-    echo "3. Removing blocking files..."
-    rm -f prod_data_backup.dump
-    rm -f *.dump
-    rm -f *.sql
-
-    echo "4. Force reseting git..."
+    echo "2. Hard Resetting Git (Discarding local commits)..."
     git fetch origin
     git reset --hard origin/main
+
+    echo "3. Cleaning untracked files..."
     git clean -fd
 
-    echo "5. Pulling latest code..."
+    echo "4. Pulling latest code..."
     git pull origin main
 
-    echo "✅ Server Git is now CLEAN and UP-TO-DATE!"
+    echo "5. Restoring SSL Certificates..."
+    mkdir -p data/certbot
+    cp -r /tmp/certbot_backup/* data/certbot/
+    rm -rf /tmp/certbot_backup
+
+    echo "6. Restarting containers..."
+    docker compose -f docker-compose.prod.yml down
+    docker compose -f docker-compose.prod.yml up -d --build
+
+    echo "✅ Server Recovered & Updated!"
 EOF

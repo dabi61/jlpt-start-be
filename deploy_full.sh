@@ -6,7 +6,8 @@
 
 # Configuration
 VPS_USER="root"
-VPS_IP="103.101.161.229"
+VPS_IP="103.152.164.250"
+VPS_PORT="22" # <--- Change this if using a custom port (e.g. 2222)
 PROJECT_DIR="/root/startjlpt"
 BACKUP_FILE="deploy_full_backup.sql"
 COMPOSE_FILE="docker-compose.prod.yml"
@@ -55,7 +56,7 @@ echo -e "${GREEN}✅ Database dump created: $BACKUP_FILE${NC}"
 
 # 3. Upload to VPS
 echo -e "\n${YELLOW}[3/4] Uploading Backup to VPS...${NC}"
-scp $BACKUP_FILE $VPS_USER@$VPS_IP:$PROJECT_DIR/$BACKUP_FILE
+scp -P $VPS_PORT $BACKUP_FILE $VPS_USER@$VPS_IP:$PROJECT_DIR/$BACKUP_FILE
 if [ $? -ne 0 ]; then
     echo -e "${RED}❌ SCP failed. Check your SSH connection.${NC}"
     rm $BACKUP_FILE
@@ -65,7 +66,7 @@ echo -e "${GREEN}✅ Upload successful.${NC}"
 
 # 4. Remote Execution
 echo -e "\n${YELLOW}[4/4] Executing Remote Deployment...${NC}"
-ssh $VPS_USER@$VPS_IP << EOF
+ssh -p $VPS_PORT $VPS_USER@$VPS_IP << EOF
     set -e # Stop on error
     cd $PROJECT_DIR
 

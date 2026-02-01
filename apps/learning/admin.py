@@ -10,9 +10,6 @@ from .models import (
     UnitGrammarDetail,
     UnitKanjiDetail,
     UserUnitProgress,
-    BookSet,
-    BookSetUnit,
-    BookSetUnitDetail,
 )
 
 
@@ -60,25 +57,4 @@ class UserUnitProgressAdmin(admin.ModelAdmin):
     ordering = ['id']
 
 
-@admin.register(BookSet)
-class BookSetAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'level', 'total_word', 'version', 'created_at']
-    search_fields = ['name', 'level']
-    list_filter = ['level', 'name']
-    ordering = ['id']
 
-
-@admin.register(BookSetUnit)
-class BookSetUnitAdmin(admin.ModelAdmin):
-    list_display = ['id', 'book_set_id', 'name', 'total_word', 'created_at']
-    search_fields = ['name', 'book_set_id']
-    list_filter = ['book_set_id']
-    ordering = ['id']
-
-
-@admin.register(BookSetUnitDetail)
-class BookSetUnitDetailAdmin(admin.ModelAdmin):
-    list_display = ['id', 'unit_id', 'word_id', 'sub_word', 'created_at']
-    search_fields = ['unit_id', 'word_id']
-    list_filter = ['unit_id']
-    ordering = ['id']

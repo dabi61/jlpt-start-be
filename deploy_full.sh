@@ -8,7 +8,7 @@
 VPS_USER="root"
 VPS_IP="103.152.164.250"
 VPS_PORT="22" # <--- Change this if using a custom port (e.g. 2222)
-PROJECT_DIR="/root/startjlpt"
+PROJECT_DIR="/root/jlpt_start"
 BACKUP_FILE="deploy_full_backup.sql"
 COMPOSE_FILE="docker-compose.prod.yml"
 
@@ -53,6 +53,17 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 echo -e "${GREEN}✅ Database dump created: $BACKUP_FILE${NC}"
+
+# 2.5 Setup Remote Directory (If not exists)
+echo -e "\n${YELLOW}[2.5/4] Checking Remote Environment...${NC}"
+ssh -p $VPS_PORT $VPS_USER@$VPS_IP << EOF
+    if [ ! -d "$PROJECT_DIR" ]; then
+        echo "⚠️  Project directory not found. Cloning from Git..."
+        git clone https://github.com/dabi61/jlpt-start-be.git $PROJECT_DIR
+    else
+        echo "✅ Project directory exists."
+    fi
+EOF
 
 # 3. Upload to VPS
 echo -e "\n${YELLOW}[3/4] Uploading Backup to VPS...${NC}"

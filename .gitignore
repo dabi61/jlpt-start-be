@@ -39,3 +39,4 @@ celerybeat.pid
 htmlcov/
 *.dump
 *.sql
+data/certbot/

@@ -4,7 +4,7 @@ Views for Learning app.
 from rest_framework import viewsets, filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiParameter
 
 from .models import (
@@ -43,7 +43,7 @@ class LessonViewSet(viewsets.ModelViewSet):
     """ViewSet for Lesson model."""
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['lession_name']
     ordering_fields = ['id', 'lession_name', 'created_at']
@@ -106,7 +106,7 @@ class UnitViewSet(viewsets.ModelViewSet):
     """ViewSet for Unit model."""
     queryset = Unit.objects.all()
     serializer_class = UnitSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['unit_name', 'lession_id', 'unit_type']
     ordering_fields = ['id', 'unit_name', 'lession_id', 'created_at']
@@ -134,13 +134,13 @@ class UnitViewSet(viewsets.ModelViewSet):
         unit = self.get_object()
         items = []
 
-        if unit.unit_type == 'vocabulary':
+        if unit.unit_type in ('vocabulary', 'word'):
             # Get word IDs from junction table
             word_ids = list(UnitWordDetail.objects.filter(
                 unit_id=str(unit.id)
             ).values_list('word_id', flat=True))
             # Convert to integers and fetch words
-            int_ids = [int(w) for w in word_ids if w and w.isdigit()]
+            int_ids = [int(w) for w in word_ids if w and str(w).isdigit()]
             words = Word.objects.filter(id__in=int_ids).order_by('id')
             items = WordSerializer(words, many=True).data
 
@@ -185,7 +185,7 @@ class UserUnitProgressViewSet(viewsets.ModelViewSet):
     """ViewSet for UserUnitProgress model."""
     queryset = UserUnitProgress.objects.all()
     serializer_class = UserUnitProgressSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
     filter_backends = [filters.OrderingFilter]
     ordering_fields = ['id', 'unit_id', 'lession_id', 'user_id', 'progress']
     ordering = ['id']

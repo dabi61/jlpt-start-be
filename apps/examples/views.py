@@ -2,7 +2,7 @@
 Views for Examples app.
 """
 from rest_framework import viewsets, filters
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Example
 from .serializers import ExampleSerializer
@@ -14,7 +14,7 @@ class ExampleViewSet(viewsets.ModelViewSet):
     """
     queryset = Example.objects.all()
     serializer_class = ExampleSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['content', 'mean', 'trans']
     ordering_fields = ['created_at']

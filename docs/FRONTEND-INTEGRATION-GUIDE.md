@@ -32,16 +32,24 @@
 
 ### Response Format
 
-Tất cả response trả về dạng JSON:
+Tất cả app APIs đều trả về dạng chuẩn:
 
 ```json
 {
-  "id": 1,
-  "field_name": "value",
-  "created_at": "2024-01-01T00:00:00Z",
-  "updated_at": "2024-01-01T00:00:00Z"
+  "meta": {
+    "code": 200,
+    "type": "SUCCESS",
+    "message": "Request successful."
+  },
+  "data": {}
 }
 ```
+
+Giá trị của `meta.type`:
+- `SUCCESS`: status code < 400
+- `ERROR`: status code >= 400
+
+Lưu ý: để tài liệu gọn, nhiều ví dụ ở các section sau có thể chỉ mô tả phần payload bên trong `data`.
 
 ### Timestamps
 
@@ -82,8 +90,14 @@ Authorization: Bearer <access_token>
 **Response (201 Created):**
 ```json
 {
-  "email": "user@example.com",
-  "message": "Please verify your email with the OTP sent."
+  "meta": {
+    "code": 201,
+    "type": "SUCCESS",
+    "message": "Verification Code has been sent to your email."
+  },
+  "data": {
+    "email": "user@example.com"
+  }
 }
 ```
 
@@ -106,14 +120,24 @@ Authorization: Bearer <access_token>
 **Response (200 OK):**
 ```json
 {
-  "message": "Account verified successfully. You can now login."
+  "meta": {
+    "code": 200,
+    "type": "SUCCESS",
+    "message": "Account verified successfully"
+  },
+  "data": {}
 }
 ```
 
 **Error (400 Bad Request):**
 ```json
 {
-  "error": "Invalid or expired OTP"
+  "meta": {
+    "code": 400,
+    "type": "ERROR",
+    "message": "Invalid or expired OTP"
+  },
+  "data": {}
 }
 ```
 
@@ -143,22 +167,29 @@ Authorization: Bearer <access_token>
 **Response (200 OK):**
 ```json
 {
-  "access": {
-    "token": "eyJ0eXAiOiJKV1QiLC...",
-    "expires_at": "2024-01-01T01:00:00Z"
+  "meta": {
+    "code": 200,
+    "type": "SUCCESS",
+    "message": "Request successful."
   },
-  "refresh": {
-    "token": "eyJ0eXAiOiJKV1QiLC...",
-    "expires_at": "2024-01-08T00:00:00Z"
-  },
-  "user": {
-    "id": 1,
-    "email": "user@example.com",
-    "display_name": "Nguyen Van A",
-    "avatar": null,
-    "role": "USER",
-    "level": "N5",
-    "streak": 0
+  "data": {
+    "access": {
+      "token": "eyJ0eXAiOiJKV1QiLC...",
+      "expires_at": "2024-01-01T01:00:00Z"
+    },
+    "refresh": {
+      "token": "eyJ0eXAiOiJKV1QiLC...",
+      "expires_at": "2024-01-08T00:00:00Z"
+    },
+    "user": {
+      "id": 1,
+      "email": "user@example.com",
+      "display_name": "Nguyen Van A",
+      "avatar": null,
+      "role": "USER",
+      "level": "N5",
+      "streak": 0
+    }
   }
 }
 ```
@@ -179,13 +210,20 @@ Authorization: Bearer <access_token>
 **Response (200 OK):**
 ```json
 {
-  "access": {
-    "token": "eyJ0eXAiOiJKV1QiLC...",
-    "expires_at": "2024-01-01T02:00:00Z"
+  "meta": {
+    "code": 200,
+    "type": "SUCCESS",
+    "message": "Request successful."
   },
-  "refresh": {
-    "token": "eyJ0eXAiOiJKV1QiLC...",
-    "expires_at": "2024-01-08T01:00:00Z"
+  "data": {
+    "access": {
+      "token": "eyJ0eXAiOiJKV1QiLC...",
+      "expires_at": "2024-01-01T02:00:00Z"
+    },
+    "refresh": {
+      "token": "eyJ0eXAiOiJKV1QiLC...",
+      "expires_at": "2024-01-08T01:00:00Z"
+    }
   }
 }
 ```
@@ -201,7 +239,12 @@ Authorization: Bearer <access_token>
 **Response (200):**
 ```json
 {
-  "detail": "Successfully logged out."
+  "meta": {
+    "code": 200,
+    "type": "SUCCESS",
+    "message": "Successfully logged out."
+  },
+  "data": {}
 }
 ```
 
@@ -283,7 +326,106 @@ Cập nhật thông tin user.
 
 ---
 
-### 3.3. Learning Module
+### 3.3. Vocabulary
+
+#### GET `/api/vocabulary/`
+
+List từ vựng.
+
+**Query Params:**
+- `?level=N5` - Filter theo JLPT level
+- `?search=食べる` - Tìm kiếm
+- `?ordering=j_word` - Sắp xếp
+
+---
+
+#### GET `/api/vocabulary/{id}/`
+
+Chi tiết 1 từ.
+
+---
+
+#### GET `/api/vocabulary/by_level/?level=N5`
+
+Lấy từ vựng theo level.
+
+---
+
+### 3.4. Kanji
+
+#### GET `/api/kanjis/`
+
+List kanji.
+
+**Query Params:**
+- `?level=N5`
+- `?search=日`
+- `?ordering=stroke_count`
+
+---
+
+#### GET `/api/kanjis/{id}/`
+
+Chi tiết kanji.
+
+---
+
+#### GET `/api/kanjis/by_level/?level=N5`
+
+Lấy kanji theo level.
+
+---
+
+### 3.5. Grammar
+
+#### GET `/api/grammar/`
+
+List ngữ pháp.
+
+**Query Params:**
+- `?level=N5`
+- `?search=は`
+- `?ordering=title`
+
+---
+
+#### GET `/api/grammar/{id}/`
+
+Chi tiết ngữ pháp.
+
+---
+
+#### GET `/api/grammar/by_level/?level=N5`
+
+Lấy ngữ pháp theo level.
+
+---
+
+### 3.6. Examples
+
+#### GET `/api/examples/`
+
+List ví dụ.
+
+#### GET `/api/examples/{id}/`
+
+Chi tiết ví dụ.
+
+**Response:**
+```json
+{
+  "id": 18909,
+  "content": "私あてに電話してください。",
+  "mean": "Làm ơn gọi điện cho tôi.",
+  "trans": "わたしあてにでんわしてください。",
+  "created_at": "2024-01-01T00:00:00Z",
+  "updated_at": "2024-01-01T00:00:00Z"
+}
+```
+
+---
+
+### 3.7. Learning Module
 
 #### GET `/api/learning/lessons/`
 
@@ -320,7 +462,7 @@ Chi tiết 1 lesson.
 Lấy tất cả units của 1 lesson.
 
 **Query Params:**
-- `?unit_type=word` - Filter theo loại (word, grammar, kanji)
+- `?unit_type=vocabulary` - Filter theo loại (vocabulary, grammar, kanji)
 
 **Response:**
 ```json
@@ -342,7 +484,7 @@ Lấy tất cả units của 1 lesson.
       "unit_name": "1. はじめまして",
       "lession_id": "1",
       "total": "60",
-      "unit_type": "word",
+      "unit_type": "vocabulary",
       "level": null
     }
   ]
@@ -357,7 +499,7 @@ List tất cả units.
 
 **Query Params:**
 - `?lession_id=1` - Filter theo lesson
-- `?unit_type=word` - Filter theo loại
+- `?unit_type=vocabulary` - Filter theo loại
 - `?level=N5` - Filter theo level
 
 ---
@@ -366,7 +508,7 @@ List tất cả units.
 
 ⭐ **API quan trọng nhất** - Lấy chi tiết unit với đầy đủ nội dung.
 
-**Response (unit_type="word"):**
+**Response (unit_type="vocabulary"):**
 ```json
 {
   "unit": {
@@ -374,7 +516,7 @@ List tất cả units.
     "unit_name": "1. はじめまして",
     "lession_id": "1",
     "total": "60",
-    "unit_type": "word",
+    "unit_type": "vocabulary",
     "level": null
   },
   "items": [
@@ -492,102 +634,95 @@ Tạo/cập nhật progress.
 
 ---
 
-### 3.4. Vocabulary
+#### Anki Learning Theo Unit
 
-#### GET `/api/vocabulary/`
+Các API này dùng scheduler kiểu Anki (SM-2 style): `again`, `hard`, `good`, `easy`.
+Chi tiết đầy đủ thuật toán và state machine: `docs/api/anki-unit-learning.md`.
 
-List từ vựng.
+##### GET `/api/learning/units/{id}/anki/next/`
 
-**Query Params:**
-- `?level=N5` - Filter theo JLPT level
-- `?search=食べる` - Tìm kiếm
-- `?ordering=j_word` - Sắp xếp
-
----
-
-#### GET `/api/vocabulary/{id}/`
-
-Chi tiết 1 từ.
-
----
-
-#### GET `/api/vocabulary/by_level/?level=N5`
-
-Lấy từ vựng theo level.
-
----
-
-### 3.5. Grammar
-
-#### GET `/api/grammar/`
-
-List ngữ pháp.
+Lấy card tiếp theo cần học trong unit cho user hiện tại.
 
 **Query Params:**
-- `?level=N5`
-- `?search=は`
-- `?ordering=title`
-
----
-
-#### GET `/api/grammar/{id}/`
-
-Chi tiết ngữ pháp.
-
----
-
-#### GET `/api/grammar/by_level/?level=N5`
-
-Lấy ngữ pháp theo level.
-
----
-
-### 3.6. Kanji
-
-#### GET `/api/kanjis/`
-
-List kanji.
-
-**Query Params:**
-- `?level=N5`
-- `?search=日`
-- `?ordering=stroke_count`
-
----
-
-#### GET `/api/kanjis/{id}/`
-
-Chi tiết kanji.
-
----
-
-#### GET `/api/kanjis/by_level/?level=N5`
-
-Lấy kanji theo level.
-
----
-
-### 3.7. Examples
-
-#### GET `/api/examples/`
-
-List ví dụ.
-
-#### GET `/api/examples/{id}/`
-
-Chi tiết ví dụ.
+- `?include_future=true` - nếu không có card đến hạn thì trả card gần nhất trong tương lai.
 
 **Response:**
 ```json
 {
-  "id": 18909,
-  "content": "私あてに電話してください。",
-  "mean": "Làm ơn gọi điện cho tôi.",
-  "trans": "わたしあてにでんわしてください。",
-  "created_at": "2024-01-01T00:00:00Z",
-  "updated_at": "2024-01-01T00:00:00Z"
+  "unit": {
+    "id": 1,
+    "unit_name": "Unit 1",
+    "unit_type": "vocabulary"
+  },
+  "sync": {
+    "total_items": 50,
+    "created_cards": 50
+  },
+  "card": {
+    "card_id": 1201,
+    "unit_id": "1",
+    "item_type": "vocabulary",
+    "item_id": "11192",
+    "state": "new",
+    "step_index": 0,
+    "interval_days": 0,
+    "ease_factor": 2.5,
+    "reps": 0,
+    "lapses": 0,
+    "due_at": "2026-02-11T16:40:00Z",
+    "last_reviewed_at": null,
+    "content": { "...": "word/grammar/kanji payload" }
+  },
+  "card_is_due": true,
+  "stats": {
+    "total_cards": 50,
+    "due_now": 50,
+    "new_cards": 50,
+    "learning_cards": 0,
+    "relearning_cards": 0,
+    "review_cards": 0,
+    "next_due_at": null
+  }
 }
 ```
+
+##### POST `/api/learning/units/{id}/anki/review/`
+
+Gửi kết quả trả lời cho 1 card.
+
+**Request:**
+```json
+{
+  "card_id": 1201,
+  "rating": "good",
+  "response_time_ms": 2400
+}
+```
+
+`rating` chỉ nhận: `again`, `hard`, `good`, `easy`.
+
+**Response:**
+```json
+{
+  "unit": { "...": "unit payload" },
+  "reviewed_card": { "...": "updated card state" },
+  "next_card": { "...": "next card payload" },
+  "next_card_is_due": true,
+  "stats": {
+    "total_cards": 50,
+    "due_now": 49,
+    "new_cards": 49,
+    "learning_cards": 1,
+    "relearning_cards": 0,
+    "review_cards": 0,
+    "next_due_at": "2026-02-11T16:41:00Z"
+  }
+}
+```
+
+##### GET `/api/learning/units/{id}/anki/stats/`
+
+Lấy thống kê hàng đợi học Anki của unit.
 
 ---
 
@@ -630,7 +765,7 @@ Chi tiết ví dụ.
 
 | Type | Description |
 |------|-------------|
-| `word` | Vocabulary unit |
+| `vocabulary` | Vocabulary unit |
 | `grammar` | Grammar unit |
 | `kanji` | Kanji unit |
 
@@ -719,16 +854,12 @@ Chi tiết ví dụ.
 
 ```json
 {
-  "detail": "Authentication credentials were not provided."
-}
-```
-
-hoặc (validation errors):
-
-```json
-{
-  "email": ["This field is required."],
-  "password": ["Password too short."]
+  "meta": {
+    "code": 401,
+    "type": "ERROR",
+    "message": "Missing or invalid authorization header."
+  },
+  "data": {}
 }
 ```
 
@@ -738,15 +869,12 @@ Khi token hết hạn, response:
 
 ```json
 {
-  "detail": "Given token not valid for any token type",
-  "code": "token_not_valid",
-  "messages": [
-    {
-      "token_class": "AccessToken",
-      "token_type": "access",
-      "message": "Token is invalid or expired"
-    }
-  ]
+  "meta": {
+    "code": 401,
+    "type": "ERROR",
+    "message": "Token is invalid"
+  },
+  "data": {}
 }
 ```
 
@@ -760,9 +888,9 @@ Khi token hết hạn, response:
 
 ```javascript
 // Lưu tokens sau login
-localStorage.setItem('accessToken', response.access.token);
-localStorage.setItem('refreshToken', response.refresh.token);
-localStorage.setItem('tokenExpiry', response.access.expires_at);
+localStorage.setItem('accessToken', response.data.data.access.token);
+localStorage.setItem('refreshToken', response.data.data.refresh.token);
+localStorage.setItem('tokenExpiry', response.data.data.access.expires_at);
 
 // Axios interceptor để tự động thêm token
 axios.interceptors.request.use((config) => {
@@ -800,10 +928,17 @@ GET /api/vocabulary/?page=1&page_size=20
 Response:
 ```json
 {
-  "count": 1000,
-  "next": "http://api.example.com/api/vocabulary/?page=2",
-  "previous": null,
-  "results": [...]
+  "meta": {
+    "code": 200,
+    "type": "SUCCESS",
+    "message": "Request successful."
+  },
+  "data": {
+    "count": 1000,
+    "next": "http://api.example.com/api/vocabulary/?page=2",
+    "previous": null,
+    "results": [...]
+  }
 }
 ```
 

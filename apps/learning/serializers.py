@@ -6,7 +6,7 @@ from rest_framework import serializers
 from .models import (
     Lesson,
     Unit,
-
+    UnitAnkiReviewLog,
     UserUnitProgress,
 )
 
@@ -40,5 +40,12 @@ class UserUnitProgressSerializer(serializers.ModelSerializer):
         fields = ['id', 'unit_id', 'lession_id', 'progress', 'completed_at', 'user_id', 'created_at', 'updated_at']
         read_only_fields = ['id', 'created_at', 'updated_at']
 
+
+class UnitAnkiReviewSerializer(serializers.Serializer):
+    """Serializer for unit anki review submission."""
+
+    card_id = serializers.IntegerField(min_value=1)
+    rating = serializers.ChoiceField(choices=UnitAnkiReviewLog.Rating.choices)
+    response_time_ms = serializers.IntegerField(min_value=0, required=False)
 
 

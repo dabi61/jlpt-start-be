@@ -10,6 +10,8 @@ from .models import (
     UnitGrammarDetail,
     UnitKanjiDetail,
     UserUnitProgress,
+    UnitAnkiCard,
+    UnitAnkiReviewLog,
 )
 
 
@@ -56,5 +58,26 @@ class UserUnitProgressAdmin(admin.ModelAdmin):
     list_filter = ['lession_id']
     ordering = ['id']
 
+
+@admin.register(UnitAnkiCard)
+class UnitAnkiCardAdmin(admin.ModelAdmin):
+    list_display = [
+        'id', 'user_id', 'unit_id', 'item_type', 'item_id',
+        'state', 'interval_days', 'ease_factor', 'due_at',
+    ]
+    search_fields = ['user_id', 'unit_id', 'item_id']
+    list_filter = ['item_type', 'state']
+    ordering = ['due_at', 'id']
+
+
+@admin.register(UnitAnkiReviewLog)
+class UnitAnkiReviewLogAdmin(admin.ModelAdmin):
+    list_display = [
+        'id', 'card', 'rating', 'previous_state', 'next_state',
+        'previous_interval_days', 'next_interval_days', 'reviewed_at',
+    ]
+    search_fields = ['card__user_id', 'card__unit_id', 'card__item_id']
+    list_filter = ['rating', 'previous_state', 'next_state']
+    ordering = ['-reviewed_at']
 
 

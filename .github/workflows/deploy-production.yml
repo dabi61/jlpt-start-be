@@ -41,6 +41,28 @@ jobs:
           mkdir -p ~/.ssh
           printf "%s\n" "${{ secrets.VPS_SSH_KEY }}" | tr -d '\r' > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
+
+          if ! ssh-keygen -y -f ~/.ssh/deploy_key >/dev/null 2>&1; then
+            echo "VPS_SSH_KEY is invalid, incomplete, or passphrase-protected."
+            exit 1
+          fi
+
+          if ! [[ "${{ secrets.VPS_PORT }}" =~ ^[0-9]+$ ]]; then
+            echo "VPS_PORT must be a numeric value."
+            exit 1
+          fi
+
+          if ! getent hosts "${{ secrets.VPS_HOST }}" >/dev/null 2>&1; then
+            echo "VPS_HOST cannot be resolved from GitHub runner."
+            exit 1
+          fi
+
+          if ! timeout 5 bash -c "cat < /dev/null > /dev/tcp/${{ secrets.VPS_HOST }}/${{ secrets.VPS_PORT }}"; then
+            echo "Cannot connect to VPS_HOST:VPS_PORT from GitHub runner."
+            echo "Check VPS firewall/security group and allow GitHub Actions outbound IPs."
+            exit 1
+          fi
+
           ssh-keyscan -p "${{ secrets.VPS_PORT }}" -H "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null
 
           PROJECT_DIR="${VPS_PROJECT_DIR:-/root/jlpt_start}"

@@ -15,6 +15,21 @@ jobs:
     name: Deploy To VPS
     runs-on: ubuntu-latest
     steps:
+      - name: Validate required secrets
+        shell: bash
+        run: |
+          missing=()
+
+          [ -z "${{ secrets.VPS_HOST }}" ] && missing+=("VPS_HOST")
+          [ -z "${{ secrets.VPS_PORT }}" ] && missing+=("VPS_PORT")
+          [ -z "${{ secrets.VPS_USER }}" ] && missing+=("VPS_USER")
+          [ -z "${{ secrets.VPS_SSH_KEY }}" ] && missing+=("VPS_SSH_KEY")
+
+          if [ "${#missing[@]}" -gt 0 ]; then
+            echo "Missing required GitHub secrets: ${missing[*]}"
+            exit 1
+          fi
+
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.2.0
         with:

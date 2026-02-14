@@ -31,98 +31,94 @@ jobs:
           fi
 
       - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          port: ${{ secrets.VPS_PORT }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          debug: true
-          script_stop: true
-          timeout: 30m
-          command_timeout: 30m
-          script: |
-            set -euo pipefail
+        shell: bash
+        env:
+          VPS_PROJECT_DIR: ${{ secrets.VPS_PROJECT_DIR }}
+          VPS_COMPOSE_FILE: ${{ secrets.VPS_COMPOSE_FILE }}
+        run: |
+          set -euo pipefail
 
-            PROJECT_DIR="${{ secrets.VPS_PROJECT_DIR }}"
-            COMPOSE_FILE="${{ secrets.VPS_COMPOSE_FILE }}"
+          mkdir -p ~/.ssh
+          printf "%s\n" "${{ secrets.VPS_SSH_KEY }}" | tr -d '\r' > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p "${{ secrets.VPS_PORT }}" -H "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null
 
-            if [ -z "$PROJECT_DIR" ]; then
-              PROJECT_DIR="/root/jlpt_start"
+          PROJECT_DIR="${VPS_PROJECT_DIR:-/root/jlpt_start}"
+          COMPOSE_FILE="${VPS_COMPOSE_FILE:-docker-compose.prod.yml}"
+
+          ssh -i ~/.ssh/deploy_key -p "${{ secrets.VPS_PORT }}" "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" \
+            "PROJECT_DIR='$PROJECT_DIR' COMPOSE_FILE='$COMPOSE_FILE' bash -s" <<'EOF'
+          set -euo pipefail
+
+          echo "Deploy host: $(hostname)"
+          echo "Deploy user: $(whoami)"
+          echo "Project dir: $PROJECT_DIR"
+          echo "Compose file: $COMPOSE_FILE"
+
+          if ! command -v git >/dev/null 2>&1; then
+            echo "git is not installed on VPS."
+            exit 1
+          fi
+
+          if ! command -v docker >/dev/null 2>&1; then
+            echo "docker is not installed on VPS."
+            exit 1
+          fi
+
+          if ! docker compose version >/dev/null 2>&1; then
+            echo "docker compose plugin is missing on VPS."
+            exit 1
+          fi
+
+          if [ ! -d "$PROJECT_DIR" ]; then
+            echo "PROJECT_DIR does not exist: $PROJECT_DIR"
+            exit 1
+          fi
+
+          cd "$PROJECT_DIR"
+
+          if [ ! -f "$COMPOSE_FILE" ]; then
+            echo "Compose file not found in project dir: $PROJECT_DIR/$COMPOSE_FILE"
+            exit 1
+          fi
+
+          if [ ! -d .git ]; then
+            echo "Project directory is not a git repository: $PROJECT_DIR"
+            exit 1
+          fi
+
+          echo "Pulling latest code..."
+          git fetch origin main
+          git reset --hard origin/main
+
+          echo "Rebuilding containers..."
+          docker compose -f "$COMPOSE_FILE" up -d --build
+
+          echo "Waiting for web container..."
+          ready=0
+          for i in $(seq 1 30); do
+            if docker compose -f "$COMPOSE_FILE" exec -T web python -V >/dev/null 2>&1; then
+              ready=1
+              break
             fi
+            sleep 2
+          done
 
-            if [ -z "$COMPOSE_FILE" ]; then
-              COMPOSE_FILE="docker-compose.prod.yml"
-            fi
+          if [ "$ready" -ne 1 ]; then
+            echo "web service is not ready after 60 seconds."
+            docker compose -f "$COMPOSE_FILE" ps
+            docker compose -f "$COMPOSE_FILE" logs --tail=80 web || true
+            exit 1
+          fi
 
-            echo "Deploy host: $(hostname)"
-            echo "Deploy user: $(whoami)"
-            echo "Project dir: $PROJECT_DIR"
-            echo "Compose file: $COMPOSE_FILE"
+          echo "Running migrations..."
+          docker compose -f "$COMPOSE_FILE" exec -T web python manage.py migrate
 
-            if ! command -v git >/dev/null 2>&1; then
-              echo "git is not installed on VPS."
-              exit 1
-            fi
+          echo "Collecting static files..."
+          docker compose -f "$COMPOSE_FILE" exec -T web python manage.py collectstatic --noinput
 
-            if ! command -v docker >/dev/null 2>&1; then
-              echo "docker is not installed on VPS."
-              exit 1
-            fi
+          echo "Pruning unused images..."
+          docker image prune -f
 
-            if ! docker compose version >/dev/null 2>&1; then
-              echo "docker compose plugin is missing on VPS."
-              exit 1
-            fi
-
-            if [ ! -d "$PROJECT_DIR" ]; then
-              echo "PROJECT_DIR does not exist: $PROJECT_DIR"
-              exit 1
-            fi
-
-            cd "$PROJECT_DIR"
-
-            if [ ! -f "$COMPOSE_FILE" ]; then
-              echo "Compose file not found in project dir: $PROJECT_DIR/$COMPOSE_FILE"
-              exit 1
-            fi
-
-            if [ ! -d .git ]; then
-              echo "Project directory is not a git repository: $PROJECT_DIR"
-              exit 1
-            fi
-
-            echo "Pulling latest code..."
-            git fetch origin main
-            git reset --hard origin/main
-
-            echo "Rebuilding containers..."
-            docker compose -f "$COMPOSE_FILE" up -d --build
-
-            echo "Waiting for web container..."
-            ready=0
-            for i in $(seq 1 30); do
-              if docker compose -f "$COMPOSE_FILE" exec -T web python -V >/dev/null 2>&1; then
-                ready=1
-                break
-              fi
-              sleep 2
-            done
-
-            if [ "$ready" -ne 1 ]; then
-              echo "web service is not ready after 60 seconds."
-              docker compose -f "$COMPOSE_FILE" ps
-              docker compose -f "$COMPOSE_FILE" logs --tail=80 web || true
-              exit 1
-            fi
-
-            echo "Running migrations..."
-            docker compose -f "$COMPOSE_FILE" exec -T web python manage.py migrate
-
-            echo "Collecting static files..."
-            docker compose -f "$COMPOSE_FILE" exec -T web python manage.py collectstatic --noinput
-
-            echo "Pruning unused images..."
-            docker image prune -f
-
-            echo "Deploy complete."
+          echo "Deploy complete."
+          EOF

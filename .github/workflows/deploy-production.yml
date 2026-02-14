@@ -37,11 +37,12 @@ jobs:
           port: ${{ secrets.VPS_PORT }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
+          debug: true
           script_stop: true
           timeout: 30m
           command_timeout: 30m
           script: |
-            set -e
+            set -euo pipefail
 
             PROJECT_DIR="${{ secrets.VPS_PROJECT_DIR }}"
             COMPOSE_FILE="${{ secrets.VPS_COMPOSE_FILE }}"
@@ -54,22 +55,74 @@ jobs:
               COMPOSE_FILE="docker-compose.prod.yml"
             fi
 
+            echo "Deploy host: $(hostname)"
+            echo "Deploy user: $(whoami)"
+            echo "Project dir: $PROJECT_DIR"
+            echo "Compose file: $COMPOSE_FILE"
+
+            if ! command -v git >/dev/null 2>&1; then
+              echo "git is not installed on VPS."
+              exit 1
+            fi
+
+            if ! command -v docker >/dev/null 2>&1; then
+              echo "docker is not installed on VPS."
+              exit 1
+            fi
+
+            if ! docker compose version >/dev/null 2>&1; then
+              echo "docker compose plugin is missing on VPS."
+              exit 1
+            fi
+
+            if [ ! -d "$PROJECT_DIR" ]; then
+              echo "PROJECT_DIR does not exist: $PROJECT_DIR"
+              exit 1
+            fi
+
             cd "$PROJECT_DIR"
 
-            echo "🔹 Pulling latest code..."
+            if [ ! -f "$COMPOSE_FILE" ]; then
+              echo "Compose file not found in project dir: $PROJECT_DIR/$COMPOSE_FILE"
+              exit 1
+            fi
+
+            if [ ! -d .git ]; then
+              echo "Project directory is not a git repository: $PROJECT_DIR"
+              exit 1
+            fi
+
+            echo "Pulling latest code..."
             git fetch origin main
             git reset --hard origin/main
 
-            echo "🔹 Rebuilding containers..."
+            echo "Rebuilding containers..."
             docker compose -f "$COMPOSE_FILE" up -d --build
 
-            echo "🔹 Running migrations..."
+            echo "Waiting for web container..."
+            ready=0
+            for i in $(seq 1 30); do
+              if docker compose -f "$COMPOSE_FILE" exec -T web python -V >/dev/null 2>&1; then
+                ready=1
+                break
+              fi
+              sleep 2
+            done
+
+            if [ "$ready" -ne 1 ]; then
+              echo "web service is not ready after 60 seconds."
+              docker compose -f "$COMPOSE_FILE" ps
+              docker compose -f "$COMPOSE_FILE" logs --tail=80 web || true
+              exit 1
+            fi
+
+            echo "Running migrations..."
             docker compose -f "$COMPOSE_FILE" exec -T web python manage.py migrate
 
-            echo "🔹 Collecting static files..."
+            echo "Collecting static files..."
             docker compose -f "$COMPOSE_FILE" exec -T web python manage.py collectstatic --noinput
 
-            echo "🔹 Pruning unused images..."
+            echo "Pruning unused images..."
             docker image prune -f
 
-            echo "✅ Deploy complete."
+            echo "Deploy complete."

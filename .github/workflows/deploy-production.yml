@@ -41,6 +41,27 @@ jobs:
         run: |
           set -euo pipefail
 
+          RAW_HOST="${{ secrets.VPS_HOST }}"
+          RAW_PORT="${{ secrets.VPS_PORT }}"
+          HOST="$(printf '%s' "$RAW_HOST" | tr -d '\r' | xargs)"
+          PORT="$(printf '%s' "$RAW_PORT" | tr -d '\r' | xargs)"
+
+          # Accept common misconfigurations: scheme/path/inline-port in VPS_HOST.
+          HOST="${HOST#http://}"
+          HOST="${HOST#https://}"
+          HOST="${HOST%%/*}"
+          HOST="${HOST%%:*}"
+
+          if [ -z "$HOST" ]; then
+            echo "VPS_HOST is empty after normalization."
+            exit 1
+          fi
+
+          if [ -z "$PORT" ]; then
+            echo "VPS_PORT is empty."
+            exit 1
+          fi
+
           mkdir -p ~/.ssh
           if [ -n "${VPS_SSH_KEY_B64:-}" ]; then
             printf "%s" "$VPS_SSH_KEY_B64" | base64 --decode > ~/.ssh/deploy_key
@@ -55,28 +76,28 @@ jobs:
             exit 1
           fi
 
-          if ! [[ "${{ secrets.VPS_PORT }}" =~ ^[0-9]+$ ]]; then
+          if ! [[ "$PORT" =~ ^[0-9]+$ ]]; then
             echo "VPS_PORT must be a numeric value."
             exit 1
           fi
 
-          if ! getent hosts "${{ secrets.VPS_HOST }}" >/dev/null 2>&1; then
+          if ! getent hosts "$HOST" >/dev/null 2>&1; then
             echo "VPS_HOST cannot be resolved from GitHub runner."
             exit 1
           fi
 
-          if ! timeout 5 bash -c "cat < /dev/null > /dev/tcp/${{ secrets.VPS_HOST }}/${{ secrets.VPS_PORT }}"; then
+          if ! timeout 5 bash -c "cat < /dev/null > /dev/tcp/$HOST/$PORT"; then
             echo "Cannot connect to VPS_HOST:VPS_PORT from GitHub runner."
             echo "Check VPS firewall/security group and allow GitHub Actions outbound IPs."
             exit 1
           fi
 
-          ssh-keyscan -p "${{ secrets.VPS_PORT }}" -H "${{ secrets.VPS_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null
+          ssh-keyscan -p "$PORT" -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
 
           PROJECT_DIR="${VPS_PROJECT_DIR:-/root/jlpt_start}"
           COMPOSE_FILE="${VPS_COMPOSE_FILE:-docker-compose.prod.yml}"
 
-          ssh -i ~/.ssh/deploy_key -p "${{ secrets.VPS_PORT }}" "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" \
+          ssh -i ~/.ssh/deploy_key -p "$PORT" "${{ secrets.VPS_USER }}@$HOST" \
             "PROJECT_DIR='$PROJECT_DIR' COMPOSE_FILE='$COMPOSE_FILE' bash -s" <<'EOF'
           set -euo pipefail
 

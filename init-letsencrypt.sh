@@ -5,7 +5,7 @@ if ! [ -x "$(command -v docker)" ]; then
   exit 1
 fi
 
-domains=(utt-school.site www.utt-school.site)
+domains=(jlpt.codes www.jlpt.codes)
 rsa_key_size=4096
 data_path="./data/certbot"
 email="jlptstart@gmail.com" # Adding a valid email is recommended

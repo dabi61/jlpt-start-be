@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "schema_version": "1.1.0",
+    "generated_at": "2026-02-11T20:55:00+07:00"
+  },
+  "project": {
+    "name": "JLPT Start Backend",
+    "description": "Backend API for Japanese learning application (N5-N1)",
+    "type": "backend",
+    "language": "python"
+  },
+  "tech_stack": {
+    "framework": "Django 5.0",
+    "api": "Django Rest Framework 3.14",
+    "database": "PostgreSQL 16",
+    "caching": "Redis 7",
+    "async_tasks": "Celery 5.3",
+    "authentication": "JWT (SimpleJWT)",
+    "infrastructure": "Docker, Nginx, Gunicorn"
+  },
+  "database_schema": {
+    "summary": "Core modules: User, Learning (Lessons/Units), Content (Vocab/Grammar/Kanji)",
+    "tables": [
+      "users.User",
+      "learning.Lesson",
+      "learning.Unit",
+      "learning.UserUnitProgress",
+      "vocabulary.Word",
+      "grammar.Grammar",
+      "kanjis.Kanji",
+      "examples.Example"
+    ]
+  },
+  "api_endpoints": [
+    {
+      "path": "/api/auth/*",
+      "description": "Authentication (Login, Register, Refresh)"
+    },
+    {
+      "path": "/api/users/*",
+      "description": "User profile and settings"
+    },
+    {
+      "path": "/api/learning/*",
+      "description": "Lessons, Units, and Progress tracking"
+    },
+    {
+      "path": "/api/vocabulary/*",
+      "description": "Vocabulary retrieval"
+    },
+    {
+      "path": "/api/grammar/*",
+      "description": "Grammar retrieval"
+    },
+    {
+      "path": "/api/kanjis/*",
+      "description": "Kanji retrieval"
+    },
+    {
+      "path": "/api/examples/*",
+      "description": "Example sentences"
+    }
+  ],
+  "business_rules": [
+    "Users identified by Email",
+    "Progress tracked per Unit",
+    "Content accessible for all levels (initially)"
+  ]
+}

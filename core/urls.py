@@ -32,12 +32,13 @@ urlpatterns = [
     path('api/auth/', include('dj_rest_auth.urls')),
     # path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
 
-    # App URLs
+    # App URLs (priority order)
     path('api/users/', include('apps.users.urls')),
-    path('api/courses/', include('apps.courses.urls')),
-    path('api/learning/', include('apps.learning.urls')),
     path('api/vocabulary/', include('apps.vocabulary.urls')),
-    path('api/grammar/', include('apps.grammar.urls')),
     path('api/kanjis/', include('apps.kanjis.urls')),
+    path('api/grammar/', include('apps.grammar.urls')),
     path('api/examples/', include('apps.examples.urls')),
+    # Remaining APIs
+    path('api/learning/', include('apps.learning.urls')),
+    path('api/courses/', include('apps.courses.urls')),
 ]

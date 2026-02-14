@@ -1,4 +1,3 @@
-import json
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
@@ -28,16 +27,25 @@ class AuthFlowTests(APITestCase):
             'display_name': 'Test User'
         }
 
+    @staticmethod
+    def _body(response):
+        """Return rendered JSON payload as received by API clients."""
+        return response.json()
+
     def test_full_auth_flow(self):
         """
         Test the complete flow: Register -> Verify OTP -> Login -> Change Password
         """
         # 1. Registration
         response = self.client.post(self.register_url, self.register_payload)
+        response_body = self._body(response)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertIn('Verification Code has been sent', response.data['detail'])
-        self.assertNotIn('key', response.data)  # Ensure no token is returned
-        self.assertNotIn('access', response.data)
+        self.assertEqual(response_body['meta']['code'], status.HTTP_201_CREATED)
+        self.assertEqual(response_body['meta']['type'], 'SUCCESS')
+        self.assertIn('Verification Code has been sent', response_body['meta']['message'])
+        self.assertEqual(response_body['data']['email'], self.user_data['email'])
+        self.assertNotIn('key', response_body['data'])  # Ensure no token is returned
+        self.assertNotIn('access', response_body['data'])
 
         # Verify User is created but INACTIVE
         user = User.objects.get(email=self.user_data['email'])
@@ -64,8 +72,9 @@ class AuthFlowTests(APITestCase):
             'otp': otp
         }
         verify_response = self.client.post(self.verify_otp_url, verify_payload)
+        verify_response_body = self._body(verify_response)
         self.assertEqual(verify_response.status_code, status.HTTP_200_OK)
-        self.assertEqual(verify_response.data['message'], 'Account verified successfully')
+        self.assertEqual(verify_response_body['meta']['message'], 'Account verified successfully')
 
         # Verify User is now ACTIVE
         user.refresh_from_db()
@@ -74,11 +83,13 @@ class AuthFlowTests(APITestCase):
 
         # 4. Login SUCCESS
         login_response = self.client.post(self.login_url, login_payload)
+        login_response_body = self._body(login_response)
         self.assertEqual(login_response.status_code, status.HTTP_200_OK)
-        self.assertIn('access', login_response.data)
-        self.assertIn('refresh', login_response.data)
+        self.assertIn('access', login_response_body['data'])
+        self.assertIn('refresh', login_response_body['data'])
+        self.assertIn('token', login_response_body['data']['access'])
 
-        token = login_response.data['access']
+        token = login_response_body['data']['access']['token']
 
         # 5. Change Password (Require Old Password)
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
@@ -127,8 +138,9 @@ class AuthFlowTests(APITestCase):
             'otp': '000000' # Wrong OTP
         }
         response = self.client.post(self.verify_otp_url, payload)
+        response_body = self._body(response)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data['error'], 'Invalid or expired OTP')
+        self.assertEqual(response_body['meta']['message'], 'Invalid or expired OTP')
 
     def test_verify_otp_expired(self):
         """Test verification with expired (non-existent) OTP"""
@@ -143,3 +155,25 @@ class AuthFlowTests(APITestCase):
         }
         response = self.client.post(self.verify_otp_url, payload)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_registration_duplicate_email_returns_400(self):
+        """Registering with an existing email should return validation error, not 500."""
+        User.objects.create_user(
+            email='duplicate@example.com',
+            password='StrongPassword123!',
+            status=User.Status.ACTIVE,
+        )
+
+        payload = {
+            'email': 'duplicate@example.com',
+            'password1': 'StrongPassword123!',
+            'password2': 'StrongPassword123!',
+            'display_name': 'Duplicate User'
+        }
+        response = self.client.post(self.register_url, payload)
+        response_body = self._body(response)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            response_body['meta']['message'],
+            'A user is already registered with this e-mail address.',
+        )

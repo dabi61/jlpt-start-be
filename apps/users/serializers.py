@@ -17,6 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
             'email',
             'display_name',
             'avatar',
+            'avatar_image_id',
             'first_name',
             'last_name',
             'role',
@@ -38,11 +39,28 @@ class UserProfileUpdateSerializer(serializers.ModelSerializer):
         fields = ['display_name', 'avatar', 'first_name', 'last_name', 'level']
 
 
+class AvatarConfirmSerializer(serializers.Serializer):
+    """Serializer for confirming Cloudflare avatar upload."""
+
+    image_id = serializers.CharField(max_length=128)
+
+
 class CustomRegisterSerializer(RegisterSerializer):
     """Custom registration serializer that removes username and adds display_name."""
 
     username = None
     display_name = serializers.CharField(required=False, allow_blank=True)
+
+    def validate_email(self, email):
+        """
+        Return a clean 400 validation error instead of DB IntegrityError
+        when client registers with an existing email.
+        """
+        if User.objects.filter(email__iexact=email).exists():
+            raise serializers.ValidationError(
+                "A user is already registered with this e-mail address."
+            )
+        return email
 
     def get_cleaned_data(self):
         data = super().get_cleaned_data()
@@ -61,7 +79,6 @@ class CustomRegisterSerializer(RegisterSerializer):
         otp = generate_otp(user.email)
         send_otp_email(user.email, otp)
 
-        return user
         return user
 
 

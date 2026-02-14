@@ -42,7 +42,6 @@ class User(AbstractUser):
     email = models.EmailField('email address', unique=True)
 
     # Profile fields
-    # Profile fields
     display_name = models.CharField(
         'display name',
         max_length=50,
@@ -54,6 +53,13 @@ class User(AbstractUser):
         blank=True,
         null=True,
         help_text='URL to user avatar image'
+    )
+    avatar_image_id = models.CharField(
+        'avatar image id',
+        max_length=128,
+        blank=True,
+        null=True,
+        help_text='Cloudflare Images ID for current avatar'
     )
 
     # Auth & Role fields
@@ -112,18 +118,16 @@ class User(AbstractUser):
         return self.email
 
     def save(self, *args, **kwargs):
-        # Sync is_staff/is_superuser/is_active based on role/status
-        if self.role == self.Role.ADMIN:
+        # Keep role/permission flags consistent. Superusers are always ADMIN.
+        if self.is_superuser or self.role == self.Role.ADMIN:
+            self.role = self.Role.ADMIN
             self.is_staff = True
             self.is_superuser = True
         else:
             self.is_staff = False
             self.is_superuser = False
 
-        if self.status == self.Status.ACTIVE:
-            self.is_active = True
-        else:
-            self.is_active = False
+        self.is_active = self.status == self.Status.ACTIVE
 
         super().save(*args, **kwargs)
 

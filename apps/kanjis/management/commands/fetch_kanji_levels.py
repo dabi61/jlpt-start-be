@@ -55,6 +55,7 @@ class Command(BaseCommand):
         count = 0
         updated = 0
         not_found = 0
+        skipped = 0
         errors = 0
 
         self.stdout.write(f"Starting fetch process for {total_to_process} kanjis...")
@@ -69,7 +70,7 @@ class Command(BaseCommand):
 
                 if not char:
                     self.stdout.write(self.style.WARNING(" EMPTY CHAR"))
-                    skipped_count += 1
+                    skipped += 1
                     continue
 
                 # Call Jisho API
@@ -123,4 +124,9 @@ class Command(BaseCommand):
             # Sleep to be polite
             time.sleep(sleep_time)
 
-        self.stdout.write(self.style.SUCCESS(f"\nDone! Processed: {count}. Updated: {updated}. Not Found/No Level: {not_found}. Errors: {errors}"))
+        self.stdout.write(
+            self.style.SUCCESS(
+                f"\nDone! Processed: {count}. Updated: {updated}. "
+                f"Not Found/No Level: {not_found}. Skipped: {skipped}. Errors: {errors}"
+            )
+        )

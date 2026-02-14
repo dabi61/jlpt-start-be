@@ -10,6 +10,22 @@ from apps.examples.models import Example
 class Command(BaseCommand):
     help = 'Import example sentences from JSON file'
 
+    def _reset_primary_key_sequence(self):
+        """
+        Keep DB sequence aligned after imports that preserve explicit IDs.
+        Prevents duplicate-key errors on subsequent API creates.
+        """
+        with connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT setval(
+                    pg_get_serial_sequence('examples_example', 'id'),
+                    COALESCE((SELECT MAX(id) FROM examples_example), 1),
+                    COALESCE((SELECT MAX(id) FROM examples_example), 0) > 0
+                );
+                """
+            )
+
     def add_arguments(self, parser):
         parser.add_argument('json_file', type=str, help='Path to JSON file')
         parser.add_argument(
@@ -139,6 +155,8 @@ class Command(BaseCommand):
                 self.stderr.write(f"Error importing example {i}: {str(e)}")
                 error_count += 1
 
+        self._reset_primary_key_sequence()
+
         self.stdout.write(self.style.SUCCESS(
             f"\nImport complete!\n"
             f"  Created: {created_count}\n"
@@ -146,4 +164,3 @@ class Command(BaseCommand):
             f"  Skipped: {skipped_count}\n"
             f"  Errors:  {error_count}"
         ))
-

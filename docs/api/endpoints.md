@@ -16,6 +16,10 @@
 - `GET /api/users/profile/`: Get profile.
 - `PUT/PATCH /api/users/profile/`: Update profile.
 - `GET /api/users/stats/`: Get user learning stats (`level`, `streak`, `last_study_date`).
+- `POST /api/users/avatar/upload-url/`: Get Cloudflare direct upload URL for avatar.
+- `POST /api/users/avatar/confirm/`: Confirm uploaded image and set avatar.
+- `DELETE /api/users/avatar/`: Delete current avatar.
+- Avatar integration guide: `docs/api/avatar-cloudflare.md`.
 
 ## 3. Vocabulary APIs
 - `GET/POST /api/vocabulary/`

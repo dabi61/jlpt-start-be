@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 
+from core.pagination import StandardResultsSetPagination
 from .models import Grammar
 from .serializers import GrammarSerializer, GrammarListSerializer, GrammarCreateSerializer
 
@@ -16,6 +17,7 @@ class GrammarViewSet(viewsets.ModelViewSet):
     ViewSet for Grammar model.
     """
     queryset = Grammar.objects.all()
+    pagination_class = StandardResultsSetPagination
     permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['title', 'mean', 'structure', 'about']
@@ -95,11 +97,25 @@ class GrammarViewSet(viewsets.ModelViewSet):
     def examples(self, request, pk=None):
         """Get all examples for a specific grammar point."""
         grammar = self.get_object()
+        examples = grammar.get_examples_list()
+        page = self.paginate_queryset(examples)
+        if page is not None:
+            paginated_data = self.get_paginated_response(page).data
+            return Response({
+                'grammar_id': grammar.id,
+                'title': grammar.title,
+                'example_count': grammar.example_count,
+                'count': paginated_data.get('count', len(examples)),
+                'next': paginated_data.get('next'),
+                'previous': paginated_data.get('previous'),
+                'examples': paginated_data.get('results', []),
+            })
+
         return Response({
             'grammar_id': grammar.id,
             'title': grammar.title,
             'example_count': grammar.example_count,
-            'examples': grammar.get_examples_list()
+            'examples': examples,
         })
 
     @extend_schema(
@@ -129,11 +145,23 @@ class GrammarViewSet(viewsets.ModelViewSet):
     def synonyms(self, request, pk=None):
         """Get all synonyms for a specific grammar point."""
         grammar = self.get_object()
+        synonyms = grammar.get_synonyms_list()
+        page = self.paginate_queryset(synonyms)
+        if page is not None:
+            paginated_data = self.get_paginated_response(page).data
+            return Response({
+                'grammar_id': grammar.id,
+                'title': grammar.title,
+                'synonym_count': len(synonyms),
+                'count': paginated_data.get('count', len(synonyms)),
+                'next': paginated_data.get('next'),
+                'previous': paginated_data.get('previous'),
+                'synonyms': paginated_data.get('results', []),
+            })
+
         return Response({
             'grammar_id': grammar.id,
             'title': grammar.title,
-            'synonym_count': len(grammar.get_synonyms_list()),
-            'synonyms': grammar.get_synonyms_list()
+            'synonym_count': len(synonyms),
+            'synonyms': synonyms,
         })
-
-

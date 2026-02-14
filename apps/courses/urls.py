@@ -3,8 +3,10 @@ URL patterns for Courses app.
 """
 from django.urls import path
 
+from .views import CoursePlaceholderView
+
 app_name = 'courses'
 
 urlpatterns = [
-    # Add your URL patterns here
+    path('', CoursePlaceholderView.as_view(), name='placeholder'),
 ]

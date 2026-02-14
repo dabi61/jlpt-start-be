@@ -2,10 +2,41 @@
 Django settings for Nihongo Project.
 """
 import os
+import warnings
 from pathlib import Path
 from datetime import timedelta
 
 import environ
+
+# -----------------------------------------------------------------------------
+# Third-party warning filters
+# -----------------------------------------------------------------------------
+# dj-rest-auth (current release) still imports deprecated allauth settings
+# attributes at module import time. Keep this scoped to known upstream warnings.
+warnings.filterwarnings(
+    'ignore',
+    message=r"app_settings\.USERNAME_REQUIRED is deprecated, use: app_settings\.SIGNUP_FIELDS\['username'\]\['required'\]",
+    category=UserWarning,
+    module=r'allauth\.account\.app_settings',
+)
+warnings.filterwarnings(
+    'ignore',
+    message=r"app_settings\.USERNAME_REQUIRED is deprecated, use: app_settings\.SIGNUP_FIELDS\['username'\]\['required'\]",
+    category=UserWarning,
+    module=r'dj_rest_auth\.registration\.serializers',
+)
+warnings.filterwarnings(
+    'ignore',
+    message=r"app_settings\.EMAIL_REQUIRED is deprecated, use: app_settings\.SIGNUP_FIELDS\['email'\]\['required'\]",
+    category=UserWarning,
+    module=r'allauth\.account\.app_settings',
+)
+warnings.filterwarnings(
+    'ignore',
+    message=r"app_settings\.EMAIL_REQUIRED is deprecated, use: app_settings\.SIGNUP_FIELDS\['email'\]\['required'\]",
+    category=UserWarning,
+    module=r'dj_rest_auth\.registration\.serializers',
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -145,9 +176,13 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'core.renderers.EnvelopedJSONRenderer',
+    ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'core.pagination.StandardResultsSetPagination',
     'PAGE_SIZE': 20,
+    'EXCEPTION_HANDLER': 'core.exception_handler.custom_exception_handler',
 }
 
 # =============================================================================
@@ -196,21 +231,27 @@ REST_AUTH = {
 # =============================================================================
 # django-allauth Settings
 # =============================================================================
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = None
 ACCOUNT_ADAPTER = 'apps.users.adapters.CustomAccountAdapter'
 
-# Fix deprecation warnings
+# New-style allauth settings (avoid deprecated ACCOUNT_* auth flags)
 ACCOUNT_LOGIN_METHODS = {'email'}
-ACCOUNT_SIGNUP_FIELDS = ['email', 'password1', 'password2']
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
 
 # Email Backend for development (logging to console instead of sending real emails)
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# =============================================================================
+# Cloudflare Images Settings
+# =============================================================================
+CF_ACCOUNT_ID = env('CF_ACCOUNT_ID', default='')
+CF_IMAGES_API_TOKEN = env('CF_IMAGES_API_TOKEN', default='')
+CF_IMAGES_ACCOUNT_HASH = env('CF_IMAGES_ACCOUNT_HASH', default='')
+CF_IMAGES_AVATAR_VARIANT = env('CF_IMAGES_AVATAR_VARIANT', default='avatar')
+CF_IMAGES_TIMEOUT = env.int('CF_IMAGES_TIMEOUT', default=15)
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -226,7 +267,18 @@ SPECTACULAR_SETTINGS = {
                    'Supports JWT and OAuth2 authentication.',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
+    'SORT_OPERATIONS': False,
     'COMPONENT_SPLIT_REQUEST': True,
+    'TAGS': [
+        {'name': 'auth'},
+        {'name': 'users'},
+        {'name': 'vocabulary'},
+        {'name': 'kanjis'},
+        {'name': 'grammar'},
+        {'name': 'examples'},
+        {'name': 'learning'},
+        {'name': 'courses'},
+    ],
     'SWAGGER_UI_SETTINGS': {
         'deepLinking': True,
         'persistAuthorization': True,

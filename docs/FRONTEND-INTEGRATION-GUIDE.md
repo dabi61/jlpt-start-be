@@ -22,7 +22,7 @@
 | Environment | URL |
 |-------------|-----|
 | **Local** | `http://localhost:8000/api/` |
-| **Production** | `https://api.jlptstart.com/api/` |
+| **Production** | `https://jlpt.codes/api/` |
 
 ### API Documentation (Interactive)
 
@@ -278,6 +278,7 @@ Lấy thông tin user hiện tại.
   "email": "user@example.com",
   "display_name": "Nguyen Van A",
   "avatar": "https://example.com/avatar.jpg",
+  "avatar_image_id": "1f6d0c85-0fd6-4dca-9e25-6b5fa6d8cc32",
   "first_name": "A",
   "last_name": "Nguyen Van",
   "role": "USER",
@@ -311,7 +312,51 @@ Cập nhật thông tin user.
 
 ---
 
-### 3.2. User Stats
+### 3.2. User Avatar (Cloudflare Images)
+
+#### POST `/api/users/avatar/upload-url/`
+
+Lấy URL upload tạm thời (1 lần) để frontend upload ảnh trực tiếp lên Cloudflare.
+
+**Response:**
+```json
+{
+  "image_id": "1f6d0c85-0fd6-4dca-9e25-6b5fa6d8cc32",
+  "upload_url": "https://upload.imagedelivery.net/..."
+}
+```
+
+Frontend upload file trực tiếp:
+- Method: `POST`
+- Content-Type: `multipart/form-data`
+- Field name: `file`
+
+#### POST `/api/users/avatar/confirm/`
+
+Xác nhận ảnh đã upload xong và set làm avatar cho user.
+
+**Request:**
+```json
+{
+  "image_id": "1f6d0c85-0fd6-4dca-9e25-6b5fa6d8cc32"
+}
+```
+
+**Response:**
+```json
+{
+  "avatar": "https://imagedelivery.net/<account_hash>/<image_id>/avatar",
+  "avatar_image_id": "1f6d0c85-0fd6-4dca-9e25-6b5fa6d8cc32"
+}
+```
+
+#### DELETE `/api/users/avatar/`
+
+Xóa avatar hiện tại (xóa trên Cloudflare và clear profile).
+
+---
+
+### 3.3. User Stats
 
 #### GET `/api/users/stats/`
 
@@ -326,7 +371,7 @@ Cập nhật thông tin user.
 
 ---
 
-### 3.3. Vocabulary
+### 3.4. Vocabulary
 
 #### GET `/api/vocabulary/`
 
@@ -351,7 +396,7 @@ Lấy từ vựng theo level.
 
 ---
 
-### 3.4. Kanji
+### 3.5. Kanji
 
 #### GET `/api/kanjis/`
 
@@ -376,7 +421,7 @@ Lấy kanji theo level.
 
 ---
 
-### 3.5. Grammar
+### 3.6. Grammar
 
 #### GET `/api/grammar/`
 
@@ -401,7 +446,7 @@ Lấy ngữ pháp theo level.
 
 ---
 
-### 3.6. Examples
+### 3.7. Examples
 
 #### GET `/api/examples/`
 
@@ -425,7 +470,7 @@ Chi tiết ví dụ.
 
 ---
 
-### 3.7. Learning Module
+### 3.8. Learning Module
 
 #### GET `/api/learning/lessons/`
 

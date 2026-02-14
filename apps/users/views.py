@@ -2,11 +2,21 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.core.cache import cache
+from django.db import IntegrityError
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiTypes
 
 from .models import User
-from .serializers import UserSerializer, UserProfileUpdateSerializer
+from .serializers import UserSerializer, UserProfileUpdateSerializer, AvatarConfirmSerializer
 from .utils import generate_otp, send_otp_email
+from .cloudflare_images import (
+    CloudflareImagesError,
+    CloudflareImagesConfigError,
+    create_direct_upload,
+    delete_image,
+    get_image,
+    is_configured,
+    resolve_avatar_url,
+)
 
 
 class UserProfileView(generics.RetrieveUpdateAPIView):
@@ -43,6 +53,117 @@ class UserStatsView(APIView):
         })
 
 
+class UserAvatarUploadURLView(APIView):
+    """
+    Create a one-time Cloudflare direct upload URL for avatar upload.
+    """
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        if not is_configured():
+            return Response(
+                {'message': 'Cloudflare Images is not configured.'},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            )
+
+        try:
+            payload = create_direct_upload(user_id=str(request.user.id))
+        except CloudflareImagesError as exc:
+            return Response({'message': str(exc)}, status=status.HTTP_502_BAD_GATEWAY)
+
+        return Response(payload, status=status.HTTP_200_OK)
+
+
+class UserAvatarConfirmView(APIView):
+    """
+    Confirm uploaded image and set it as current user's avatar.
+    """
+    permission_classes = [permissions.IsAuthenticated]
+
+    @extend_schema(
+        request=AvatarConfirmSerializer,
+        responses={200: OpenApiTypes.OBJECT},
+    )
+    def post(self, request):
+        serializer = AvatarConfirmSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        image_id = serializer.validated_data['image_id']
+
+        if not is_configured():
+            return Response(
+                {'message': 'Cloudflare Images is not configured.'},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            )
+
+        try:
+            image = get_image(image_id)
+            if bool(image.get('draft')):
+                return Response(
+                    {'message': 'Image upload is not completed yet.'},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            avatar_url = resolve_avatar_url(image)
+        except CloudflareImagesConfigError as exc:
+            return Response({'message': str(exc)}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+        except CloudflareImagesError as exc:
+            return Response({'message': str(exc)}, status=status.HTTP_502_BAD_GATEWAY)
+
+        user = request.user
+        old_image_id = user.avatar_image_id
+        user.avatar_image_id = image_id
+        user.avatar = avatar_url
+        user.save(update_fields=['avatar_image_id', 'avatar'])
+
+        if old_image_id and old_image_id != image_id:
+            try:
+                delete_image(old_image_id)
+            except CloudflareImagesError:
+                # Non-blocking cleanup failure; keep new avatar.
+                pass
+
+        return Response(
+            {
+                'avatar': user.avatar,
+                'avatar_image_id': user.avatar_image_id,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
+class UserAvatarDeleteView(APIView):
+    """
+    Delete current avatar from Cloudflare and clear profile avatar.
+    """
+    permission_classes = [permissions.IsAuthenticated]
+
+    def delete(self, request):
+        user = request.user
+        image_id = (user.avatar_image_id or '').strip()
+
+        if image_id:
+            if not is_configured():
+                return Response(
+                    {'message': 'Cloudflare Images is not configured.'},
+                    status=status.HTTP_503_SERVICE_UNAVAILABLE,
+                )
+            try:
+                delete_image(image_id)
+            except CloudflareImagesError as exc:
+                return Response({'message': str(exc)}, status=status.HTTP_502_BAD_GATEWAY)
+
+        user.avatar = None
+        user.avatar_image_id = None
+        user.save(update_fields=['avatar', 'avatar_image_id'])
+
+        return Response(
+            {
+                'avatar': user.avatar,
+                'avatar_image_id': user.avatar_image_id,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
 class VerifyOTPView(APIView):
     """
     API endpoint to verify OTP and activate user account.
@@ -68,7 +189,7 @@ class VerifyOTPView(APIView):
         otp = request.data.get('otp')
 
         if not email or not otp:
-            return Response({'error': 'Email and OTP are required'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message': 'Email and OTP are required'}, status=status.HTTP_400_BAD_REQUEST)
 
         cached_otp = cache.get(f"otp_{email}")
 
@@ -81,9 +202,9 @@ class VerifyOTPView(APIView):
                 cache.delete(f"otp_{email}")
                 return Response({'message': 'Account verified successfully'}, status=status.HTTP_200_OK)
             except User.DoesNotExist:
-                return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+                return Response({'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        return Response({'error': 'Invalid or expired OTP'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message': 'Invalid or expired OTP'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ResendOTPView(APIView):
@@ -109,7 +230,7 @@ class ResendOTPView(APIView):
         email = request.data.get('email')
 
         if not email:
-            return Response({'error': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             User.objects.get(email=email)
@@ -117,7 +238,7 @@ class ResendOTPView(APIView):
             send_otp_email(email, otp)
             return Response({'message': 'OTP sent successfully'}, status=status.HTTP_200_OK)
         except User.DoesNotExist:
-            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 from dj_rest_auth.registration.views import RegisterView
 from dj_rest_auth.views import LoginView
 from django.conf import settings
@@ -244,14 +365,23 @@ class CustomRegisterView(RegisterView):
         serializer.is_valid(raise_exception=True)
 
         # Save the user (this triggers CustomRegisterSerializer.save which sends OTP)
-        user = serializer.save(request)
+        # Guard race-condition where duplicate email can still happen between
+        # validation and insert.
+        try:
+            user = serializer.save(request)
+        except IntegrityError:
+            return Response(
+                {
+                    "message": "A user is already registered with this e-mail address.",
+                },
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         email = request.data.get('email')
         return Response(
             {
-                "detail": "Verification Code has been sent to your email.",
+                "message": "Verification Code has been sent to your email.",
                 "email": email,
-                "message": "Please use the verify-otp endpoint to activate your account."
             },
             status=status.HTTP_201_CREATED
         )

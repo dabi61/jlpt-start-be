@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 
+from core.pagination import StandardResultsSetPagination
 from .models import Kanji
 from .serializers import KanjiSerializer, KanjiListSerializer
 
@@ -16,6 +17,7 @@ class KanjiViewSet(viewsets.ModelViewSet):
     ViewSet for Kanji model.
     """
     queryset = Kanji.objects.all()
+    pagination_class = StandardResultsSetPagination
     permission_classes = [IsAuthenticated]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['kanji', 'mean', 'on', 'kun']
@@ -96,11 +98,24 @@ class KanjiViewSet(viewsets.ModelViewSet):
         """Get all examples for a specific kanji."""
         kanji = self.get_object()
         examples = kanji.examples if isinstance(kanji.examples, list) else []
+        page = self.paginate_queryset(examples)
+        if page is not None:
+            paginated_data = self.get_paginated_response(page).data
+            return Response({
+                'kanji_id': kanji.id,
+                'kanji': kanji.kanji,
+                'example_count': len(examples),
+                'count': paginated_data.get('count', len(examples)),
+                'next': paginated_data.get('next'),
+                'previous': paginated_data.get('previous'),
+                'examples': paginated_data.get('results', []),
+            })
+
         return Response({
             'kanji_id': kanji.id,
             'kanji': kanji.kanji,
             'example_count': len(examples),
-            'examples': examples
+            'examples': examples,
         })
 
     @extend_schema(
@@ -133,13 +148,26 @@ class KanjiViewSet(viewsets.ModelViewSet):
         """Get component details for a specific kanji."""
         kanji = self.get_object()
         comp_detail = kanji.compDetail if isinstance(kanji.compDetail, list) else []
+        page = self.paginate_queryset(comp_detail)
+        if page is not None:
+            paginated_data = self.get_paginated_response(page).data
+            return Response({
+                'kanji_id': kanji.id,
+                'kanji': kanji.kanji,
+                'comp': kanji.comp,
+                'stroke_count': kanji.stroke_count,
+                'component_count': len(comp_detail),
+                'count': paginated_data.get('count', len(comp_detail)),
+                'next': paginated_data.get('next'),
+                'previous': paginated_data.get('previous'),
+                'compDetail': paginated_data.get('results', []),
+            })
+
         return Response({
             'kanji_id': kanji.id,
             'kanji': kanji.kanji,
             'comp': kanji.comp,
             'stroke_count': kanji.stroke_count,
             'component_count': len(comp_detail),
-            'compDetail': comp_detail
+            'compDetail': comp_detail,
         })
-
-

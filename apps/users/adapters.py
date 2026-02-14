@@ -1,8 +1,7 @@
 from allauth.account.adapter import DefaultAccountAdapter
-from rest_framework.response import Response
-from rest_framework import status
-import json
-from django.http import HttpResponse
+from django.http import JsonResponse
+
+from core.response_envelope import build_envelope
 
 class CustomAccountAdapter(DefaultAccountAdapter):
     """
@@ -16,22 +15,24 @@ class CustomAccountAdapter(DefaultAccountAdapter):
         """
         # Since this is called from within a view, we often need to return an HttpResponse
         # that DRF can handle or a simple HttpResponse with JSON.
-        response_data = {
-            "error": "Account is inactive.",
-            "detail": "Please check your email for the verification code (OTP) to activate your account."
-        }
-        return HttpResponse(
-            json.dumps(response_data),
-            content_type="application/json",
-            status=403
+        return JsonResponse(
+            build_envelope(
+                code=403,
+                message="Account is inactive. Please check your email for the verification code (OTP) to activate your account.",
+                data={},
+            ),
+            status=403,
         )
 
     def respond_email_verification_sent(self, request, user):
         """
         Return JSON response when email verification is sent.
         """
-        return HttpResponse(
-            json.dumps({"detail": "Verification email sent."}),
-            content_type="application/json",
-            status=200
+        return JsonResponse(
+            build_envelope(
+                code=200,
+                message="Verification email sent.",
+                data={},
+            ),
+            status=200,
         )

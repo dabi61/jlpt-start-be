@@ -37,6 +37,11 @@ Used to manage the remote VPS server from your local machine.
 | **Backup** | `./prod/backup.sh` | Backup remote DB & download to `backups/prod/`. |
 | **Setup** | `./prod/server_setup.sh` | Initial server setup (Docker, Nginx). Run once. |
 
+GitHub Actions auto deploy is also available:
+- Workflow: `.github/workflows/deploy-production.yml`
+- Trigger: push to `main` or manual dispatch
+- Uses repository secrets for SSH credentials
+
 ---
 
 ## ⚠️ Important Notes

@@ -63,6 +63,30 @@ Deploy latest code from GitHub `main` branch:
 ./scripts/prod/deploy.sh
 ```
 
+### 2.1 Auto Deploy With GitHub Actions
+
+Repository now includes workflow:
+- `.github/workflows/deploy-production.yml`
+
+It runs on:
+- push to `main`
+- manual trigger (`workflow_dispatch`)
+
+Required GitHub Repository Secrets:
+- `VPS_HOST`
+- `VPS_PORT`
+- `VPS_USER`
+- `VPS_SSH_KEY` (private key for SSH)
+- `VPS_PROJECT_DIR` (optional, default: `/root/jlpt_start`)
+- `VPS_COMPOSE_FILE` (optional, default: `docker-compose.prod.yml`)
+
+Deploy steps executed on server:
+- `git fetch` + `git reset --hard origin/main`
+- `docker compose up -d --build`
+- `python manage.py migrate`
+- `python manage.py collectstatic --noinput`
+- `docker image prune -f`
+
 ### 3. Server Management
 - **View Logs**:
   ```bash

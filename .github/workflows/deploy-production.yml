@@ -49,8 +49,10 @@ jobs:
           # Accept common misconfigurations: scheme/path/inline-port in VPS_HOST.
           HOST="${HOST#http://}"
           HOST="${HOST#https://}"
+          HOST="${HOST#ssh://}"
           HOST="${HOST%%/*}"
           HOST="${HOST%%:*}"
+          HOST="${HOST##*@}"
 
           if [ -z "$HOST" ]; then
             echo "VPS_HOST is empty after normalization."

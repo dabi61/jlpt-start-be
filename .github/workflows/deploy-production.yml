@@ -173,6 +173,9 @@ jobs:
 
           echo "Rebuilding containers..."
           docker compose -f "$COMPOSE_FILE" up -d --build
+          
+          echo "Reloading nginx (refresh upstream DNS)..."
+          docker compose -f "$COMPOSE_FILE" exec -T nginx nginx -s reload || true
 
           echo "Waiting for web container..."
           ready=0

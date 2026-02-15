@@ -18,7 +18,7 @@
 - `GET /api/users/stats/`: Get user learning stats (`level`, `streak`, `last_study_date`).
 - `POST /api/users/avatar/upload-url/`: Get presigned upload URL for avatar (Cloudflare R2).
 - `POST /api/users/avatar/confirm/`: Confirm uploaded image and set avatar.
-- `PUT/POST /api/users/avatar/`: Upload avatar (multipart) and set avatar (backend uploads to R2).
+- `PUT/POST /api/users/avatar/`: Upload avatar (raw bytes or multipart) and set avatar (backend uploads to R2).
 - `DELETE /api/users/avatar/`: Delete current avatar.
 - Avatar integration guide: `docs/api/avatar-cloudflare.md`.
 

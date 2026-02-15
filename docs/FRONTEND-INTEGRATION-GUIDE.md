@@ -375,6 +375,8 @@ Response giống như `confirm/`.
 
 Xóa avatar hiện tại (xóa trên R2 và clear profile).
 
+Xem hướng dẫn chi tiết: `docs/api/avatar-cloudflare.md`.
+
 ---
 
 ### 3.3. User Stats

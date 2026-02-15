@@ -242,3 +242,20 @@ class AvatarUploadTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(body['meta']['message'], 'file is required.')
         mock_s3_client.assert_not_called()
+
+    @patch('apps.users.r2_storage._s3_client')
+    def test_put_avatar_raw_bytes(self, mock_s3_client):
+        s3 = MagicMock()
+        mock_s3_client.return_value = s3
+
+        response = self.client.put(
+            self.avatar_url,
+            b'\x89PNG\r\n\x1a\nfakepng',
+            content_type='image/png',
+        )
+        body = self._body(response)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('avatar', body['data'])
+        self.assertIn('avatar_image_id', body['data'])
+
+        self.assertTrue(s3.put_object.called)

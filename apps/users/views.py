@@ -163,11 +163,12 @@ class UserAvatarView(APIView):
 
     def put(self, request):
         """
-        Upload avatar via backend (multipart/form-data) and set it for the current user.
+        Upload avatar via backend and set it for the current user.
 
         Request:
-          - multipart/form-data
-          - file field name: `file` (or `avatar` for backward compatibility)
+          - multipart/form-data with field `file` (or `avatar` for backward compatibility), OR
+          - raw bytes with `Content-Type: image/*` (optionally provide filename via `X-Filename`
+            header or `?filename=...` query param)
         """
         if not is_configured():
             return Response(
@@ -175,26 +176,61 @@ class UserAvatarView(APIView):
                 status=status.HTTP_503_SERVICE_UNAVAILABLE,
             )
 
-        upload = request.FILES.get('file') or request.FILES.get('avatar')
-        if not upload:
-            return Response(
-                {'message': 'file is required.'},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-
         max_bytes = int(getattr(settings, 'R2_MAX_UPLOAD_BYTES', 0) or 0)
-        if max_bytes and int(getattr(upload, 'size', 0) or 0) > max_bytes:
-            return Response(
-                {'message': 'Image is too large.'},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+        raw_content_type = (getattr(request, 'content_type', '') or '').split(';', 1)[0].strip()
+
+        # Avoid triggering DRF parsers for non-multipart requests.
+        if raw_content_type.lower().startswith('multipart/form-data'):
+            upload = request.FILES.get('file') or request.FILES.get('avatar')
+            if not upload:
+                return Response(
+                    {'message': 'file is required.'},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            if max_bytes and int(getattr(upload, 'size', 0) or 0) > max_bytes:
+                return Response(
+                    {'message': 'Image is too large.'},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            fileobj = getattr(upload, 'file', upload)
+            content_type = getattr(upload, 'content_type', None) or None
+            filename = getattr(upload, 'name', None) or None
+        else:
+            body = getattr(request, 'body', b'') or b''
+            if not body:
+                return Response(
+                    {'message': 'file is required.'},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            if max_bytes and len(body) > max_bytes:
+                return Response(
+                    {'message': 'Image is too large.'},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+            # Accept only image uploads for the raw-bytes mode.
+            raw_ct_lower = (raw_content_type or '').lower()
+            if raw_ct_lower and not (
+                raw_ct_lower.startswith('image/') or raw_ct_lower in ('application/octet-stream', 'binary/octet-stream')
+            ):
+                return Response(
+                    {'message': 'Unsupported content type.'},
+                    status=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
+                )
+
+            fileobj = body
+            content_type = raw_content_type or None
+            filename = request.headers.get('X-Filename') or request.query_params.get('filename') or None
 
         try:
             result = upload_avatar_file(
                 user_id=str(request.user.id),
-                fileobj=getattr(upload, 'file', upload),
-                content_type=getattr(upload, 'content_type', None) or None,
-                filename=getattr(upload, 'name', None) or None,
+                fileobj=fileobj,
+                content_type=content_type,
+                filename=filename,
             )
         except R2StorageBadRequestError as exc:
             return Response({'message': str(exc)}, status=status.HTTP_400_BAD_REQUEST)

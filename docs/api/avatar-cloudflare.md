@@ -76,9 +76,12 @@ Backend sẽ:
 Nếu bạn không muốn dùng presigned URL, backend hỗ trợ upload ảnh qua `multipart/form-data` và backend sẽ upload lên R2 thay bạn.
 
 - `PUT /api/users/avatar/` (hoặc `POST /api/users/avatar/`)
-- Content-Type: `multipart/form-data`
-- Field:
-  - `file`: file ảnh (hoặc `avatar`)
+- Hỗ trợ 2 kiểu request:
+  - `multipart/form-data`:
+    - Field: `file` (hoặc `avatar`)
+  - Raw bytes:
+    - `Content-Type: image/png` (hoặc `image/jpeg`, `image/webp`, `image/gif`, `application/octet-stream`)
+    - (optional) `X-Filename: avatar.png` hoặc `?filename=avatar.png`
 
 Response:
 ```json

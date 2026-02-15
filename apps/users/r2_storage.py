@@ -194,6 +194,14 @@ _ALLOWED_IMAGE_CONTENT_TYPES: dict[str, str] = {
     'image/gif': '.gif',
 }
 
+_EXT_TO_CONTENT_TYPE: dict[str, str] = {
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.webp': 'image/webp',
+    '.gif': 'image/gif',
+}
+
 
 def upload_avatar_file(
     *,
@@ -219,14 +227,20 @@ def upload_avatar_file(
     if filename:
         _, raw_ext = os.path.splitext(str(filename))
         raw_ext = raw_ext.lower()
-        if raw_ext in ('.png', '.jpg', '.jpeg', '.webp', '.gif'):
+        if raw_ext in _EXT_TO_CONTENT_TYPE:
             ext = raw_ext
 
     ct = (str(content_type).strip().lower() if content_type else '') or None
+    if ct in ('application/octet-stream', 'binary/octet-stream'):
+        ct = None
     if ct and ct not in _ALLOWED_IMAGE_CONTENT_TYPES:
         raise R2StorageBadRequestError('Unsupported image content type.')
     if not ext and ct:
         ext = _ALLOWED_IMAGE_CONTENT_TYPES.get(ct, '')
+    if not ct and ext:
+        ct = _EXT_TO_CONTENT_TYPE.get(ext)
+    if not ct:
+        raise R2StorageBadRequestError('content_type or filename is required.')
 
     key = f"{_avatar_prefix()}{user_id}/{uuid.uuid4().hex}{ext}"
 

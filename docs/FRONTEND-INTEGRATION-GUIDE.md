@@ -365,8 +365,9 @@ Xác nhận ảnh đã upload xong và set làm avatar cho user.
 
 #### PUT/POST `/api/users/avatar/` (upload qua backend)
 
-Nếu bạn muốn upload qua backend (1 API call), gửi `multipart/form-data`:
-- Field name: `file` (hoặc `avatar`)
+Nếu bạn muốn upload qua backend (1 API call), có 2 cách:
+- `multipart/form-data`: field name `file` (hoặc `avatar`)
+- Raw bytes: `Content-Type: image/*` (hoặc `application/octet-stream`) (optional `X-Filename` header hoặc `?filename=...`)
 
 Response giống như `confirm/`.
 

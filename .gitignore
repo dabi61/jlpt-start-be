@@ -28,6 +28,7 @@ venv.bak/
 # Project Specific
 staticfiles/
 .DS_Store
+.tmp/
 
 # Celery
 celerybeat-schedule

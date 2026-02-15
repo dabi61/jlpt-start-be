@@ -253,6 +253,20 @@ CF_IMAGES_ACCOUNT_HASH = env('CF_IMAGES_ACCOUNT_HASH', default='')
 CF_IMAGES_AVATAR_VARIANT = env('CF_IMAGES_AVATAR_VARIANT', default='avatar')
 CF_IMAGES_TIMEOUT = env.int('CF_IMAGES_TIMEOUT', default=15)
 
+# =============================================================================
+# Cloudflare R2 (S3-compatible) Settings
+# =============================================================================
+# Used for direct-to-R2 uploads via presigned URLs.
+R2_ENDPOINT_URL = env('R2_ENDPOINT_URL', default='')
+R2_REGION = env('R2_REGION', default='auto')
+R2_BUCKET_NAME = env('R2_BUCKET_NAME', default='')
+R2_ACCESS_KEY_ID = env('R2_ACCESS_KEY_ID', default='')
+R2_SECRET_ACCESS_KEY = env('R2_SECRET_ACCESS_KEY', default='')
+R2_PUBLIC_BASE_URL = env('R2_PUBLIC_BASE_URL', default='')  # e.g. https://storage.jlpt.codes
+R2_AVATAR_PREFIX = env('R2_AVATAR_PREFIX', default='avatar/')
+R2_PRESIGNED_EXPIRES = env.int('R2_PRESIGNED_EXPIRES', default=600)
+R2_MAX_UPLOAD_BYTES = env.int('R2_MAX_UPLOAD_BYTES', default=5242880)  # 5 MiB
+
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',

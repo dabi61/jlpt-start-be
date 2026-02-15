@@ -3,19 +3,22 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.core.cache import cache
 from django.db import IntegrityError
+from django.conf import settings
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiTypes
 
 from .models import User
 from .serializers import UserSerializer, UserProfileUpdateSerializer, AvatarConfirmSerializer
 from .utils import generate_otp, send_otp_email
-from .cloudflare_images import (
-    CloudflareImagesError,
-    CloudflareImagesConfigError,
-    create_direct_upload,
-    delete_image,
-    get_image,
+from .r2_storage import (
+    R2StorageError,
+    R2StorageConfigError,
+    R2ObjectNotFoundError,
+    create_avatar_upload,
+    delete_avatar,
+    head_avatar,
     is_configured,
-    resolve_avatar_url,
+    looks_like_avatar_key,
+    public_url,
 )
 
 
@@ -55,20 +58,28 @@ class UserStatsView(APIView):
 
 class UserAvatarUploadURLView(APIView):
     """
-    Create a one-time Cloudflare direct upload URL for avatar upload.
+    Create a one-time presigned upload URL for avatar upload (Cloudflare R2).
     """
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
         if not is_configured():
             return Response(
-                {'message': 'Cloudflare Images is not configured.'},
+                {'message': 'R2 storage is not configured.'},
                 status=status.HTTP_503_SERVICE_UNAVAILABLE,
             )
 
         try:
-            payload = create_direct_upload(user_id=str(request.user.id))
-        except CloudflareImagesError as exc:
+            content_type = request.data.get('content_type') or request.data.get('contentType')
+            filename = request.data.get('filename') or request.data.get('file_name')
+            payload = create_avatar_upload(
+                user_id=str(request.user.id),
+                content_type=content_type,
+                filename=filename,
+            )
+        except R2StorageConfigError as exc:
+            return Response({'message': str(exc)}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+        except R2StorageError as exc:
             return Response({'message': str(exc)}, status=status.HTTP_502_BAD_GATEWAY)
 
         return Response(payload, status=status.HTTP_200_OK)
@@ -76,7 +87,7 @@ class UserAvatarUploadURLView(APIView):
 
 class UserAvatarConfirmView(APIView):
     """
-    Confirm uploaded image and set it as current user's avatar.
+    Confirm uploaded object and set it as current user's avatar.
     """
     permission_classes = [permissions.IsAuthenticated]
 
@@ -87,25 +98,33 @@ class UserAvatarConfirmView(APIView):
     def post(self, request):
         serializer = AvatarConfirmSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        image_id = serializer.validated_data['image_id']
+        image_id = serializer.validated_data['image_id']  # R2 object key
 
         if not is_configured():
             return Response(
-                {'message': 'Cloudflare Images is not configured.'},
+                {'message': 'R2 storage is not configured.'},
                 status=status.HTTP_503_SERVICE_UNAVAILABLE,
             )
 
         try:
-            image = get_image(image_id)
-            if bool(image.get('draft')):
+            head = head_avatar(key=image_id, user_id=str(request.user.id))
+            max_bytes = int(getattr(settings, 'R2_MAX_UPLOAD_BYTES', 0) or 0)
+            if max_bytes and int(head.get('ContentLength') or 0) > max_bytes:
+                # Best-effort cleanup.
+                try:
+                    delete_avatar(key=image_id, user_id=str(request.user.id))
+                except R2StorageError:
+                    pass
                 return Response(
-                    {'message': 'Image upload is not completed yet.'},
+                    {'message': 'Image is too large.'},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
-            avatar_url = resolve_avatar_url(image)
-        except CloudflareImagesConfigError as exc:
+            avatar_url = public_url(image_id)
+        except R2ObjectNotFoundError as exc:
+            return Response({'message': str(exc)}, status=status.HTTP_400_BAD_REQUEST)
+        except R2StorageConfigError as exc:
             return Response({'message': str(exc)}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
-        except CloudflareImagesError as exc:
+        except R2StorageError as exc:
             return Response({'message': str(exc)}, status=status.HTTP_502_BAD_GATEWAY)
 
         user = request.user
@@ -114,10 +133,10 @@ class UserAvatarConfirmView(APIView):
         user.avatar = avatar_url
         user.save(update_fields=['avatar_image_id', 'avatar'])
 
-        if old_image_id and old_image_id != image_id:
+        if old_image_id and old_image_id != image_id and looks_like_avatar_key(old_image_id):
             try:
-                delete_image(old_image_id)
-            except CloudflareImagesError:
+                delete_avatar(key=old_image_id, user_id=str(request.user.id))
+            except R2StorageError:
                 # Non-blocking cleanup failure; keep new avatar.
                 pass
 
@@ -132,7 +151,7 @@ class UserAvatarConfirmView(APIView):
 
 class UserAvatarDeleteView(APIView):
     """
-    Delete current avatar from Cloudflare and clear profile avatar.
+    Delete current avatar from R2 and clear profile avatar.
     """
     permission_classes = [permissions.IsAuthenticated]
 
@@ -140,15 +159,15 @@ class UserAvatarDeleteView(APIView):
         user = request.user
         image_id = (user.avatar_image_id or '').strip()
 
-        if image_id:
+        if image_id and looks_like_avatar_key(image_id):
             if not is_configured():
                 return Response(
-                    {'message': 'Cloudflare Images is not configured.'},
+                    {'message': 'R2 storage is not configured.'},
                     status=status.HTTP_503_SERVICE_UNAVAILABLE,
                 )
             try:
-                delete_image(image_id)
-            except CloudflareImagesError as exc:
+                delete_avatar(key=image_id, user_id=str(request.user.id))
+            except R2StorageError as exc:
                 return Response({'message': str(exc)}, status=status.HTTP_502_BAD_GATEWAY)
 
         user.avatar = None
@@ -241,7 +260,6 @@ class ResendOTPView(APIView):
             return Response({'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
 from dj_rest_auth.registration.views import RegisterView
 from dj_rest_auth.views import LoginView
-from django.conf import settings
 
 class CustomLoginView(LoginView):
     """

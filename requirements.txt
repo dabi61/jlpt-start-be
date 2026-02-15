@@ -31,3 +31,6 @@ django-redis>=5.4.0
 
 # Production Server
 gunicorn>=21.2.0
+
+# Object storage (Cloudflare R2 - S3 compatible)
+boto3>=1.34.0

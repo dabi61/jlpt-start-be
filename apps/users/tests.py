@@ -1,8 +1,11 @@
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import override_settings
 from rest_framework.test import APITestCase
 from rest_framework import status
+from unittest.mock import MagicMock, patch
 
 User = get_user_model()
 
@@ -177,3 +180,65 @@ class AuthFlowTests(APITestCase):
             response_body['meta']['message'],
             'A user is already registered with this e-mail address.',
         )
+
+
+@override_settings(
+    R2_ENDPOINT_URL='https://example.r2.cloudflarestorage.com',
+    R2_REGION='auto',
+    R2_BUCKET_NAME='test-bucket',
+    R2_ACCESS_KEY_ID='test-access-key',
+    R2_SECRET_ACCESS_KEY='test-secret-key',
+    R2_PUBLIC_BASE_URL='https://storage.example.com',
+    R2_AVATAR_PREFIX='avatar/',
+    R2_MAX_UPLOAD_BYTES=1024 * 1024,
+)
+class AvatarUploadTests(APITestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            email='avatar@example.com',
+            password='StrongPassword123!',
+            status=User.Status.ACTIVE,
+        )
+        self.client.force_authenticate(user=self.user)
+        self.avatar_url = reverse('users:avatar-delete')
+
+    @staticmethod
+    def _body(response):
+        return response.json()
+
+    @patch('apps.users.r2_storage._s3_client')
+    def test_put_avatar_uploads_and_sets_profile(self, mock_s3_client):
+        s3 = MagicMock()
+        mock_s3_client.return_value = s3
+
+        upload = SimpleUploadedFile(
+            'avatar.png',
+            b'\x89PNG\r\n\x1a\nfakepng',
+            content_type='image/png',
+        )
+        response = self.client.put(self.avatar_url, {'file': upload}, format='multipart')
+        body = self._body(response)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('avatar', body['data'])
+        self.assertIn('avatar_image_id', body['data'])
+        self.assertTrue(body['data']['avatar'].startswith('https://storage.example.com/avatar/'))
+        self.assertIn(f"/avatar/{self.user.id}/", body['data']['avatar'])
+
+        # Ensure an object was uploaded to the expected bucket/prefix.
+        self.assertTrue(s3.put_object.called)
+        kwargs = s3.put_object.call_args.kwargs
+        self.assertEqual(kwargs['Bucket'], 'test-bucket')
+        self.assertTrue(kwargs['Key'].startswith(f"avatar/{self.user.id}/"))
+
+        self.user.refresh_from_db()
+        self.assertEqual(self.user.avatar, body['data']['avatar'])
+        self.assertEqual(self.user.avatar_image_id, body['data']['avatar_image_id'])
+
+    @patch('apps.users.r2_storage._s3_client')
+    def test_put_avatar_requires_file(self, mock_s3_client):
+        response = self.client.put(self.avatar_url, {}, format='multipart')
+        body = self._body(response)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(body['meta']['message'], 'file is required.')
+        mock_s3_client.assert_not_called()

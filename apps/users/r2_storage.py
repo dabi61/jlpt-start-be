@@ -185,6 +185,72 @@ def create_avatar_upload(*, user_id: str, content_type: str | None = None, filen
     }
 
 
+_ALLOWED_IMAGE_CONTENT_TYPES: dict[str, str] = {
+    # content-type -> default extension (used when filename has no valid extension)
+    'image/png': '.png',
+    'image/jpeg': '.jpg',
+    'image/jpg': '.jpg',
+    'image/webp': '.webp',
+    'image/gif': '.gif',
+}
+
+
+def upload_avatar_file(
+    *,
+    user_id: str,
+    fileobj,
+    content_type: str | None = None,
+    filename: str | None = None,
+) -> dict[str, Any]:
+    """
+    Upload an avatar to R2 via backend (server-side upload).
+
+    This is an alternative to presigned URLs for non-browser clients that prefer
+    a single backend API call.
+    """
+    _ensure_config()
+    s3 = _s3_client()
+
+    user_id = str(user_id).strip()
+    if not user_id:
+        raise R2StorageBadRequestError('user_id is required.')
+
+    ext = ''
+    if filename:
+        _, raw_ext = os.path.splitext(str(filename))
+        raw_ext = raw_ext.lower()
+        if raw_ext in ('.png', '.jpg', '.jpeg', '.webp', '.gif'):
+            ext = raw_ext
+
+    ct = (str(content_type).strip().lower() if content_type else '') or None
+    if ct and ct not in _ALLOWED_IMAGE_CONTENT_TYPES:
+        raise R2StorageBadRequestError('Unsupported image content type.')
+    if not ext and ct:
+        ext = _ALLOWED_IMAGE_CONTENT_TYPES.get(ct, '')
+
+    key = f"{_avatar_prefix()}{user_id}/{uuid.uuid4().hex}{ext}"
+
+    put_kwargs: dict[str, Any] = {
+        'Bucket': settings.R2_BUCKET_NAME,
+        'Key': key,
+        'Body': fileobj,
+        # New key per upload -> immutable caching is safe and prevents needless re-fetches.
+        'CacheControl': 'public, max-age=31536000, immutable',
+    }
+    if ct:
+        put_kwargs['ContentType'] = ct
+
+    try:
+        s3.put_object(**put_kwargs)
+    except (BotoCoreError, ClientError) as exc:
+        raise R2StorageAPIError(f'Failed to upload avatar object: {exc}') from exc
+
+    return {
+        'image_id': key,
+        'public_url': public_url(key),
+    }
+
+
 def head_avatar(*, key: str, user_id: str) -> dict[str, Any]:
     _ensure_config()
     _validate_avatar_key_for_user(key, user_id=user_id)

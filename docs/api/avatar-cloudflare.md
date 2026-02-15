@@ -29,6 +29,8 @@ Ghi chú:
 
 ## 3. API Flow
 
+### Option A (khuyến nghị): Upload trực tiếp lên R2 (presigned URL)
+
 ### Bước 1: Lấy upload URL
 - `POST /api/users/avatar/upload-url/`
 - Request body (optional):
@@ -69,6 +71,22 @@ Backend sẽ:
 - Lưu `public_url` vào `user.avatar`.
 - Lưu `image_id` vào `user.avatar_image_id`.
 - Xóa avatar cũ (best-effort) nếu thuộc prefix `avatar/`.
+
+### Option B: Upload qua backend (1 API call)
+Nếu bạn không muốn dùng presigned URL, backend hỗ trợ upload ảnh qua `multipart/form-data` và backend sẽ upload lên R2 thay bạn.
+
+- `PUT /api/users/avatar/` (hoặc `POST /api/users/avatar/`)
+- Content-Type: `multipart/form-data`
+- Field:
+  - `file`: file ảnh (hoặc `avatar`)
+
+Response:
+```json
+{
+  "avatar": "https://storage.jlpt.codes/avatar/<user_id>/<uuid>.png",
+  "avatar_image_id": "avatar/<user_id>/<uuid>.png"
+}
+```
 
 ### Bước 4: Xóa avatar
 - `DELETE /api/users/avatar/`

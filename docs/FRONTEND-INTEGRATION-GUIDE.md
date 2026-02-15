@@ -312,24 +312,37 @@ Cập nhật thông tin user.
 
 ---
 
-### 3.2. User Avatar (Cloudflare Images)
+### 3.2. User Avatar (Cloudflare R2)
 
 #### POST `/api/users/avatar/upload-url/`
 
-Lấy URL upload tạm thời (1 lần) để frontend upload ảnh trực tiếp lên Cloudflare.
+Lấy presigned URL (1 lần) để upload ảnh trực tiếp lên Cloudflare R2.
+
+**Request (optional):**
+```json
+{
+  "content_type": "image/png",
+  "filename": "avatar.png"
+}
+```
 
 **Response:**
 ```json
 {
-  "image_id": "1f6d0c85-0fd6-4dca-9e25-6b5fa6d8cc32",
-  "upload_url": "https://upload.imagedelivery.net/..."
+  "image_id": "avatar/<user_id>/<uuid>.png",
+  "upload_url": "https://<account_id>.r2.cloudflarestorage.com/<bucket>/avatar/<user_id>/<uuid>.png?...",
+  "method": "PUT",
+  "headers": { "Content-Type": "image/png" },
+  "public_url": "https://storage.jlpt.codes/avatar/<user_id>/<uuid>.png",
+  "expires_in": 600,
+  "max_bytes": 5242880
 }
 ```
 
-Frontend upload file trực tiếp:
-- Method: `POST`
-- Content-Type: `multipart/form-data`
-- Field name: `file`
+Upload file trực tiếp:
+- Method: `PUT` tới `upload_url`
+- Body: bytes của file (không phải multipart)
+- Header: `Content-Type` (nếu backend trả về `headers`)
 
 #### POST `/api/users/avatar/confirm/`
 
@@ -338,21 +351,28 @@ Xác nhận ảnh đã upload xong và set làm avatar cho user.
 **Request:**
 ```json
 {
-  "image_id": "1f6d0c85-0fd6-4dca-9e25-6b5fa6d8cc32"
+  "image_id": "avatar/<user_id>/<uuid>.png"
 }
 ```
 
 **Response:**
 ```json
 {
-  "avatar": "https://imagedelivery.net/<account_hash>/<image_id>/avatar",
-  "avatar_image_id": "1f6d0c85-0fd6-4dca-9e25-6b5fa6d8cc32"
+  "avatar": "https://storage.jlpt.codes/avatar/<user_id>/<uuid>.png",
+  "avatar_image_id": "avatar/<user_id>/<uuid>.png"
 }
 ```
 
+#### PUT/POST `/api/users/avatar/` (upload qua backend)
+
+Nếu bạn muốn upload qua backend (1 API call), gửi `multipart/form-data`:
+- Field name: `file` (hoặc `avatar`)
+
+Response giống như `confirm/`.
+
 #### DELETE `/api/users/avatar/`
 
-Xóa avatar hiện tại (xóa trên Cloudflare và clear profile).
+Xóa avatar hiện tại (xóa trên R2 và clear profile).
 
 ---
 

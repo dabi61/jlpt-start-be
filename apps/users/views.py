@@ -1,4 +1,5 @@
 from rest_framework import generics, permissions, status
+from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.core.cache import cache
@@ -20,6 +21,7 @@ from .r2_storage import (
     is_configured,
     looks_like_avatar_key,
     public_url,
+    upload_avatar_file,
 )
 
 
@@ -152,11 +154,79 @@ class UserAvatarConfirmView(APIView):
         )
 
 
-class UserAvatarDeleteView(APIView):
+class UserAvatarView(APIView):
     """
-    Delete current avatar from R2 and clear profile avatar.
+    Update or delete current avatar stored in R2.
     """
     permission_classes = [permissions.IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
+
+    def put(self, request):
+        """
+        Upload avatar via backend (multipart/form-data) and set it for the current user.
+
+        Request:
+          - multipart/form-data
+          - file field name: `file` (or `avatar` for backward compatibility)
+        """
+        if not is_configured():
+            return Response(
+                {'message': 'R2 storage is not configured.'},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            )
+
+        upload = request.FILES.get('file') or request.FILES.get('avatar')
+        if not upload:
+            return Response(
+                {'message': 'file is required.'},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        max_bytes = int(getattr(settings, 'R2_MAX_UPLOAD_BYTES', 0) or 0)
+        if max_bytes and int(getattr(upload, 'size', 0) or 0) > max_bytes:
+            return Response(
+                {'message': 'Image is too large.'},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            result = upload_avatar_file(
+                user_id=str(request.user.id),
+                fileobj=getattr(upload, 'file', upload),
+                content_type=getattr(upload, 'content_type', None) or None,
+                filename=getattr(upload, 'name', None) or None,
+            )
+        except R2StorageBadRequestError as exc:
+            return Response({'message': str(exc)}, status=status.HTTP_400_BAD_REQUEST)
+        except R2StorageConfigError as exc:
+            return Response({'message': str(exc)}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+        except R2StorageError as exc:
+            return Response({'message': str(exc)}, status=status.HTTP_502_BAD_GATEWAY)
+
+        user = request.user
+        old_image_id = user.avatar_image_id
+        user.avatar_image_id = result['image_id']
+        user.avatar = result['public_url']
+        user.save(update_fields=['avatar_image_id', 'avatar'])
+
+        if old_image_id and old_image_id != user.avatar_image_id and looks_like_avatar_key(old_image_id):
+            try:
+                delete_avatar(key=old_image_id, user_id=str(request.user.id))
+            except R2StorageError:
+                # Non-blocking cleanup failure; keep new avatar.
+                pass
+
+        return Response(
+            {
+                'avatar': user.avatar,
+                'avatar_image_id': user.avatar_image_id,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+    def post(self, request):
+        # Some clients struggle with multipart PUT; allow POST as an alias.
+        return self.put(request)
 
     def delete(self, request):
         user = request.user

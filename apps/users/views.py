@@ -13,6 +13,7 @@ from .r2_storage import (
     R2StorageError,
     R2StorageConfigError,
     R2ObjectNotFoundError,
+    R2StorageBadRequestError,
     create_avatar_upload,
     delete_avatar,
     head_avatar,
@@ -122,6 +123,8 @@ class UserAvatarConfirmView(APIView):
             avatar_url = public_url(image_id)
         except R2ObjectNotFoundError as exc:
             return Response({'message': str(exc)}, status=status.HTTP_400_BAD_REQUEST)
+        except R2StorageBadRequestError as exc:
+            return Response({'message': str(exc)}, status=status.HTTP_400_BAD_REQUEST)
         except R2StorageConfigError as exc:
             return Response({'message': str(exc)}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
         except R2StorageError as exc:
@@ -167,6 +170,9 @@ class UserAvatarDeleteView(APIView):
                 )
             try:
                 delete_avatar(key=image_id, user_id=str(request.user.id))
+            except R2StorageBadRequestError:
+                # Ignore invalid historical keys; still clear profile fields.
+                pass
             except R2StorageError as exc:
                 return Response({'message': str(exc)}, status=status.HTTP_502_BAD_GATEWAY)
 

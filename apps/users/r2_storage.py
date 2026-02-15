@@ -32,6 +32,10 @@ class R2ObjectNotFoundError(R2StorageError):
     """Raised when a referenced object key does not exist."""
 
 
+class R2StorageBadRequestError(R2StorageError):
+    """Raised when client input is invalid (e.g., malformed key)."""
+
+
 class R2StorageAPIError(R2StorageError):
     """Raised when the S3-compatible API returns an error."""
 
@@ -105,16 +109,16 @@ def looks_like_avatar_key(key: str) -> bool:
 def _validate_avatar_key_for_user(key: str, user_id: str):
     prefix = _avatar_prefix()
     if not key or not isinstance(key, str):
-        raise R2StorageAPIError('Invalid avatar key.')
+        raise R2StorageBadRequestError('Invalid avatar key.')
     if key.startswith('/'):
-        raise R2StorageAPIError('Invalid avatar key.')
+        raise R2StorageBadRequestError('Invalid avatar key.')
     if '\\' in key or '..' in key:
-        raise R2StorageAPIError('Invalid avatar key.')
+        raise R2StorageBadRequestError('Invalid avatar key.')
     if not key.startswith(prefix):
-        raise R2StorageAPIError('Avatar key does not match expected prefix.')
+        raise R2StorageBadRequestError('Avatar key does not match expected prefix.')
     expected = f"{prefix}{str(user_id).strip()}/"
     if not key.startswith(expected):
-        raise R2StorageAPIError('Avatar key does not belong to current user.')
+        raise R2StorageBadRequestError('Avatar key does not belong to current user.')
 
 
 def public_url(key: str) -> str:
@@ -142,7 +146,7 @@ def create_avatar_upload(*, user_id: str, content_type: str | None = None, filen
 
     user_id = str(user_id).strip()
     if not user_id:
-        raise R2StorageAPIError('user_id is required.')
+        raise R2StorageBadRequestError('user_id is required.')
 
     # Keep the key short to fit in the existing `avatar_image_id` DB field.
     ext = ''
@@ -205,4 +209,3 @@ def delete_avatar(*, key: str, user_id: str | None = None):
         s3.delete_object(Bucket=settings.R2_BUCKET_NAME, Key=key)
     except (BotoCoreError, ClientError) as exc:
         raise R2StorageAPIError(f'Failed to delete avatar object: {exc}') from exc
-

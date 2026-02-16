@@ -70,6 +70,12 @@ Ví dụ Postman:
 4) Body:
 Chọn `binary` rồi chọn file ảnh.
 
+Test nhanh trên Swagger UI:
+1) Mở `PUT /api/users/avatar/` rồi bấm `Try it out`.
+2) Ở dropdown `Request body content type`, chọn `multipart/form-data`.
+3) Field `file` sẽ xuất hiện để chọn ảnh từ máy.
+4) Nếu không thấy field, hard refresh trình duyệt (`Cmd+Shift+R`) hoặc restart server.
+
 Ví dụ Node.js (fetch):
 ```js
 import fs from "node:fs";

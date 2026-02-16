@@ -1,11 +1,12 @@
 from rest_framework import generics, permissions, status
+from rest_framework import serializers as drf_serializers
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.core.cache import cache
 from django.db import IntegrityError
 from django.conf import settings
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiTypes
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiTypes, inline_serializer
 
 from .models import User
 from .serializers import UserSerializer, UserProfileUpdateSerializer, AvatarConfirmSerializer
@@ -65,6 +66,37 @@ class UserAvatarUploadURLView(APIView):
     """
     permission_classes = [permissions.IsAuthenticated]
 
+    @extend_schema(
+        request=inline_serializer(
+            name='AvatarUploadURLRequest',
+            fields={
+                'content_type': drf_serializers.CharField(required=False),
+                'contentType': drf_serializers.CharField(required=False),
+                'filename': drf_serializers.CharField(required=False),
+                'file_name': drf_serializers.CharField(required=False),
+            },
+        ),
+        responses={
+            200: inline_serializer(
+                name='AvatarUploadURLResponse',
+                fields={
+                    'image_id': drf_serializers.CharField(),
+                    'upload_url': drf_serializers.CharField(),
+                    'method': drf_serializers.CharField(),
+                    'headers': drf_serializers.DictField(
+                        child=drf_serializers.CharField(),
+                        required=False,
+                    ),
+                    'public_url': drf_serializers.URLField(),
+                    'expires_in': drf_serializers.IntegerField(),
+                    'max_bytes': drf_serializers.IntegerField(),
+                },
+            ),
+            401: OpenApiTypes.OBJECT,
+            502: OpenApiTypes.OBJECT,
+            503: OpenApiTypes.OBJECT,
+        },
+    )
     def post(self, request):
         if not is_configured():
             return Response(
@@ -96,7 +128,19 @@ class UserAvatarConfirmView(APIView):
 
     @extend_schema(
         request=AvatarConfirmSerializer,
-        responses={200: OpenApiTypes.OBJECT},
+        responses={
+            200: inline_serializer(
+                name='AvatarConfirmResponse',
+                fields={
+                    'avatar': drf_serializers.URLField(),
+                    'avatar_image_id': drf_serializers.CharField(),
+                },
+            ),
+            400: OpenApiTypes.OBJECT,
+            401: OpenApiTypes.OBJECT,
+            502: OpenApiTypes.OBJECT,
+            503: OpenApiTypes.OBJECT,
+        },
     )
     def post(self, request):
         serializer = AvatarConfirmSerializer(data=request.data)
@@ -161,6 +205,52 @@ class UserAvatarView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
 
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name='filename',
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.QUERY,
+                required=False,
+                description='Optional filename for raw-bytes uploads (e.g. avatar.png).',
+            ),
+            OpenApiParameter(
+                name='X-Filename',
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.HEADER,
+                required=False,
+                description='Optional filename header for raw-bytes uploads.',
+            ),
+        ],
+        request={
+            'multipart/form-data': inline_serializer(
+                name='AvatarUploadMultipartRequest',
+                fields={
+                    'file': drf_serializers.ImageField(required=False),
+                    'avatar': drf_serializers.ImageField(required=False),
+                },
+            ),
+            'application/octet-stream': OpenApiTypes.BINARY,
+            'image/png': OpenApiTypes.BINARY,
+            'image/jpeg': OpenApiTypes.BINARY,
+            'image/webp': OpenApiTypes.BINARY,
+            'image/gif': OpenApiTypes.BINARY,
+        },
+        responses={
+            200: inline_serializer(
+                name='AvatarUploadResponse',
+                fields={
+                    'avatar': drf_serializers.URLField(),
+                    'avatar_image_id': drf_serializers.CharField(),
+                },
+            ),
+            400: OpenApiTypes.OBJECT,
+            401: OpenApiTypes.OBJECT,
+            415: OpenApiTypes.OBJECT,
+            502: OpenApiTypes.OBJECT,
+            503: OpenApiTypes.OBJECT,
+        },
+    )
     def put(self, request):
         """
         Upload avatar via backend and set it for the current user.
@@ -260,10 +350,70 @@ class UserAvatarView(APIView):
             status=status.HTTP_200_OK,
         )
 
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name='filename',
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.QUERY,
+                required=False,
+                description='Optional filename for raw-bytes uploads (e.g. avatar.png).',
+            ),
+            OpenApiParameter(
+                name='X-Filename',
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.HEADER,
+                required=False,
+                description='Optional filename header for raw-bytes uploads.',
+            ),
+        ],
+        request={
+            'multipart/form-data': inline_serializer(
+                name='AvatarUploadMultipartRequestPost',
+                fields={
+                    'file': drf_serializers.ImageField(required=False),
+                    'avatar': drf_serializers.ImageField(required=False),
+                },
+            ),
+            'application/octet-stream': OpenApiTypes.BINARY,
+            'image/png': OpenApiTypes.BINARY,
+            'image/jpeg': OpenApiTypes.BINARY,
+            'image/webp': OpenApiTypes.BINARY,
+            'image/gif': OpenApiTypes.BINARY,
+        },
+        responses={
+            200: inline_serializer(
+                name='AvatarUploadResponsePost',
+                fields={
+                    'avatar': drf_serializers.URLField(),
+                    'avatar_image_id': drf_serializers.CharField(),
+                },
+            ),
+            400: OpenApiTypes.OBJECT,
+            401: OpenApiTypes.OBJECT,
+            415: OpenApiTypes.OBJECT,
+            502: OpenApiTypes.OBJECT,
+            503: OpenApiTypes.OBJECT,
+        },
+    )
     def post(self, request):
         # Some clients struggle with multipart PUT; allow POST as an alias.
         return self.put(request)
 
+    @extend_schema(
+        responses={
+            200: inline_serializer(
+                name='AvatarDeleteResponse',
+                fields={
+                    'avatar': drf_serializers.URLField(allow_null=True),
+                    'avatar_image_id': drf_serializers.CharField(allow_null=True),
+                },
+            ),
+            401: OpenApiTypes.OBJECT,
+            502: OpenApiTypes.OBJECT,
+            503: OpenApiTypes.OBJECT,
+        },
+    )
     def delete(self, request):
         user = request.user
         image_id = (user.avatar_image_id or '').strip()

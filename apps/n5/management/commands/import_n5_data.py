@@ -196,6 +196,11 @@ class Command(BaseCommand):
             action='store_true',
             help='Parse and report only, do not write DB/upload media.',
         )
+        parser.add_argument(
+            '--skip-existing-exams',
+            action='store_true',
+            help='Skip JSON files whose exam (source_file) already exists in DB.',
+        )
 
     def handle(self, *args, **options):
         source_dir = Path(options['source_dir']).resolve()
@@ -204,6 +209,7 @@ class Command(BaseCommand):
         skip_upload_local = bool(options['skip_upload_local'])
         skip_upload_remote = bool(options['skip_upload_remote'])
         dry_run = bool(options['dry_run'])
+        skip_existing_exams = bool(options.get('skip_existing_exams'))
 
         if not source_dir.exists() or not source_dir.is_dir():
             raise CommandError(f"Source dir not found: {source_dir}")
@@ -220,7 +226,11 @@ class Command(BaseCommand):
 
         local_media_map: dict[str, UploadedMedia] = {}
         local_variant_map: dict[str, set[str]] = {}
+        # Cache remote URLs -> mapped public URLs to avoid re-downloading/uploading.
+        # Useful when re-running the import after media has already been uploaded.
         remote_url_cache: dict[str, str] = {}
+        if not dry_run:
+            remote_url_cache = self._load_remote_url_cache()
 
         if clear and not dry_run:
             self.stdout.write(self.style.WARNING('Clearing existing N5 dataset...'))
@@ -236,7 +246,7 @@ class Command(BaseCommand):
                 f"Local media prepared: {len(local_media_map)} files ({'dry-run' if dry_run else 'uploaded'})."
             ))
         else:
-            local_media_map, local_variant_map = self._build_local_media_indices(source_dir)
+            local_media_map, local_variant_map = self._build_local_media_indices(source_dir, uploader=uploader)
             self.stdout.write(self.style.WARNING('Skipped local media upload; using local index for mapping only.'))
 
         summary = {
@@ -253,7 +263,13 @@ class Command(BaseCommand):
         }
 
         for json_path in json_files:
-            self.stdout.write(f"Importing {json_path.relative_to(source_dir)} ...")
+            relative = json_path.relative_to(source_dir)
+            if skip_existing_exams and not dry_run:
+                if N5Exam.objects.filter(source_file=str(relative)).exists():
+                    self.stdout.write(f"Skipping {relative} (already imported).")
+                    continue
+
+            self.stdout.write(f"Importing {relative} ...")
             file_stats = self._import_one_json(
                 source_dir=source_dir,
                 json_path=json_path,
@@ -276,7 +292,25 @@ class Command(BaseCommand):
         N5Section.objects.all().delete()
         N5MediaAsset.objects.all().delete()
 
-    def _build_local_media_indices(self, source_dir: Path) -> tuple[dict[str, UploadedMedia], dict[str, set[str]]]:
+    def _load_remote_url_cache(self) -> dict[str, str]:
+        """Build a cache mapping remote source URLs to already-uploaded public URLs."""
+        cache: dict[str, str] = {}
+        for source_url, public_url in (
+            N5MediaAsset.objects
+            .filter(source_type=N5MediaAsset.SourceType.REMOTE)
+            .exclude(source_url='')
+            .exclude(public_url='')
+            .values_list('source_url', 'public_url')
+        ):
+            if source_url and public_url:
+                cache[str(source_url)] = str(public_url)
+        return cache
+
+    def _build_local_media_indices(
+        self,
+        source_dir: Path,
+        uploader: R2Uploader | None = None,
+    ) -> tuple[dict[str, UploadedMedia], dict[str, set[str]]]:
         media_map: dict[str, UploadedMedia] = {}
         variant_map: dict[str, set[str]] = {}
 
@@ -288,9 +322,16 @@ class Command(BaseCommand):
                 continue
 
             basename = path.name
+            public_url = ''
+            r2_key = ''
+            if uploader is not None:
+                # Build deterministic URLs for already-uploaded objects.
+                # This enables fast re-import without re-uploading large media sets.
+                r2_key = uploader.build_key(basename=basename, remote=False)
+                public_url = uploader.build_public_url(r2_key)
             media_map[basename] = UploadedMedia(
-                public_url='',
-                r2_key='',
+                public_url=public_url,
+                r2_key=r2_key,
                 content_type=mimetypes.guess_type(basename)[0] or 'application/octet-stream',
                 content_length=int(path.stat().st_size),
             )

@@ -88,6 +88,7 @@ INSTALLED_APPS = [
 
     # Local apps
     'apps.users',
+    'apps.n5',
     'apps.courses',
     'apps.learning',
     'apps.vocabulary',
@@ -292,6 +293,7 @@ SPECTACULAR_SETTINGS = {
         {'name': 'examples'},
         {'name': 'learning'},
         {'name': 'courses'},
+        {'name': 'n5'},
     ],
     'SWAGGER_UI_SETTINGS': {
         'deepLinking': True,

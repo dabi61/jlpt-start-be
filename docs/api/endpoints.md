@@ -86,6 +86,23 @@ Anki learning flow (per unit):
 ### Courses
 - `GET /api/courses/`
 
+### N5 Practice
+- `GET/POST /api/n5/sections/`
+- `GET/PUT/PATCH/DELETE /api/n5/sections/{id}/`
+- `GET/POST /api/n5/subcategories/`
+- `GET/PUT/PATCH/DELETE /api/n5/subcategories/{id}/`
+- `GET/POST /api/n5/exams/`
+- `GET/PUT/PATCH/DELETE /api/n5/exams/{id}/`
+- `GET /api/n5/exams/{id}/questions/`
+- `GET/POST /api/n5/questions/`
+- `GET/PUT/PATCH/DELETE /api/n5/questions/{id}/`
+- `GET /api/n5/questions/{id}/items/`
+- `GET/POST /api/n5/question-items/`
+- `GET/PUT/PATCH/DELETE /api/n5/question-items/{id}/`
+- `GET/POST /api/n5/media-assets/`
+- `GET/PUT/PATCH/DELETE /api/n5/media-assets/{id}/`
+- Import command + mapping guide: `docs/api/n5.md`
+
 ## 8. API Metadata
 - `GET /api/schema/`: OpenAPI schema.
 - `GET /api/docs/`: Swagger UI.

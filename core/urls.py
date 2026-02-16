@@ -34,6 +34,7 @@ urlpatterns = [
 
     # App URLs (priority order)
     path('api/users/', include('apps.users.urls')),
+    path('api/n4/', include('apps.n4.urls')),
     path('api/n5/', include('apps.n5.urls')),
     path('api/vocabulary/', include('apps.vocabulary.urls')),
     path('api/kanjis/', include('apps.kanjis.urls')),

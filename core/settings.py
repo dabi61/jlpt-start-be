@@ -88,6 +88,7 @@ INSTALLED_APPS = [
 
     # Local apps
     'apps.users',
+    'apps.n4',
     'apps.n5',
     'apps.courses',
     'apps.learning',
@@ -293,6 +294,7 @@ SPECTACULAR_SETTINGS = {
         {'name': 'examples'},
         {'name': 'learning'},
         {'name': 'courses'},
+        {'name': 'n4'},
         {'name': 'n5'},
     ],
     'SWAGGER_UI_SETTINGS': {

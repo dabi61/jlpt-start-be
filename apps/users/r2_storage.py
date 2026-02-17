@@ -13,6 +13,7 @@ from __future__ import annotations
 import os
 import uuid
 from typing import Any
+from urllib.parse import quote
 
 import boto3
 from botocore.config import Config
@@ -123,7 +124,9 @@ def _validate_avatar_key_for_user(key: str, user_id: str):
 
 def public_url(key: str) -> str:
     base = (settings.R2_PUBLIC_BASE_URL or '').rstrip('/')
-    return f"{base}/{key.lstrip('/')}"
+    # URL-encode the key path but keep slashes, so files with literal '%' remain accessible.
+    safe_key = quote((key or '').lstrip('/'), safe='/')
+    return f"{base}/{safe_key}"
 
 
 def create_avatar_upload(*, user_id: str, content_type: str | None = None, filename: str | None = None) -> dict[str, Any]:

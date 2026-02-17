@@ -97,7 +97,7 @@ class PracticeAttemptViewSet(viewsets.ModelViewSet):
         ),
         responses={200: PracticeAnswerSerializer(many=True), 400: OpenApiTypes.OBJECT},
     )
-    @action(detail=True, methods=['get', 'post'], pagination_class=None)
+    @action(detail=True, methods=['get', 'post'], pagination_class=None, filter_backends=[])
     def answers(self, request, pk=None):
         attempt = self.get_object()
 
@@ -167,7 +167,7 @@ class PracticeAttemptViewSet(viewsets.ModelViewSet):
 
         return Response(PracticeAnswerSerializer(saved, many=True).data, status=status.HTTP_200_OK)
 
-    @extend_schema(responses={200: PracticeAttemptSerializer, 400: OpenApiTypes.OBJECT})
+    @extend_schema(request=None, responses={200: PracticeAttemptSerializer, 400: OpenApiTypes.OBJECT})
     @action(detail=True, methods=['post'])
     def submit(self, request, pk=None):
         attempt = self.get_object()
@@ -206,7 +206,7 @@ class PracticeAttemptViewSet(viewsets.ModelViewSet):
 
         return Response(PracticeAttemptSerializer(attempt).data, status=status.HTTP_200_OK)
 
-    @extend_schema(responses={200: PracticeAttemptSerializer, 400: OpenApiTypes.OBJECT})
+    @extend_schema(request=None, responses={200: PracticeAttemptSerializer, 400: OpenApiTypes.OBJECT})
     @action(detail=True, methods=['post'])
     def abandon(self, request, pk=None):
         attempt = self.get_object()

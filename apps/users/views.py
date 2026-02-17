@@ -50,6 +50,20 @@ class UserStatsView(APIView):
     """
     permission_classes = [permissions.IsAuthenticated]
 
+    @extend_schema(
+        responses={
+            200: inline_serializer(
+                name='UserStatsResponse',
+                fields={
+                    'level': drf_serializers.CharField(allow_blank=True, required=False),
+                    'streak': drf_serializers.IntegerField(required=False),
+                    'last_study_date': drf_serializers.DateField(allow_null=True, required=False),
+                    'display_name': drf_serializers.CharField(allow_blank=True, required=False),
+                },
+            ),
+            401: OpenApiTypes.OBJECT,
+        },
+    )
     def get(self, request):
         user = request.user
         return Response({

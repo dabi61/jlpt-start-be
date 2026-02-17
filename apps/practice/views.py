@@ -4,11 +4,11 @@ from collections import defaultdict
 
 from django.db import transaction
 from django.utils import timezone
-from rest_framework import filters, status, viewsets
+from rest_framework import filters, serializers as drf_serializers, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from drf_spectacular.utils import extend_schema, OpenApiParameter
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiTypes, inline_serializer
 
 from core.pagination import StandardResultsSetPagination
 from .models import PracticeAnswer, PracticeAttempt
@@ -80,13 +80,24 @@ class PracticeAttemptViewSet(viewsets.ModelViewSet):
         status_code = status.HTTP_200_OK if getattr(serializer, '_resumed', False) else status.HTTP_201_CREATED
         return Response(PracticeAttemptSerializer(attempt).data, status=status_code)
 
-    @action(detail=True, methods=['get', 'post'])
+    @extend_schema(methods=['GET'], responses={200: PracticeAnswerSerializer(many=True)})
     @extend_schema(
-        request={
-            'application/json': PracticeAnswerUpsertSerializer,
-        },
-        responses={200: PracticeAnswerSerializer(many=True)},
+        methods=['POST'],
+        request=inline_serializer(
+            name='PracticeAnswersUpsertRequest',
+            fields={
+                # Single-item payload
+                'question_item_id': drf_serializers.IntegerField(required=False),
+                'selected_answer': drf_serializers.IntegerField(required=False),
+                'response_time_ms': drf_serializers.IntegerField(required=False),
+                'metadata': drf_serializers.DictField(required=False),
+                # Batch payload
+                'answers': PracticeAnswerUpsertSerializer(many=True, required=False),
+            },
+        ),
+        responses={200: PracticeAnswerSerializer(many=True), 400: OpenApiTypes.OBJECT},
     )
+    @action(detail=True, methods=['get', 'post'], pagination_class=None)
     def answers(self, request, pk=None):
         attempt = self.get_object()
 
@@ -156,6 +167,7 @@ class PracticeAttemptViewSet(viewsets.ModelViewSet):
 
         return Response(PracticeAnswerSerializer(saved, many=True).data, status=status.HTTP_200_OK)
 
+    @extend_schema(responses={200: PracticeAttemptSerializer, 400: OpenApiTypes.OBJECT})
     @action(detail=True, methods=['post'])
     def submit(self, request, pk=None):
         attempt = self.get_object()
@@ -194,6 +206,7 @@ class PracticeAttemptViewSet(viewsets.ModelViewSet):
 
         return Response(PracticeAttemptSerializer(attempt).data, status=status.HTTP_200_OK)
 
+    @extend_schema(responses={200: PracticeAttemptSerializer, 400: OpenApiTypes.OBJECT})
     @action(detail=True, methods=['post'])
     def abandon(self, request, pk=None):
         attempt = self.get_object()
@@ -203,7 +216,13 @@ class PracticeAttemptViewSet(viewsets.ModelViewSet):
         attempt.save(update_fields=['status', 'updated_at'])
         return Response(PracticeAttemptSerializer(attempt).data, status=status.HTTP_200_OK)
 
-    @action(detail=False, methods=['get'])
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(name='level', required=False, type=str, description='Optional level filter (N1..N6).'),
+        ],
+        responses={200: OpenApiTypes.OBJECT},
+    )
+    @action(detail=False, methods=['get'], pagination_class=None)
     def progress(self, request):
         """
         Summary progress for the current user.

@@ -121,6 +121,7 @@ class N4ExamViewSet(viewsets.ModelViewSet):
 
         return queryset
 
+    @extend_schema(responses={200: N4QuestionListSerializer(many=True)})
     @action(detail=True, methods=['get'])
     def questions(self, request, pk=None):
         exam = self.get_object()
@@ -193,7 +194,8 @@ class N4QuestionViewSet(viewsets.ModelViewSet):
 
         return queryset
 
-    @action(detail=True, methods=['get'])
+    @extend_schema(responses={200: N4QuestionItemSerializer(many=True)})
+    @action(detail=True, methods=['get'], pagination_class=None)
     def items(self, request, pk=None):
         question = self.get_object()
         queryset = question.items.order_by('item_order', 'id')

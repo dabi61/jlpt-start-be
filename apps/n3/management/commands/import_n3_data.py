@@ -9,7 +9,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlparse
+from urllib.parse import quote, urlparse
 
 import boto3
 import requests
@@ -117,7 +117,9 @@ class R2Uploader:
         return f"{self.prefix}/{safe_basename}"
 
     def build_public_url(self, key: str) -> str:
-        return f"{self.public_base}/{key.lstrip('/')}"
+        # URL-encode the key path but keep slashes, so filenames like `a%20b.jpg` remain accessible.
+        safe_key = quote(key.lstrip('/'), safe='/')
+        return f"{self.public_base}/{safe_key}"
 
     def _guess_content_type(self, filename: str) -> str:
         ct, _ = mimetypes.guess_type(filename)
@@ -336,14 +338,29 @@ class Command(BaseCommand):
                 # This enables fast re-import without re-uploading large media sets.
                 r2_key = uploader.build_key(basename=basename, remote=False)
                 public_url = uploader.build_public_url(r2_key)
-            media_map[basename] = UploadedMedia(
+            uploaded = UploadedMedia(
                 public_url=public_url,
                 r2_key=r2_key,
                 content_type=mimetypes.guess_type(basename)[0] or 'application/octet-stream',
                 content_length=int(path.stat().st_size),
             )
+            media_map[basename] = uploaded
             for variant in self._build_variants(basename):
                 variant_map.setdefault(variant, set()).add(basename)
+
+            if uploader is not None:
+                # Keep MediaAsset table consistent even when skipping uploads.
+                media_type = self._detect_media_type(ext)
+                rel_path = str(path.relative_to(source_dir))
+                self._upsert_media_asset(
+                    source_type=N3MediaAsset.SourceType.LOCAL,
+                    media_type=media_type,
+                    source_url='',
+                    source_path=rel_path,
+                    source_basename=basename,
+                    uploaded=uploaded,
+                    metadata={'source_dir': str(source_dir.name), 'skip_upload_local': True},
+                )
 
         return media_map, variant_map
 

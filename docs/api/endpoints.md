@@ -95,6 +95,23 @@ Anki learning flow (per unit):
 ### Courses
 - `GET /api/courses/`
 
+### N1 Practice
+- `GET/POST /api/n1/sections/`
+- `GET/PUT/PATCH/DELETE /api/n1/sections/{id}/`
+- `GET/POST /api/n1/subcategories/`
+- `GET/PUT/PATCH/DELETE /api/n1/subcategories/{id}/`
+- `GET/POST /api/n1/exams/`
+- `GET/PUT/PATCH/DELETE /api/n1/exams/{id}/`
+- `GET /api/n1/exams/{id}/questions/`
+- `GET/POST /api/n1/questions/`
+- `GET/PUT/PATCH/DELETE /api/n1/questions/{id}/`
+- `GET /api/n1/questions/{id}/items/`
+- `GET/POST /api/n1/question-items/`
+- `GET/PUT/PATCH/DELETE /api/n1/question-items/{id}/`
+- `GET/POST /api/n1/media-assets/`
+- `GET/PUT/PATCH/DELETE /api/n1/media-assets/{id}/`
+- Import command + mapping guide: `docs/api/n1.md`
+
 ### N2 Practice
 - `GET/POST /api/n2/sections/`
 - `GET/PUT/PATCH/DELETE /api/n2/sections/{id}/`

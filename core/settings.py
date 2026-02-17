@@ -90,6 +90,7 @@ INSTALLED_APPS = [
     # Local apps
     'apps.users',
     'apps.practice',
+    'apps.n1',
     'apps.n2',
     'apps.n3',
     'apps.n4',
@@ -299,6 +300,7 @@ SPECTACULAR_SETTINGS = {
         {'name': 'examples'},
         {'name': 'learning'},
         {'name': 'courses'},
+        {'name': 'n1'},
         {'name': 'n2'},
         {'name': 'n3'},
         {'name': 'n4'},

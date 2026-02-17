@@ -2,6 +2,7 @@
 Django settings for Nihongo Project.
 """
 import os
+import sys
 import warnings
 from pathlib import Path
 from datetime import timedelta
@@ -88,6 +89,8 @@ INSTALLED_APPS = [
 
     # Local apps
     'apps.users',
+    'apps.practice',
+    'apps.n3',
     'apps.n4',
     'apps.n5',
     'apps.courses',
@@ -288,12 +291,14 @@ SPECTACULAR_SETTINGS = {
     'TAGS': [
         {'name': 'auth'},
         {'name': 'users'},
+        {'name': 'practice'},
         {'name': 'vocabulary'},
         {'name': 'kanjis'},
         {'name': 'grammar'},
         {'name': 'examples'},
         {'name': 'learning'},
         {'name': 'courses'},
+        {'name': 'n3'},
         {'name': 'n4'},
         {'name': 'n5'},
     ],
@@ -375,6 +380,14 @@ CACHES = {
         }
     }
 }
+
+# Make unit tests self-contained (do not require a running Redis service).
+if 'test' in sys.argv:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        }
+    }
 
 # =============================================================================
 # Email Settings

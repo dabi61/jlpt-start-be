@@ -30,8 +30,9 @@ staticfiles/
 .DS_Store
 .tmp/
 tmp_schema.db
-n4/
-n5/
+/n3/
+/n4/
+/n5/
 
 # Celery
 celerybeat-schedule

@@ -22,28 +22,37 @@
 - `DELETE /api/users/avatar/`: Delete current avatar.
 - Avatar integration guide: `docs/api/avatar-cloudflare.md`.
 
-## 3. Vocabulary APIs
+## 3. Practice Attempts (per-user answers)
+- `GET/POST /api/practice/attempts/`
+- `GET /api/practice/attempts/{id}/`
+- `GET/POST /api/practice/attempts/{id}/answers/`
+- `POST /api/practice/attempts/{id}/submit/`
+- `POST /api/practice/attempts/{id}/abandon/`
+- `GET /api/practice/attempts/progress/`
+- Attempts/answers guide: `docs/api/practice.md`
+
+## 4. Vocabulary APIs
 - `GET/POST /api/vocabulary/`
 - `GET/PUT/PATCH/DELETE /api/vocabulary/{id}/`
 - `GET /api/vocabulary/by_level/?level=N5`
 - `GET /api/vocabulary/stats/`
 - `GET /api/vocabulary/{id}/examples/`
 
-## 4. Kanji APIs
+## 5. Kanji APIs
 - `GET/POST /api/kanjis/`
 - `GET/PUT/PATCH/DELETE /api/kanjis/{id}/`
 - `GET /api/kanjis/stats/`
 - `GET /api/kanjis/{id}/examples/`
 - `GET /api/kanjis/{id}/components/`
 
-## 5. Grammar APIs
+## 6. Grammar APIs
 - `GET/POST /api/grammar/`
 - `GET/PUT/PATCH/DELETE /api/grammar/{id}/`
 - `GET /api/grammar/stats/`
 - `GET /api/grammar/{id}/examples/`
 - `GET /api/grammar/{id}/synonyms/`
 
-## 6. Example APIs
+## 7. Example APIs
 - `GET/POST /api/examples/`
 - `GET/PUT/PATCH/DELETE /api/examples/{id}/`
 
@@ -54,7 +63,7 @@ Pagination:
   - `GET /api/grammar/{id}/examples/?page=1&page_size=10`
   - `GET /api/kanjis/{id}/examples/?page=2&page_size=10`
 
-## 7. Remaining APIs
+## 8. Remaining APIs
 ### Learning
 - `GET/POST /api/learning/lessons/`
 - `GET/PUT/PATCH/DELETE /api/learning/lessons/{id}/`
@@ -85,6 +94,23 @@ Anki learning flow (per unit):
 
 ### Courses
 - `GET /api/courses/`
+
+### N3 Practice
+- `GET/POST /api/n3/sections/`
+- `GET/PUT/PATCH/DELETE /api/n3/sections/{id}/`
+- `GET/POST /api/n3/subcategories/`
+- `GET/PUT/PATCH/DELETE /api/n3/subcategories/{id}/`
+- `GET/POST /api/n3/exams/`
+- `GET/PUT/PATCH/DELETE /api/n3/exams/{id}/`
+- `GET /api/n3/exams/{id}/questions/`
+- `GET/POST /api/n3/questions/`
+- `GET/PUT/PATCH/DELETE /api/n3/questions/{id}/`
+- `GET /api/n3/questions/{id}/items/`
+- `GET/POST /api/n3/question-items/`
+- `GET/PUT/PATCH/DELETE /api/n3/question-items/{id}/`
+- `GET/POST /api/n3/media-assets/`
+- `GET/PUT/PATCH/DELETE /api/n3/media-assets/{id}/`
+- Import command + mapping guide: `docs/api/n3.md`
 
 ### N4 Practice
 - `GET/POST /api/n4/sections/`
@@ -120,12 +146,12 @@ Anki learning flow (per unit):
 - `GET/PUT/PATCH/DELETE /api/n5/media-assets/{id}/`
 - Import command + mapping guide: `docs/api/n5.md`
 
-## 8. API Metadata
+## 9. API Metadata
 - `GET /api/schema/`: OpenAPI schema.
 - `GET /api/docs/`: Swagger UI.
 - `GET /api/redoc/`: ReDoc.
 
-## 9. Response Envelope
+## 10. Response Envelope
 - All app APIs return the same envelope shape.
 - Note: `/api/schema/` keeps raw OpenAPI payload for Swagger/ReDoc compatibility.
 ```json

@@ -1,4 +1,4 @@
-"""Import JLPT N4 dataset from JSON files and upload media to Cloudflare R2."""
+"""Import JLPT N3 dataset from JSON files and upload media to Cloudflare R2."""
 from __future__ import annotations
 
 import hashlib
@@ -20,13 +20,13 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from django.utils.text import slugify
 
-from apps.n4.models import (
-    N4Exam,
-    N4MediaAsset,
-    N4Question,
-    N4QuestionItem,
-    N4Section,
-    N4Subcategory,
+from apps.n3.models import (
+    N3Exam,
+    N3MediaAsset,
+    N3Question,
+    N3QuestionItem,
+    N3Section,
+    N3Subcategory,
 )
 
 MEDIA_EXTENSIONS = {
@@ -49,9 +49,11 @@ SECTION_NAME_MAP = {
 SUBCATEGORY_NAME_MAP = {
     'DoanVanNgan': 'Đoạn văn ngắn',
     'DoanVanTrungBinh': 'Đoạn văn trung bình',
+    'DoanVanDai': 'Đoạn văn dài',
     'TimThongTin': 'Tìm thông tin',
     'NgheHieuChuDe': 'Nghe hiểu chủ đề',
     'NgheHieuDiemChinh': 'Nghe hiểu điểm chính',
+    'NgheHieuKhaiQuat': 'Nghe hiểu khái quát',
     'NgheHieuDienDat': 'Nghe hiểu diễn đạt',
     'TraLoiNhanh': 'Trả lời nhanh',
     'DangNguPhap': 'Dạng ngữ pháp',
@@ -166,25 +168,25 @@ class R2Uploader:
 
 
 class Command(BaseCommand):
-    help = 'Import N4 JSON dataset, upload media to R2, and map media URLs into question data.'
+    help = 'Import N3 JSON dataset, upload media to R2, and map media URLs into question data.'
 
     def add_arguments(self, parser):
         parser.add_argument(
             '--source-dir',
             type=str,
-            default='n4',
-            help='Source directory containing N4 JSON and media folders (default: n4).',
+            default='n3',
+            help='Source directory containing N3 JSON and media folders (default: n3).',
         )
         parser.add_argument(
             '--prefix',
             type=str,
-            default='n4/images',
-            help='R2 key prefix for uploaded media (default: n4/images).',
+            default='n3/images',
+            help='R2 key prefix for uploaded media (default: n3/images).',
         )
         parser.add_argument(
             '--clear',
             action='store_true',
-            help='Clear existing N4 tables before importing.',
+            help='Clear existing N3 tables before importing.',
         )
         parser.add_argument(
             '--skip-upload-local',
@@ -238,7 +240,7 @@ class Command(BaseCommand):
             remote_url_cache = self._load_remote_url_cache()
 
         if clear and not dry_run:
-            self.stdout.write(self.style.WARNING('Clearing existing N4 dataset...'))
+            self.stdout.write(self.style.WARNING('Clearing existing N3 dataset...'))
             self._clear_existing_data()
 
         if not skip_upload_local:
@@ -270,7 +272,7 @@ class Command(BaseCommand):
         for json_path in json_files:
             relative = json_path.relative_to(source_dir)
             if skip_existing_exams and not dry_run:
-                if N4Exam.objects.filter(source_file=str(relative)).exists():
+                if N3Exam.objects.filter(source_file=str(relative)).exists():
                     self.stdout.write(f"Skipping {relative} (already imported).")
                     continue
 
@@ -289,20 +291,20 @@ class Command(BaseCommand):
             for key, value in file_stats.items():
                 summary[key] = summary.get(key, 0) + value
 
-        self.stdout.write(self.style.SUCCESS('N4 import finished.'))
+        self.stdout.write(self.style.SUCCESS('N3 import finished.'))
         for key in sorted(summary.keys()):
             self.stdout.write(f"  {key}: {summary[key]}")
 
     def _clear_existing_data(self):
-        N4Section.objects.all().delete()
-        N4MediaAsset.objects.all().delete()
+        N3Section.objects.all().delete()
+        N3MediaAsset.objects.all().delete()
 
     def _load_remote_url_cache(self) -> dict[str, str]:
         """Build a cache mapping remote source URLs to already-uploaded public URLs."""
         cache: dict[str, str] = {}
         for source_url, public_url in (
-            N4MediaAsset.objects
-            .filter(source_type=N4MediaAsset.SourceType.REMOTE)
+            N3MediaAsset.objects
+            .filter(source_type=N3MediaAsset.SourceType.REMOTE)
             .exclude(source_url='')
             .exclude(public_url='')
             .values_list('source_url', 'public_url')
@@ -380,7 +382,7 @@ class Command(BaseCommand):
                 media_type = self._detect_media_type(path.suffix)
                 rel_path = str(path.relative_to(source_dir))
                 self._upsert_media_asset(
-                    source_type=N4MediaAsset.SourceType.LOCAL,
+                    source_type=N3MediaAsset.SourceType.LOCAL,
                     media_type=media_type,
                     source_url='',
                     source_path=rel_path,
@@ -420,10 +422,10 @@ class Command(BaseCommand):
     def _detect_media_type(ext: str) -> str:
         ext = ext.lower()
         if ext in {'.png', '.jpg', '.jpeg', '.gif'}:
-            return N4MediaAsset.MediaType.IMAGE
+            return N3MediaAsset.MediaType.IMAGE
         if ext in {'.mp3', '.wav', '.m4a', '.ogg'}:
-            return N4MediaAsset.MediaType.AUDIO
-        return N4MediaAsset.MediaType.OTHER
+            return N3MediaAsset.MediaType.AUDIO
+        return N3MediaAsset.MediaType.OTHER
 
     def _upsert_media_asset(
         self,
@@ -436,7 +438,7 @@ class Command(BaseCommand):
         uploaded: UploadedMedia,
         metadata: dict[str, Any] | None = None,
     ):
-        N4MediaAsset.objects.update_or_create(
+        N3MediaAsset.objects.update_or_create(
             r2_key=uploaded.r2_key,
             defaults={
                 'source_type': source_type,
@@ -490,12 +492,12 @@ class Command(BaseCommand):
         if rows and isinstance(rows[0], dict):
             source_kind = str(rows[0].get('kind') or '').strip()
 
-        dataset_level = 4
+        dataset_level = 3
         if rows and isinstance(rows[0], dict):
             try:
-                dataset_level = int(rows[0].get('level') or 4)
+                dataset_level = int(rows[0].get('level') or 3)
             except (TypeError, ValueError):
-                dataset_level = 4
+                dataset_level = 3
 
         stats = {
             'exam_created': 0,
@@ -515,7 +517,7 @@ class Command(BaseCommand):
         assert uploader is not None
 
         with transaction.atomic():
-            section, _ = N4Section.objects.get_or_create(
+            section, _ = N3Section.objects.get_or_create(
                 code=slugify(section_key),
                 defaults={
                     'name': section_name,
@@ -526,7 +528,7 @@ class Command(BaseCommand):
                 section.name = section_name
                 section.save(update_fields=['name', 'updated_at'])
 
-            subcategory, _ = N4Subcategory.objects.get_or_create(
+            subcategory, _ = N3Subcategory.objects.get_or_create(
                 section=section,
                 code=slugify(subcategory_key),
                 defaults={
@@ -545,7 +547,7 @@ class Command(BaseCommand):
             if changed:
                 subcategory.save(update_fields=['source_key', 'name', 'updated_at'])
 
-            exam, created = N4Exam.objects.update_or_create(
+            exam, created = N3Exam.objects.update_or_create(
                 source_file=str(relative),
                 defaults={
                     'subcategory': subcategory,
@@ -637,7 +639,7 @@ class Command(BaseCommand):
                     'display_order': order,
                     'kind': str(row.get('kind') or ''),
                     'title': str(row.get('title') or ''),
-                    'jlpt_level': int(row.get('level') or 4),
+                    'jlpt_level': int(row.get('level') or 3),
                     'score': float(row.get('score') or 0),
                     'scores': row.get('scores') or [],
                     'correct_answers': row.get('correct_answers') or [],
@@ -651,7 +653,7 @@ class Command(BaseCommand):
                     'general_text_read_vn': general_text_read_vn,
                 }
 
-                question, q_created = N4Question.objects.update_or_create(
+                question, q_created = N3Question.objects.update_or_create(
                     exam=exam,
                     source_id=source_id,
                     defaults=question_defaults,
@@ -729,7 +731,7 @@ class Command(BaseCommand):
                         'raw_data': content,
                     }
 
-                    item, item_created = N4QuestionItem.objects.update_or_create(
+                    item, item_created = N3QuestionItem.objects.update_or_create(
                         question=question,
                         item_order=item_order,
                         defaults=item_defaults,
@@ -760,8 +762,8 @@ class Command(BaseCommand):
         section_order = {
             'TuVung': ['CachDocKanji', 'DongNghia', 'BieuHienTu', 'CachDungTu', 'CachDocHiragana'],
             'NguPhap': ['DangNguPhap', 'ThanhLapCau', 'NguPhapTheoDoanVan'],
-            'Doc': ['DoanVanNgan', 'DoanVanTrungBinh', 'TimThongTin'],
-            'Nghe': ['NgheHieuChuDe', 'NgheHieuDiemChinh', 'TraLoiNhanh', 'NgheHieuDienDat'],
+            'Doc': ['DoanVanNgan', 'DoanVanTrungBinh', 'DoanVanDai', 'TimThongTin'],
+            'Nghe': ['NgheHieuChuDe', 'NgheHieuDiemChinh', 'NgheHieuKhaiQuat', 'TraLoiNhanh', 'NgheHieuDienDat'],
         }
         candidates = section_order.get(section_key, [])
         if subcategory_key in candidates:
@@ -841,7 +843,7 @@ class Command(BaseCommand):
         # Keep conservative matching to avoid wrong audio assignment.
         # For ambiguous names (Q1.mp3 etc.), this intentionally returns False.
         lowered = candidate_basename.lower()
-        tokens = ['nghehieuchude', 'nghehieudiemchinh', 'nghehieudiendat', 'traloinhanh']
+        tokens = ['nghehieuchude', 'nghehieudiemchinh', 'nghehieukhaiquat', 'nghehieudiendat', 'traloinhanh']
         if any(tok in context for tok in tokens):
             return any(tok in lowered for tok in tokens)
         return False
@@ -912,7 +914,7 @@ class Command(BaseCommand):
 
             media_type = self._detect_media_type(Path(base).suffix)
             self._upsert_media_asset(
-                source_type=N4MediaAsset.SourceType.REMOTE,
+                source_type=N3MediaAsset.SourceType.REMOTE,
                 media_type=media_type,
                 source_url=value,
                 source_path='',

@@ -33,7 +33,11 @@ MEDIA_EXTENSIONS = {
     '.png', '.jpg', '.jpeg', '.gif',
     '.mp3', '.wav', '.m4a', '.ogg',
 }
-MEDIA_URL_RE = re.compile(r'https?://[^\s"\'<>]+')
+# Only rewrite URLs that look like media assets (avoid fetching random website links in reading text).
+MEDIA_URL_RE = re.compile(
+    r'https?://[^\s"\'<>]+?\.(?:png|jpe?g|gif|mp3|wav|m4a|ogg)(?:\?[^\s"\'<>]*)?',
+    re.IGNORECASE,
+)
 
 SECTION_NAME_MAP = {
     'Doc': 'Đọc',

@@ -33,6 +33,7 @@ tmp_schema.db
 /n3/
 /n4/
 /n5/
+/n2/
 
 # Celery
 celerybeat-schedule

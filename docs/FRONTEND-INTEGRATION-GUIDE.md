@@ -690,6 +690,15 @@ List progress của user.
 
 Tạo/cập nhật progress.
 
+Notes:
+- Với user thường, backend **bỏ qua** field `user_id` trong request và tự lấy user hiện tại từ JWT.
+- `POST` hoạt động theo kiểu **upsert** theo key `(user_id, unit_id)`:
+  - Nếu đã có record progress cho unit đó, backend sẽ update record mới nhất.
+  - Nếu chưa có, backend tạo record mới.
+- Khi `progress >= 100`:
+  - Backend set `completed_at` (nếu trước đó chưa completed).
+  - Backend cập nhật `streak` + `last_study_date` cho user theo rule trong `docs/business/rules.md`.
+
 **Request:**
 ```json
 {

@@ -1,15 +1,20 @@
 """
 Views for Learning app.
 """
+from datetime import timedelta
+
+from django.contrib.auth import get_user_model
 from rest_framework import viewsets, filters
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from django.db.models import Q
+from django.utils import timezone
 from drf_spectacular.utils import extend_schema, extend_schema_view, OpenApiParameter
 
 from core.pagination import StandardResultsSetPagination
+from core.permissions import IsAdminOrReadOnly
 from .models import (
     Lesson,
     Unit,
@@ -55,7 +60,7 @@ class LessonViewSet(viewsets.ModelViewSet):
     queryset = Lesson.objects.all()
     serializer_class = LessonSerializer
     pagination_class = StandardResultsSetPagination
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminOrReadOnly]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['lession_name']
     ordering_fields = ['id', 'lession_name', 'created_at']
@@ -164,6 +169,13 @@ class UnitViewSet(viewsets.ModelViewSet):
         if level:
             queryset = queryset.filter(level=level)
         return queryset
+
+    def get_permissions(self):
+        # Units are a content resource: only admins can modify them, but all authenticated
+        # users can read and use study-related actions (anki, detail).
+        if self.action in {'create', 'update', 'partial_update', 'destroy'}:
+            return [IsAdminUser()]
+        return [IsAuthenticated()]
 
     @extend_schema(
         description="Get unit detail with full content (words, grammar, or kanji)",
@@ -362,6 +374,50 @@ class UserUnitProgressViewSet(viewsets.ModelViewSet):
         user = self.request.user
         return bool(user and (user.is_staff or user.is_superuser))
 
+    @staticmethod
+    def _parse_progress(value) -> float | None:
+        """
+        Progress is stored as a TextField (historical import). Accept numbers or numeric strings.
+        Returns float or None if unparseable.
+        """
+        if value is None:
+            return None
+        if isinstance(value, (int, float)):
+            return float(value)
+        raw = str(value).strip()
+        if not raw:
+            return None
+        try:
+            return float(raw)
+        except (TypeError, ValueError):
+            return None
+
+    def _progress_is_completed(self, value) -> bool:
+        # Treat 100+ as completed, per frontend integration guide.
+        v = self._parse_progress(value)
+        return bool(v is not None and v >= 100)
+
+    def _update_user_streak_if_needed(self, user) -> None:
+        """
+        Update streak when the user completes at least one unit on a new calendar day.
+
+        Rules:
+        - If last_study_date is today: keep streak unchanged.
+        - If last_study_date is yesterday: increment streak.
+        - Otherwise: reset streak to 1.
+        """
+        today = timezone.now().date()
+        last = user.last_study_date
+        if last == today:
+            return
+
+        if last == (today - timedelta(days=1)):
+            user.streak = int(user.streak or 0) + 1
+        else:
+            user.streak = 1
+        user.last_study_date = today
+        user.save(update_fields=['streak', 'last_study_date'])
+
     def get_queryset(self):
         queryset = super().get_queryset()
 
@@ -380,6 +436,60 @@ class UserUnitProgressViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(lession_id=lession_id)
         return queryset
 
+    def create(self, request, *args, **kwargs):
+        """
+        Upsert progress for (user_id, unit_id).
+
+        This matches the frontend expectation: client often only knows unit_id and sends POST repeatedly.
+        """
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+
+        # Determine target user_id. Non-admin users can only write their own progress.
+        target_user_id = str(request.user.id)
+        if self._is_admin() and data.get('user_id'):
+            target_user_id = str(data.get('user_id')).strip()
+
+        unit_id = str(data.get('unit_id') or '').strip()
+        if not unit_id:
+            raise ValidationError({'unit_id': 'This field is required.'})
+
+        # Find latest record if duplicates exist (historical data). Update the newest one.
+        qs = UserUnitProgress.objects.filter(user_id=target_user_id, unit_id=unit_id).order_by('-id')
+        instance = qs.first()
+        created = instance is None
+        if created:
+            instance = UserUnitProgress(user_id=target_user_id, unit_id=unit_id)
+
+        was_completed = bool(getattr(instance, 'completed_at', None))
+
+        # Update fields.
+        if data.get('lession_id') is not None:
+            instance.lession_id = str(data.get('lession_id') or '').strip()
+        if data.get('progress') is not None:
+            instance.progress = str(data.get('progress'))
+
+        now_completed = was_completed or self._progress_is_completed(instance.progress)
+        if now_completed and not was_completed:
+            instance.completed_at = timezone.now().isoformat()
+
+        instance.user_id = target_user_id
+        instance.save()
+
+        # Update user's streak on first completion transition for this unit.
+        if now_completed and not was_completed:
+            UserModel = get_user_model()
+            try:
+                user_obj = UserModel.objects.get(id=int(target_user_id))
+            except Exception:
+                user_obj = None
+            if user_obj is not None:
+                self._update_user_streak_if_needed(user_obj)
+
+        out = self.get_serializer(instance)
+        return Response(out.data, status=(201 if created else 200))
+
     def perform_create(self, serializer):
         if self._is_admin() and serializer.validated_data.get('user_id'):
             serializer.save()
@@ -387,7 +497,24 @@ class UserUnitProgressViewSet(viewsets.ModelViewSet):
         serializer.save(user_id=str(self.request.user.id))
 
     def perform_update(self, serializer):
+        instance = self.get_object()
+        was_completed = bool(getattr(instance, 'completed_at', None))
+
         if self._is_admin():
-            serializer.save()
-            return
-        serializer.save(user_id=str(self.request.user.id))
+            updated = serializer.save()
+        else:
+            updated = serializer.save(user_id=str(self.request.user.id))
+
+        now_completed = was_completed or self._progress_is_completed(getattr(updated, 'progress', None))
+        if now_completed and not was_completed:
+            updated.completed_at = updated.completed_at or timezone.now().isoformat()
+            updated.save(update_fields=['completed_at', 'updated_at'])
+
+            # Best-effort streak update.
+            UserModel = get_user_model()
+            try:
+                user_obj = UserModel.objects.get(id=int(updated.user_id))
+            except Exception:
+                user_obj = None
+            if user_obj is not None:
+                self._update_user_streak_if_needed(user_obj)

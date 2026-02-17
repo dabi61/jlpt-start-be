@@ -1,11 +1,11 @@
 """ViewSets for N1 practice APIs."""
 from rest_framework import filters, viewsets
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 
 from core.pagination import StandardResultsSetPagination
+from core.permissions import IsAdminOrReadOnly
 from .models import (
     N1Section,
     N1Subcategory,
@@ -29,7 +29,7 @@ class N1SectionViewSet(viewsets.ModelViewSet):
     queryset = N1Section.objects.all()
     serializer_class = N1SectionSerializer
     pagination_class = StandardResultsSetPagination
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminOrReadOnly]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['code', 'name', 'description']
     ordering_fields = ['sort_order', 'name', 'updated_at']
@@ -40,7 +40,7 @@ class N1SubcategoryViewSet(viewsets.ModelViewSet):
     queryset = N1Subcategory.objects.select_related('section').all()
     serializer_class = N1SubcategorySerializer
     pagination_class = StandardResultsSetPagination
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminOrReadOnly]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['name', 'code', 'source_key', 'section__name', 'section__code']
     ordering_fields = ['sort_order', 'name', 'updated_at']
@@ -72,7 +72,7 @@ class N1ExamViewSet(viewsets.ModelViewSet):
     queryset = N1Exam.objects.select_related('subcategory', 'subcategory__section').all()
     serializer_class = N1ExamSerializer
     pagination_class = StandardResultsSetPagination
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminOrReadOnly]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['name', 'slug', 'source_file', 'source_kind', 'subcategory__name']
     ordering_fields = ['name', 'question_count', 'time_limit_seconds', 'updated_at']
@@ -136,7 +136,7 @@ class N1ExamViewSet(viewsets.ModelViewSet):
 class N1QuestionViewSet(viewsets.ModelViewSet):
     queryset = N1Question.objects.select_related('exam', 'exam__subcategory', 'exam__subcategory__section').all()
     pagination_class = StandardResultsSetPagination
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminOrReadOnly]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['title', 'kind', 'source_id', 'exam__name']
     ordering_fields = ['display_order', 'source_id', 'score', 'updated_at']
@@ -209,7 +209,7 @@ class N1QuestionItemViewSet(viewsets.ModelViewSet):
     ).all()
     serializer_class = N1QuestionItemSerializer
     pagination_class = StandardResultsSetPagination
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminOrReadOnly]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['question_text', 'question__title']
     ordering_fields = ['item_order', 'correct_answer', 'updated_at']
@@ -252,7 +252,7 @@ class N1MediaAssetViewSet(viewsets.ModelViewSet):
     queryset = N1MediaAsset.objects.all()
     serializer_class = N1MediaAssetSerializer
     pagination_class = StandardResultsSetPagination
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminOrReadOnly]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['source_basename', 'source_path', 'source_url', 'r2_key', 'public_url']
     ordering_fields = ['created_at', 'updated_at', 'media_type', 'source_type']

@@ -4,10 +4,10 @@ Views for Kanji app.
 from rest_framework import viewsets, filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 
 from core.pagination import StandardResultsSetPagination
+from core.permissions import IsAdminOrReadOnly
 from .models import Kanji
 from .serializers import KanjiSerializer, KanjiListSerializer
 
@@ -18,7 +18,7 @@ class KanjiViewSet(viewsets.ModelViewSet):
     """
     queryset = Kanji.objects.all()
     pagination_class = StandardResultsSetPagination
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminOrReadOnly]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['kanji', 'mean', 'on', 'kun']
     ordering_fields = ['kanji', 'level', 'stroke_count', 'created_at']

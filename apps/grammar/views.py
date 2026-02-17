@@ -4,10 +4,10 @@ Views for Grammar app.
 from rest_framework import viewsets, filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 
 from core.pagination import StandardResultsSetPagination
+from core.permissions import IsAdminOrReadOnly
 from .models import Grammar
 from .serializers import GrammarSerializer, GrammarListSerializer, GrammarCreateSerializer
 
@@ -18,7 +18,7 @@ class GrammarViewSet(viewsets.ModelViewSet):
     """
     queryset = Grammar.objects.all()
     pagination_class = StandardResultsSetPagination
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminOrReadOnly]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['title', 'mean', 'structure', 'about']
     ordering_fields = ['title', 'level', 'created_at']

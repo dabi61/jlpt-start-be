@@ -1,0 +1,200 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JLPT.codes | Ứng dụng học tiếng Nhật JLPT</title>
+    <meta name="description" content="Ứng dụng học tiếng Nhật JLPT N5-N1 với lộ trình rõ ràng, ôn tập hằng ngày và theo dõi tiến độ học tập.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'landing/landing.css' %}">
+    <script defer src="{% static 'landing/landing.js' %}"></script>
+</head>
+<body>
+    <div class="ambient ambient-left" aria-hidden="true"></div>
+    <div class="ambient ambient-right" aria-hidden="true"></div>
+
+    <header class="site-header">
+        <div class="layout">
+            <a class="brand" href="/">jlpt<span>.codes</span></a>
+            <button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false">
+                Danh mục
+            </button>
+            <nav class="site-nav" id="site-nav" aria-label="Điều hướng chính">
+                <a href="#gioi-thieu">Giới thiệu</a>
+                <a href="#tinh-nang">Tính năng</a>
+                <a href="#lo-trinh">Lộ trình</a>
+                <a href="#tai-ung-dung">Tải ứng dụng</a>
+            </nav>
+            <a class="header-docs" href="#tai-ung-dung">Tải ngay</a>
+        </div>
+    </header>
+
+    <main class="layout">
+        <section class="hero reveal" aria-labelledby="hero-title" id="gioi-thieu">
+            <div class="hero-copy">
+                <p class="eyebrow">Nền tảng học JLPT</p>
+                <h1 id="hero-title">
+                    Học tiếng Nhật mỗi ngày cùng
+                    <span>JLPT Start</span>.
+                </h1>
+                <p class="hero-lead">
+                    Ứng dụng giúp bạn học theo lộ trình từ N5 đến N1, ôn tập đều đặn,
+                    bám sát mục tiêu thi JLPT với trải nghiệm đơn giản và dễ theo dõi.
+                </p>
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="#tai-ung-dung">Tải cho iOS</a>
+                    <a class="btn btn-ghost" href="#tai-ung-dung">Tải cho Android</a>
+                </div>
+                <ul class="hero-points">
+                    <li>Từ vựng, Kanji, Ngữ pháp theo từng cấp độ JLPT</li>
+                    <li>Luyện đề và theo dõi tiến độ học theo ngày</li>
+                    <li>Nhắc học đều để duy trì thói quen dài hạn</li>
+                </ul>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+                <svg viewBox="0 0 520 360" role="img">
+                    <path d="M53 287h156l66-74h167" />
+                    <rect x="82" y="190" width="165" height="96" rx="8" />
+                    <rect x="100" y="204" width="129" height="66" rx="4" />
+                    <circle cx="164" cy="236" r="16" />
+                    <path d="M153 245c7 7 18 7 23 0M156 228h1M172 228h1" />
+                    <path d="M312 56c29-26 75-18 95 13s15 75-14 98" />
+                    <path d="M391 168c20 11 38 31 49 58M331 119c9-1 17 2 22 8" />
+                    <path d="M335 185c11-15 29-24 48-24 32 0 59 25 60 57" />
+                    <path d="M341 206c10 20 13 41 9 63" />
+                    <path d="M290 237c21-11 45-14 69-9" />
+                    <rect x="255" y="95" width="71" height="52" rx="20" fill="#f59d1a" />
+                    <circle cx="277" cy="121" r="4" fill="#1d1f2b" />
+                    <circle cx="291" cy="121" r="4" fill="#1d1f2b" />
+                    <circle cx="305" cy="121" r="4" fill="#1d1f2b" />
+                    <rect x="286" y="136" width="62" height="44" rx="18" fill="#fff" />
+                    <circle cx="308" cy="157" r="3" fill="#1d1f2b" />
+                    <circle cx="320" cy="157" r="3" fill="#1d1f2b" />
+                    <circle cx="332" cy="157" r="3" fill="#1d1f2b" />
+                </svg>
+            </div>
+        </section>
+
+        <section class="level-strip reveal" id="lo-trinh" aria-label="Lộ trình JLPT">
+            <div class="level-list">
+                <span>N5 Căn bản</span>
+                <span>N4 Mở rộng</span>
+                <span>N3 Tăng tốc</span>
+                <span>N2 Nâng cao</span>
+                <span>N1 Chuyên sâu</span>
+                <span>Kho từ vựng</span>
+                <span>Ngữ pháp trọng điểm</span>
+            </div>
+        </section>
+
+        <section class="feature feature-main reveal" id="tinh-nang">
+            <div class="feature-art" aria-hidden="true">
+                <svg viewBox="0 0 360 260" role="img">
+                    <rect x="30" y="34" width="118" height="180" rx="8" />
+                    <line x1="46" y1="58" x2="132" y2="58" />
+                    <line x1="46" y1="74" x2="132" y2="74" />
+                    <line x1="46" y1="90" x2="132" y2="90" />
+                    <line x1="46" y1="106" x2="132" y2="106" />
+                    <circle cx="216" cy="140" r="64" />
+                    <path d="M189 120h54M189 142h54M189 164h32" />
+                    <rect x="156" y="183" width="120" height="23" rx="11" fill="#dff4ea" />
+                    <path d="M60 214h230" />
+                </svg>
+            </div>
+            <div class="feature-copy">
+                <h2>Một ứng dụng, đủ bộ kỹ năng <span>Nghe - Đọc - Từ vựng.</span></h2>
+                <p>
+                    Nội dung học được chia rõ theo cấp độ JLPT, giúp bạn chọn đúng bài,
+                    học đúng trọng tâm và kiểm tra lại kiến thức ngay sau mỗi phiên học.
+                </p>
+            </div>
+        </section>
+
+        <section class="statement reveal">
+            <h2><span>Học đều mỗi ngày</span> để tiến bộ bền vững.</h2>
+        </section>
+
+        <section class="feature-grid reveal">
+            <article class="feature-card">
+                <h3>Lộ trình rõ ràng theo từng cấp độ</h3>
+                <p>
+                    Bạn có thể bắt đầu từ N5 hoặc vào thẳng cấp độ phù hợp, sau đó học tuần tự
+                    theo chủ đề để không bị hổng kiến thức nền.
+                </p>
+            </article>
+            <article class="feature-card">
+                <h3>Ôn tập ngắn, dễ duy trì thói quen</h3>
+                <p>
+                    Mỗi phiên học được thiết kế ngắn gọn, phù hợp cả khi bạn bận rộn.
+                    Học trên điện thoại mọi lúc để giữ nhịp học liên tục.
+                </p>
+            </article>
+        </section>
+
+        <section class="research reveal">
+            <div class="research-head">
+                <p class="eyebrow">Điểm nổi bật của ứng dụng</p>
+                <h2>Thiết kế để bạn học thật, nhớ lâu và đi đường dài.</h2>
+            </div>
+            <div class="stats-grid">
+                <article>
+                    <strong>Đầy đủ N5-N1</strong>
+                    <p>Phủ toàn bộ lộ trình JLPT để bạn học liên tục từ cơ bản đến nâng cao.</p>
+                </article>
+                <article>
+                    <strong>Tiến độ cá nhân hóa</strong>
+                    <p>Ghi nhận quá trình học của bạn để theo dõi độ ổn định theo ngày/tuần.</p>
+                </article>
+                <article>
+                    <strong>Học trên di động</strong>
+                    <p>Tập trung trải nghiệm iOS và Android để bạn có thể học mọi lúc, mọi nơi.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="download-section reveal" id="tai-ung-dung">
+            <div class="download-head">
+                <p class="eyebrow">Tải ứng dụng</p>
+                <h2>Tải JLPT Start cho <span>iOS</span> và <span>Android</span>.</h2>
+            </div>
+            <div class="download-grid">
+                <article class="download-card">
+                    <h3>iPhone / iPad (iOS)</h3>
+                    <ol>
+                        <li>Mở App Store trên thiết bị của bạn.</li>
+                        <li>Tìm kiếm từ khóa <strong>JLPT Start</strong>.</li>
+                        <li>Nhấn nút <strong>Tải về</strong> để cài đặt.</li>
+                    </ol>
+                    <a class="store-btn ios" href="https://apps.apple.com/us/search?term=jlpt%20start" target="_blank" rel="noopener noreferrer">
+                        Mở App Store
+                    </a>
+                </article>
+                <article class="download-card">
+                    <h3>Điện thoại Android</h3>
+                    <ol>
+                        <li>Mở Google Play (CH Play).</li>
+                        <li>Tìm kiếm từ khóa <strong>JLPT Start</strong>.</li>
+                        <li>Nhấn <strong>Cài đặt</strong> để bắt đầu học.</li>
+                    </ol>
+                    <a class="store-btn android" href="https://play.google.com/store/search?q=jlpt%20start&c=apps" target="_blank" rel="noopener noreferrer">
+                        Mở Google Play
+                    </a>
+                </article>
+            </div>
+            <p class="download-note">
+                Nếu chưa thấy ứng dụng trên cửa hàng, vui lòng thử lại sau do thời gian cập nhật giữa các khu vực có thể khác nhau.
+            </p>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="layout">
+            <p>© {% now "Y" %} JLPT.codes</p>
+            <p>Ứng dụng học tiếng Nhật dành cho người học JLPT tại Việt Nam.</p>
+        </div>
+    </footer>
+</body>
+</html>

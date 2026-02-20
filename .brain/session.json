@@ -21,7 +21,7 @@
             "description": "Generated system architecture, database schema, and API documentation."
         }
     ],
-    "errors_encountered": [],
+    "errors_encountered": [],   
     "decisions_made": [
         {
             "decision": "Use markdown for documentation",

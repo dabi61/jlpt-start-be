@@ -10,8 +10,12 @@ from drf_spectacular.views import (
 )
 from apps.users.views import CustomRegisterView, CustomLoginView, CustomTokenRefreshView
 from dj_rest_auth.views import PasswordResetConfirmView
+from core.views import landing_page
 
 urlpatterns = [
+    # Landing page
+    path('', landing_page, name='landing'),
+
     # Admin
     path('admin/', admin.site.urls),
 

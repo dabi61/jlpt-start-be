@@ -1,5 +1,8 @@
 # API Endpoints (Current)
 
+Mobile Kotlin Multiplatform integration guide:
+- `docs/api/mobile-kmp-integration.md`
+
 ## 1. Authentication
 - `POST /api/auth/registration/`: Register account (returns OTP flow message).
 - `POST /api/auth/login/`: Login with email/password.

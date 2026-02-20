@@ -401,6 +401,41 @@ h3 {
     color: #47505a;
 }
 
+.faq {
+    margin-top: 3.2rem;
+}
+
+.faq-head h2 {
+    margin-top: 0.45rem;
+    font-size: clamp(1.45rem, 3vw, 2.25rem);
+    max-width: 26ch;
+}
+
+.faq-list {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.9rem;
+}
+
+.faq-item {
+    border: 1px solid #e8dcc6;
+    border-radius: 20px;
+    background: #fff;
+    padding: 1rem;
+    box-shadow: var(--shadow-soft);
+}
+
+.faq-item h3 {
+    font-size: 1.06rem;
+    line-height: 1.35;
+}
+
+.faq-item p {
+    margin: 0.6rem 0 0;
+    color: #4a525f;
+}
+
 .download-section {
     margin: 3.3rem 0 3rem;
     padding: 1.8rem;
@@ -527,6 +562,10 @@ h3 {
     }
 
     .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .faq-list {
         grid-template-columns: 1fr;
     }
 
